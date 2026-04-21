@@ -1,0 +1,74 @@
+import { NextResponse } from 'next/server';
+import { connectDB } from '@/lib/db';
+import Order from '@/models/Order';
+import Enquiry from '@/models/Enquiry';
+import ContactMessage from '@/models/ContactMessage';
+
+export const dynamic = 'force-dynamic';
+
+export async function GET() {
+  try {
+    await connectDB();
+
+    // Fetch counts for statistics
+    const totalOrders = await Order.countDocuments();
+    const inTransitOrders = await Order.countDocuments({ status: 'In Transit' });
+    const pendingOrders = await Order.countDocuments({ status: 'Pending' });
+    
+    // Calculate total revenue (example: sum of some field or a fixed calculation)
+    // For now, let's assume a dummy revenue calculation or fetch if there's a field
+    const revenueData = await Order.aggregate([
+      { $match: { status: 'Delivered' } },
+      { $group: { _id: null, total: { $sum: "$weight" } } } // Example: weight * rate
+    ]);
+    const revenue = revenueData[0]?.total ? (revenueData[0].total * 150).toLocaleString() : '0';
+
+    // Fetch recent activity (mix of orders and enquiries)
+    const recentOrders = await Order.find({})
+      .sort({ updatedAt: -1 })
+      .limit(5)
+      .select('trackingId status updatedAt');
+
+    const recentEnquiries = await Enquiry.find({})
+      .sort({ createdAt: -1 })
+      .limit(5)
+      .select('name service createdAt');
+
+    const recentActivity = [
+      ...recentOrders.map(order => ({
+        id: order._id,
+        type: 'order',
+        title: `Order #${order.trackingId}`,
+        description: `Status updated to ${order.status}`,
+        time: order.updatedAt
+      })),
+      ...recentEnquiries.map(enq => ({
+        id: enq._id,
+        type: 'enquiry',
+        title: `New Enquiry from ${enq.name}`,
+        description: `Requested ${enq.service}`,
+        time: enq.createdAt
+      }))
+    ].sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime()).slice(0, 5);
+
+    // Fetch recent shipments (orders)
+    const recentShipments = await Order.find({})
+      .sort({ createdAt: -1 })
+      .limit(5);
+
+    return NextResponse.json({
+      stats: {
+        totalOrders: totalOrders.toLocaleString(),
+        inTransit: inTransitOrders.toLocaleString(),
+        revenue: `$${revenue}`,
+        pending: pendingOrders.toLocaleString(),
+      },
+      recentActivity,
+      recentShipments
+    });
+
+  } catch (error: any) {
+    console.error('Dashboard Stats Error:', error);
+    return NextResponse.json({ message: 'Error fetching dashboard data', error: error.message }, { status: 500 });
+  }
+}
