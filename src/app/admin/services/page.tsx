@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Layers, Plus, Search, Filter, Edit2, Trash2, ExternalLink, Globe, X, Image as ImageIcon, Check, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import ConfirmationModal from '@/components/admin/ConfirmationModal';
 
 interface Service {
   _id?: string;
@@ -22,6 +23,8 @@ export default function AdminServices() {
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [serviceToDelete, setServiceToDelete] = useState<string | null>(null);
   const [editingService, setEditingService] = useState<Service | null>(null);
   const [isSaving, setIsSaving] = useState(false);
 
@@ -139,20 +142,28 @@ export default function AdminServices() {
     }
   };
 
-  const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this service?')) return;
+  const handleDelete = async () => {
+    if (!serviceToDelete) return;
     
     try {
-      const response = await fetch(`/api/admin/services/${id}`, {
+      const response = await fetch(`/api/admin/services/${serviceToDelete}`, {
         method: 'DELETE',
       });
 
       if (response.ok) {
-        setServices(prev => prev.filter(s => s._id !== id));
+        setServices(prev => prev.filter(s => s._id !== serviceToDelete));
       }
     } catch (error) {
       console.error('Error deleting service:', error);
+    } finally {
+      setIsConfirmModalOpen(false);
+      setServiceToDelete(null);
     }
+  };
+
+  const confirmDelete = (id: string) => {
+    setServiceToDelete(id);
+    setIsConfirmModalOpen(true);
   };
 
   const filteredServices = services.filter(service => 
@@ -274,7 +285,7 @@ export default function AdminServices() {
                       <Edit2 className="w-4 h-4" />
                     </button>
                     <button 
-                      onClick={() => handleDelete(service._id!)}
+                      onClick={() => confirmDelete(service._id!)}
                       className="p-2 hover:bg-red-50 dark:hover:bg-red-900/20 text-red-500 rounded-xl transition-all" 
                       title="Delete Service"
                     >
@@ -349,7 +360,7 @@ export default function AdminServices() {
                       required
                       value={formData.slug}
                       onChange={handleInputChange}
-                      placeholder="air-freight"
+                      placeholder="e.g. air-freight"
                       className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-600/20 transition-all font-bold text-slate-900 dark:text-white"
                     />
                   </div>
@@ -357,14 +368,14 @@ export default function AdminServices() {
 
                 <div className="space-y-2">
                   <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Short Description</label>
-                  <textarea
+                  <input
+                    type="text"
                     name="shortDescription"
                     required
-                    rows={2}
                     value={formData.shortDescription}
                     onChange={handleInputChange}
-                    placeholder="Brief overview for the card..."
-                    className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-600/20 transition-all font-bold text-slate-900 dark:text-white resize-none"
+                    placeholder="Brief overview for cards"
+                    className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-600/20 transition-all font-bold text-slate-900 dark:text-white"
                   />
                 </div>
 
@@ -376,50 +387,53 @@ export default function AdminServices() {
                     rows={4}
                     value={formData.description}
                     onChange={handleInputChange}
-                    placeholder="Detailed service explanation..."
+                    placeholder="Detailed service explanation"
                     className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-600/20 transition-all font-bold text-slate-900 dark:text-white resize-none"
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Image URL</label>
-                  <input
-                    type="text"
-                    name="image"
-                    required
-                    value={formData.image}
-                    onChange={handleInputChange}
-                    placeholder="https://images.unsplash.com/..."
-                    className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-600/20 transition-all font-bold text-slate-900 dark:text-white"
-                  />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Icon Name (Lucide)</label>
+                    <input
+                      type="text"
+                      name="icon"
+                      required
+                      value={formData.icon}
+                      onChange={handleInputChange}
+                      placeholder="e.g. Package, Ship, Plane"
+                      className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-600/20 transition-all font-bold text-slate-900 dark:text-white"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Image URL</label>
+                    <input
+                      type="text"
+                      name="image"
+                      required
+                      value={formData.image}
+                      onChange={handleInputChange}
+                      placeholder="https://..."
+                      className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-600/20 transition-all font-bold text-slate-900 dark:text-white"
+                    />
+                  </div>
                 </div>
 
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
-                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Key Features</label>
-                    <button 
-                      type="button" 
-                      onClick={() => addArrayItem('features')}
-                      className="text-blue-600 text-[10px] font-black uppercase tracking-widest hover:underline"
-                    >
-                      + Add Feature
-                    </button>
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Features</label>
+                    <button type="button" onClick={() => addArrayItem('features')} className="text-blue-600 text-xs font-bold uppercase tracking-widest hover:text-blue-700">+ Add Feature</button>
                   </div>
-                  <div className="grid grid-cols-1 gap-3">
-                    {formData.features.map((feature, idx) => (
-                      <div key={idx} className="flex gap-2">
+                  <div className="space-y-3">
+                    {formData.features.map((feature, index) => (
+                      <div key={index} className="flex gap-2">
                         <input
                           type="text"
-                          required
                           value={feature}
-                          onChange={(e) => handleArrayChange(idx, e.target.value, 'features')}
+                          onChange={(e) => handleArrayChange(index, e.target.value, 'features')}
                           className="flex-1 px-4 py-2 bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600/20 transition-all font-bold text-sm text-slate-900 dark:text-white"
                         />
-                        <button 
-                          type="button" 
-                          onClick={() => removeArrayItem(idx, 'features')}
-                          className="p-2 text-red-400 hover:text-red-600 transition-colors"
-                        >
+                        <button type="button" onClick={() => removeArrayItem(index, 'features')} className="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-all">
                           <Trash2 className="w-4 h-4" />
                         </button>
                       </div>
@@ -429,68 +443,62 @@ export default function AdminServices() {
 
                 <div className="space-y-4">
                   <div className="flex justify-between items-center">
-                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Core Benefits</label>
-                    <button 
-                      type="button" 
-                      onClick={() => addArrayItem('benefits')}
-                      className="text-blue-600 text-[10px] font-black uppercase tracking-widest hover:underline"
-                    >
-                      + Add Benefit
-                    </button>
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Benefits</label>
+                    <button type="button" onClick={() => addArrayItem('benefits')} className="text-blue-600 text-xs font-bold uppercase tracking-widest hover:text-blue-700">+ Add Benefit</button>
                   </div>
-                  <div className="grid grid-cols-1 gap-3">
-                    {formData.benefits.map((benefit, idx) => (
-                      <div key={idx} className="flex gap-2">
+                  <div className="space-y-3">
+                    {formData.benefits.map((benefit, index) => (
+                      <div key={index} className="flex gap-2">
                         <input
                           type="text"
-                          required
                           value={benefit}
-                          onChange={(e) => handleArrayChange(idx, e.target.value, 'benefits')}
+                          onChange={(e) => handleArrayChange(index, e.target.value, 'benefits')}
                           className="flex-1 px-4 py-2 bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600/20 transition-all font-bold text-sm text-slate-900 dark:text-white"
                         />
-                        <button 
-                          type="button" 
-                          onClick={() => removeArrayItem(idx, 'benefits')}
-                          className="p-2 text-red-400 hover:text-red-600 transition-colors"
-                        >
+                        <button type="button" onClick={() => removeArrayItem(index, 'benefits')} className="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-all">
                           <Trash2 className="w-4 h-4" />
                         </button>
                       </div>
                     ))}
                   </div>
+                </div>
+
+                <div className="pt-8 flex gap-3 sticky bottom-0 bg-white dark:bg-slate-800 pb-2">
+                  <button
+                    type="button"
+                    onClick={handleCloseModal}
+                    className="flex-1 px-6 py-4 rounded-2xl font-black uppercase tracking-widest text-xs text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all border border-slate-200 dark:border-slate-600"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={isSaving}
+                    className="flex-1 px-6 py-4 rounded-2xl font-black uppercase tracking-widest text-xs text-white bg-blue-600 hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/20 disabled:opacity-50 flex items-center justify-center gap-2"
+                  >
+                    {isSaving && <Loader2 className="w-4 h-4 animate-spin" />}
+                    {isSaving ? 'Saving...' : (editingService ? 'Update Service' : 'Create Service')}
+                  </button>
                 </div>
               </form>
-
-              <div className="p-8 border-t border-slate-100 dark:border-slate-700 flex gap-4 bg-slate-50/50 dark:bg-slate-800/50">
-                <button
-                  type="button"
-                  onClick={handleCloseModal}
-                  className="flex-1 px-6 py-3 border border-slate-200 dark:border-slate-700 rounded-2xl font-black text-xs uppercase tracking-widest text-slate-500 hover:bg-white dark:hover:bg-slate-700 transition-all"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleSubmit}
-                  disabled={isSaving}
-                  className="flex-2 px-10 py-3 bg-blue-600 text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/20 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                >
-                  {isSaving ? (
-                    <>
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                      Saving...
-                    </>
-                  ) : (
-                    <>
-                      <Check className="w-4 h-4" />
-                      {editingService ? 'Update Service' : 'Create Service'}
-                    </>
-                  )}
-                </button>
-              </div>
             </motion.div>
           </div>
         )}
       </AnimatePresence>
+
+      <ConfirmationModal
+        isOpen={isConfirmModalOpen}
+        onConfirm={handleDelete}
+        onCancel={() => {
+          setIsConfirmModalOpen(false);
+          setServiceToDelete(null);
+        }}
+        title="Delete Service"
+        message="Are you sure you want to delete this service? This will remove it from the public website as well."
+        confirmText="Delete"
+        cancelText="Cancel"
+        type="danger"
+      />
     </motion.div>
   );
 }

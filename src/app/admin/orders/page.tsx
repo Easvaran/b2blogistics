@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Package, Plus, Search, Filter, MoreVertical, Edit2, Trash2, ExternalLink, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import ConfirmationModal from '@/components/admin/ConfirmationModal';
 
 interface Order {
   _id: string;
@@ -24,6 +25,8 @@ export default function AdminOrders() {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [orderToDelete, setOrderToDelete] = useState<string | null>(null);
   const [editingOrder, setEditingOrder] = useState<Order | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
@@ -121,11 +124,11 @@ export default function AdminOrders() {
     }
   };
 
-  const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this order?')) return;
+  const handleDelete = async () => {
+    if (!orderToDelete) return;
     
     try {
-      const response = await fetch(`/api/admin/orders/${id}`, {
+      const response = await fetch(`/api/admin/orders/${orderToDelete}`, {
         method: 'DELETE',
       });
       if (response.ok) {
@@ -133,7 +136,15 @@ export default function AdminOrders() {
       }
     } catch (error) {
       console.error('Error deleting order:', error);
+    } finally {
+      setIsConfirmModalOpen(false);
+      setOrderToDelete(null);
     }
+  };
+
+  const confirmDelete = (id: string) => {
+    setOrderToDelete(id);
+    setIsConfirmModalOpen(true);
   };
 
   const filteredOrders = orders.filter(order => {
@@ -412,7 +423,7 @@ export default function AdminOrders() {
                           <Edit2 className="w-4 h-4" />
                         </button>
                         <button 
-                          onClick={() => handleDelete(order._id)}
+                          onClick={() => confirmDelete(order._id)}
                           className="p-2 hover:bg-red-50 dark:hover:bg-red-900/20 text-red-500 rounded-lg transition-all" 
                           title="Delete"
                         >
@@ -427,6 +438,20 @@ export default function AdminOrders() {
           </table>
         </div>
       </div>
+
+      <ConfirmationModal
+        isOpen={isConfirmModalOpen}
+        onConfirm={handleDelete}
+        onCancel={() => {
+          setIsConfirmModalOpen(false);
+          setOrderToDelete(null);
+        }}
+        title="Delete Order"
+        message="Are you sure you want to delete this order? This action cannot be undone."
+        confirmText="Delete"
+        cancelText="Cancel"
+        type="danger"
+      />
     </motion.div>
   );
 }

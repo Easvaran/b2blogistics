@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { MessageSquare, Search, Filter, Trash2, CheckCircle, Mail, Phone, Calendar, Clock, User, Tag, ChevronDown, ChevronUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import ConfirmationModal from '@/components/admin/ConfirmationModal';
 
 interface Enquiry {
   _id: string;
@@ -21,6 +22,8 @@ export default function AdminEnquiries() {
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [enquiryToDelete, setEnquiryToDelete] = useState<string | null>(null);
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -54,18 +57,26 @@ export default function AdminEnquiries() {
     }
   };
 
-  const deleteEnquiry = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this enquiry?')) return;
+  const handleDelete = async () => {
+    if (!enquiryToDelete) return;
     try {
-      const response = await fetch(`/api/admin/enquiries?id=${id}`, {
+      const response = await fetch(`/api/admin/enquiries?id=${enquiryToDelete}`, {
         method: 'DELETE',
       });
       if (response.ok) {
-        setEnquiries(prev => prev.filter(e => e._id !== id));
+        setEnquiries(prev => prev.filter(e => e._id !== enquiryToDelete));
       }
     } catch (error) {
       console.error('Error deleting enquiry:', error);
+    } finally {
+      setIsConfirmModalOpen(false);
+      setEnquiryToDelete(null);
     }
+  };
+
+  const confirmDelete = (id: string) => {
+    setEnquiryToDelete(id);
+    setIsConfirmModalOpen(true);
   };
 
   const filteredEnquiries = enquiries.filter(enquiry => {
@@ -236,7 +247,7 @@ export default function AdminEnquiries() {
                           </button>
                         </div>
                         <button 
-                          onClick={() => deleteEnquiry(enquiry._id)}
+                          onClick={() => confirmDelete(enquiry._id)}
                           className="p-3 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-all"
                           title="Delete Enquiry"
                         >
@@ -251,6 +262,20 @@ export default function AdminEnquiries() {
           ))
         )}
       </div>
+
+      <ConfirmationModal
+        isOpen={isConfirmModalOpen}
+        onConfirm={handleDelete}
+        onCancel={() => {
+          setIsConfirmModalOpen(false);
+          setEnquiryToDelete(null);
+        }}
+        title="Delete Enquiry"
+        message="Are you sure you want to delete this enquiry? This action cannot be undone."
+        confirmText="Delete"
+        cancelText="Cancel"
+        type="danger"
+      />
     </motion.div>
   );
 }
