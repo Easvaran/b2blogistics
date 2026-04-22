@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { Menu, X, Sun, Moon, Globe, ChevronDown } from 'lucide-react';
 import { useTheme } from '@/components/providers/ThemeProvider';
@@ -41,8 +41,27 @@ export default function Navbar() {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [mobileTrackOpen, setMobileTrackOpen] = useState(false);
+  const [visibility, setVisibility] = useState<any>(null);
   const { theme, toggleTheme } = useTheme();
   const pathname = usePathname();
+
+  useEffect(() => {
+    fetch('/api/settings')
+      .then(res => res.json())
+      .then(data => {
+        if (data.visibility) {
+          setVisibility(data.visibility);
+        }
+      })
+      .catch(err => console.error('Error fetching visibility settings in Navbar:', err));
+  }, []);
+
+  const filteredNavLinks = navLinks.filter(link => {
+    if (link.label === 'SERVICES' && visibility?.services === false) {
+      return false;
+    }
+    return true;
+  });
 
   return (
     <header className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl shadow-lg sticky top-0 z-50 border-b border-slate-100 dark:border-slate-800">
@@ -68,7 +87,7 @@ export default function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-1">
-            {navLinks.map(link => {
+            {filteredNavLinks.map(link => {
               const isActive = pathname === link.href || (link.subLinks && pathname.startsWith(link.href));
               const isDropdownOpen = activeDropdown === link.label;
               
@@ -205,7 +224,7 @@ export default function Navbar() {
               className="lg:hidden py-4 border-t border-slate-100 dark:border-slate-800"
             >
               <div className="space-y-2">
-                {navLinks.map(link => {
+                {filteredNavLinks.map(link => {
                   const isActive = pathname === link.href;
                   
                   if (link.subLinks) {

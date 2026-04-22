@@ -1,9 +1,11 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Plane, Ship, Anchor, Truck, Shield, FileCheck, Globe, ArrowRight, CheckCircle2, Warehouse, BadgeCheck, Clock, MapPin } from 'lucide-react';
+import { Plane, Ship, Anchor, Truck, Shield, FileCheck, Globe, ArrowRight, CheckCircle2, Warehouse, BadgeCheck, Clock, MapPin, Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { notFound } from 'next/navigation';
 
 const services = [
   {
@@ -57,6 +59,34 @@ const services = [
 ];
 
 export default function ServicesPage() {
+  const [visibility, setVisibility] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('/api/settings')
+      .then(res => res.json())
+      .then(data => {
+        if (data.visibility) {
+          setVisibility(data.visibility);
+        }
+      })
+      .catch(err => console.error('Error fetching visibility settings:', err))
+      .finally(() => setIsLoading(false));
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-white dark:bg-slate-900 flex items-center justify-center">
+        <Loader2 className="w-12 h-12 text-blue-600 animate-spin" />
+      </div>
+    );
+  }
+
+  // If services are explicitly hidden in admin settings
+  if (visibility?.services === false) {
+    return notFound();
+  }
+
   return (
     <div className="bg-white dark:bg-slate-900">
       {/* Hero Section */}

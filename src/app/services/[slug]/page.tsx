@@ -1,10 +1,11 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Plane, Ship, Anchor, Truck, Shield, FileCheck, Globe, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { Plane, Ship, Anchor, Truck, Shield, FileCheck, Globe, ArrowRight, CheckCircle2, Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const servicesData: Record<string, any> = {
   'air-freight': {
@@ -116,8 +117,30 @@ const servicesData: Record<string, any> = {
 
 export default function ServiceDetailPage({ params }: { params: { slug: string } }) {
   const service = servicesData[params.slug];
+  const [visibility, setVisibility] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  if (!service) {
+  useEffect(() => {
+    fetch('/api/settings')
+      .then(res => res.json())
+      .then(data => {
+        if (data.visibility) {
+          setVisibility(data.visibility);
+        }
+      })
+      .catch(err => console.error('Error fetching visibility settings in service detail:', err))
+      .finally(() => setIsLoading(false));
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-white dark:bg-slate-900 flex items-center justify-center">
+        <Loader2 className="w-12 h-12 text-blue-600 animate-spin" />
+      </div>
+    );
+  }
+
+  if (!service || visibility?.services === false) {
     notFound();
   }
 
