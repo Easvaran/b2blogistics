@@ -3,7 +3,7 @@
 import { useRef, useEffect, useState } from 'react';
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 import Link from 'next/link';
-import { Plane, Ship, FileCheck, Warehouse, ArrowRight, Clock, Shield, Globe, Award, ChevronRight, Star, Users, Package, Route, Headphones, Zap, Target, TrendingUp, Check, Loader2 } from 'lucide-react';
+import { Plane, Ship, FileCheck, Warehouse, ArrowRight, Clock, Shield, Globe, Award, ChevronRight, Star, Users, Package, Route, Headphones, Zap, Target, TrendingUp, Check, Loader2, Truck, CheckCircle2 } from 'lucide-react';
 import ServiceCard from '@/components/ui/ServiceCard';
 import TestimonialCard from '@/components/ui/TestimonialCard';
 import AnimatedCounter from '@/components/ui/AnimatedCounter';
