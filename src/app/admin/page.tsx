@@ -106,16 +106,17 @@ export default function AdminDashboard() {
     { icon: Layers, label: 'Services' },
     { icon: Users, label: 'Customers' },
     { icon: BarChart3, label: 'Analytics' },
+    { icon: ClipboardList, label: 'Activity' },
     { icon: MessageSquare, label: 'Enquiries' },
     { icon: Mail, label: 'Messages' },
     { icon: Settings, label: 'Settings' },
   ];
 
   const stats = [
-    { label: 'Total Orders', value: dashboardData?.stats?.totalOrders || '0', trend: '+0%', color: 'text-blue-600', bg: 'bg-blue-50 dark:bg-blue-900/20' },
-    { label: 'In Transit', value: dashboardData?.stats?.inTransit || '0', trend: '+0%', color: 'text-purple-600', bg: 'bg-purple-50 dark:bg-purple-900/20' },
-    { label: 'Revenue', value: dashboardData?.stats?.revenue || '$0', trend: '+0%', color: 'text-green-600', bg: 'bg-green-50 dark:bg-green-900/20' },
-    { label: 'Pending', value: dashboardData?.stats?.pending || '0', trend: '-0%', color: 'text-orange-600', bg: 'bg-orange-50 dark:bg-orange-900/20' },
+    { label: 'Total Orders', value: dashboardData?.stats?.totalOrders || '0', trend: '+0%', color: 'text-blue-600', bg: 'bg-blue-50 dark:bg-blue-900/20', icon: ClipboardList },
+    { label: 'In Transit', value: dashboardData?.stats?.inTransit || '0', trend: '+0%', color: 'text-purple-600', bg: 'bg-purple-50 dark:bg-purple-900/20', icon: Truck },
+    { label: 'Revenue', value: dashboardData?.stats?.revenue || '$0', trend: '+0%', color: 'text-green-600', bg: 'bg-green-50 dark:bg-green-900/20', icon: BarChart3 },
+    { label: 'Pending', value: dashboardData?.stats?.pending || '0', trend: '-0%', color: 'text-orange-600', bg: 'bg-orange-50 dark:bg-orange-900/20', icon: Clock },
   ];
 
   return (
@@ -205,106 +206,93 @@ export default function AdminDashboard() {
         </header>
 
         {/* Dashboard Content */}
-        <main className="flex-1 overflow-y-auto p-8 custom-scrollbar">
+        <main className="flex-1 overflow-y-auto p-8 custom-scrollbar bg-slate-50 dark:bg-slate-900/50">
           <div className="max-w-7xl mx-auto">
-            <div className="mb-8">
-              <h1 className="text-3xl font-black text-slate-900 dark:text-white mb-2">
-                {activeTab} Overview
-              </h1>
-              <p className="text-slate-500 dark:text-slate-400">
-                Real-time tracking and logistics management data.
-              </p>
-            </div>
-
-            {/* Stats Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-              {stats.map((stat, i) => (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                  className="bg-white dark:bg-slate-800 p-6 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 group hover:shadow-xl hover:shadow-blue-600/5 transition-all"
-                >
-                  <div className="flex justify-between items-start mb-4">
-                    <div className={`p-3 rounded-2xl ${stat.bg} ${stat.color}`}>
-                      <BarChart3 className="w-6 h-6" />
-                    </div>
-                    <span className={`text-xs font-bold px-2 py-1 rounded-lg ${
-                      stat.trend.startsWith('+') ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'
-                    }`}>
-                      {stat.trend}
-                    </span>
-                  </div>
-                  <p className="text-slate-500 dark:text-slate-400 font-bold text-sm mb-1">{stat.label}</p>
-                  <h3 className="text-3xl font-black text-slate-900 dark:text-white">{stat.value}</h3>
-                </motion.div>
-              ))}
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              {/* Main Content Area Based on Active Tab */}
-              <div className="lg:col-span-2 space-y-8">
-                {activeTab === 'Dashboard' && (
-                  <div className="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm min-h-[400px]">
-                    <h2 className="text-xl font-black text-slate-900 dark:text-white mb-6">
-                      Recent Shipments
-                    </h2>
-                    {isLoadingDashboard ? (
-                      <div className="flex flex-col items-center justify-center h-[300px] text-slate-400">
-                        <Loader2 className="w-12 h-12 mb-4 animate-spin text-blue-600" />
-                        <p>Loading dashboard data...</p>
-                      </div>
-                    ) : dashboardData?.recentShipments?.length > 0 ? (
-                      <div className="space-y-4">
-                        {dashboardData.recentShipments.map((shipment: any) => (
-                          <div key={shipment._id} className="flex items-center justify-between p-4 rounded-2xl bg-slate-50 dark:bg-slate-700/50 hover:bg-blue-50 dark:hover:bg-blue-900/10 transition-colors border border-transparent hover:border-blue-100 dark:hover:border-blue-800">
-                            <div className="flex items-center gap-4">
-                              <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600">
-                                <Truck className="w-5 h-5" />
-                              </div>
-                              <div>
-                                <p className="font-black text-slate-900 dark:text-white">#{shipment.trackingId}</p>
-                                <p className="text-xs text-slate-500 font-bold uppercase tracking-wider">{shipment.customerName}</p>
-                              </div>
-                            </div>
-                            <div className="text-right">
-                              <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${
-                                shipment.status === 'Delivered' ? 'bg-green-100 text-green-700' : 
-                                shipment.status === 'In Transit' ? 'bg-blue-100 text-blue-700' : 'bg-orange-100 text-orange-700'
-                              }`}>
-                                {shipment.status}
-                              </span>
-                              <p className="text-[10px] text-slate-400 mt-1 font-bold">{new Date(shipment.createdAt).toLocaleDateString()}</p>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="flex flex-col items-center justify-center h-[300px] text-slate-400">
-                        <Package className="w-12 h-12 mb-4 opacity-20" />
-                        <p>No recent shipments found.</p>
-                      </div>
-                    )}
-                  </div>
-                )}
-                {activeTab === 'Orders' && <AdminOrders />}
-                {activeTab === 'Shipments' && <AdminShipments />}
-                {activeTab === 'Services' && <AdminServices />}
-                {activeTab === 'Customers' && <AdminCustomers />}
-                {activeTab === 'Analytics' && <AdminAnalytics />}
-                {activeTab === 'Enquiries' && <AdminEnquiries />}
-                {activeTab === 'Messages' && <AdminContacts />}
-                {activeTab === 'Settings' && <AdminSettings />}
+            <div className="mb-8 flex justify-between items-end">
+              <div>
+                <h1 className="text-3xl font-black text-slate-900 dark:text-white mb-2">
+                  {activeTab} Overview
+                </h1>
+                <p className="text-slate-500 dark:text-slate-400 font-medium">
+                  {activeTab === 'Dashboard' 
+                    ? 'Welcome back! Here is what is happening with your logistics today.' 
+                    : `Manage your ${activeTab.toLowerCase()} and view detailed reports.`}
+                </p>
               </div>
+              {activeTab === 'Dashboard' && (
+                <div className="flex gap-3">
+                  <button 
+                    onClick={fetchDashboardData}
+                    className="px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-50 transition-all flex items-center gap-2"
+                  >
+                    <BarChart3 className="w-4 h-4" />
+                    Refresh Stats
+                  </button>
+                </div>
+              )}
+            </div>
 
-              {/* Sidebar Content Area */}
-              <div className="space-y-8">
+            {/* Stats Grid - Always visible in Dashboard tab */}
+            {activeTab === 'Dashboard' && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                {stats.map((stat, i) => (
+                  <motion.div
+                    key={stat.label}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.1 }}
+                    className="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 group hover:shadow-md transition-all"
+                  >
+                    <div className="flex justify-between items-start mb-4">
+                      <div className={`p-3 rounded-xl ${stat.bg} ${stat.color}`}>
+                        <stat.icon className="w-6 h-6" />
+                      </div>
+                      <span className={`text-[10px] font-black uppercase tracking-widest px-2 py-1 rounded-lg ${
+                        stat.trend.startsWith('+') ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'
+                      }`}>
+                        {stat.trend}
+                      </span>
+                    </div>
+                    <p className="text-slate-400 dark:text-slate-500 font-black text-[10px] uppercase tracking-[0.2em] mb-1">{stat.label}</p>
+                    <h3 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">{stat.value}</h3>
+                  </motion.div>
+                ))}
+              </div>
+            )}
+
+            <div className="space-y-8">
+              {activeTab === 'Dashboard' && (
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  {/* Minimal Dashboard Welcome or empty state for now as requested */}
+                  <div className="lg:col-span-2 bg-gradient-to-br from-blue-600 to-blue-800 p-10 rounded-[2rem] shadow-xl shadow-blue-600/10 text-white relative overflow-hidden">
+                    <div className="relative z-10">
+                      <h2 className="text-4xl font-black mb-4">Good Morning, Admin!</h2>
+                      <p className="text-blue-100 text-lg max-w-md mb-8">
+                        Everything is running smoothly. You have {dashboardData?.stats?.pending || '0'} pending orders that need your attention.
+                      </p>
+                      <button 
+                        onClick={() => setActiveTab('Orders')}
+                        className="bg-white text-blue-600 px-6 py-3 rounded-xl font-black uppercase tracking-widest text-xs hover:bg-blue-50 transition-all active:scale-95"
+                      >
+                        Review Pending Orders
+                      </button>
+                    </div>
+                    {/* Decorative Background Icon */}
+                    <Truck className="absolute -bottom-10 -right-10 w-64 h-64 text-white/10 -rotate-12" />
+                  </div>
+                </div>
+              )}
+              {activeTab === 'Orders' && <AdminOrders />}
+              {activeTab === 'Shipments' && <AdminShipments />}
+              {activeTab === 'Services' && <AdminServices />}
+              {activeTab === 'Customers' && <AdminCustomers />}
+              {activeTab === 'Analytics' && <AdminAnalytics />}
+              {activeTab === 'Activity' && (
                 <div className="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm">
                   <h2 className="text-xl font-black text-slate-900 dark:text-white mb-6">Recent Activity</h2>
                   <div className="space-y-6">
                     {isLoadingDashboard ? (
-                      [1, 2, 3].map(i => (
+                      [1, 2, 3, 4, 5].map(i => (
                         <div key={i} className="flex gap-4 animate-pulse">
                           <div className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-700 flex-shrink-0" />
                           <div className="space-y-2 flex-1 pt-2">
@@ -315,30 +303,33 @@ export default function AdminDashboard() {
                       ))
                     ) : dashboardData?.recentActivity?.length > 0 ? (
                       dashboardData.recentActivity.map((activity: any, i: number) => (
-                        <div key={activity.id} className="flex gap-4 group">
+                        <div key={activity.id} className="flex gap-4 group items-center p-4 hover:bg-slate-50 dark:hover:bg-slate-700/50 rounded-2xl transition-all">
                           <div className="relative">
-                            <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold z-10 relative transition-transform group-hover:scale-110 ${
+                            <div className={`w-12 h-12 rounded-xl flex items-center justify-center font-bold z-10 relative transition-transform group-hover:scale-110 ${
                               activity.type === 'order' ? 'bg-blue-50 text-blue-600' : 'bg-red-50 text-red-600'
                             }`}>
-                              {activity.type === 'order' ? <Package className="w-4 h-4" /> : <MessageSquare className="w-4 h-4" />}
+                              {activity.type === 'order' ? <Package className="w-5 h-5" /> : <MessageSquare className="w-5 h-5" />}
                             </div>
-                            {i < dashboardData.recentActivity.length - 1 && (
-                              <div className="absolute top-10 left-1/2 -translate-x-1/2 w-0.5 h-6 bg-slate-50 dark:bg-slate-700"></div>
-                            )}
                           </div>
-                          <div className="flex-1 overflow-hidden pt-0.5">
-                            <p className="text-sm font-black text-slate-900 dark:text-white truncate uppercase tracking-tight">{activity.title}</p>
+                          <div className="flex-1 overflow-hidden">
+                            <div className="flex justify-between items-start">
+                              <p className="text-sm font-black text-slate-900 dark:text-white truncate uppercase tracking-tight">{activity.title}</p>
+                              <p className="text-[10px] text-slate-400 font-bold">{new Date(activity.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                            </div>
                             <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider line-clamp-1">{activity.description}</p>
-                            <p className="text-[9px] text-slate-400 mt-1 font-bold">{new Date(activity.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
                           </div>
+                          <ChevronRight className="w-4 h-4 text-slate-300 group-hover:text-blue-600 transition-colors" />
                         </div>
                       ))
                     ) : (
-                      <p className="text-center py-10 text-slate-400 text-xs font-bold uppercase tracking-widest">No activity yet</p>
+                      <p className="text-center py-20 text-slate-400 text-xs font-bold uppercase tracking-widest">No activity found in the logs</p>
                     )}
                   </div>
                 </div>
-              </div>
+              )}
+              {activeTab === 'Enquiries' && <AdminEnquiries />}
+              {activeTab === 'Messages' && <AdminContacts />}
+              {activeTab === 'Settings' && <AdminSettings />}
             </div>
           </div>
         </main>
