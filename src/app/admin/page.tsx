@@ -13,6 +13,7 @@ import {
   ChevronRight,
   Menu,
   X,
+  Bell,
   User as UserIcon, // Renamed to avoid conflict with User component
   Layers,
   ClipboardList,
