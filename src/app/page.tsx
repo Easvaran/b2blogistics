@@ -33,7 +33,7 @@ export default function HomePage() {
     workflow: true,
     capabilities: true
   });
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -105,8 +105,16 @@ export default function HomePage() {
     );
   }
 
+  // Debug: Log visibility state
+  console.log('Visibility:', visibility);
+
   return (
     <div className="min-h-screen bg-white dark:bg-slate-900">
+      {/* Forced Debug Bar */}
+      <div className="bg-red-600 text-white text-[10px] font-black uppercase tracking-widest text-center py-1 z-[100] relative">
+        Homepage Rendered Successfully
+      </div>
+
       {isLoading && (
         <div className="fixed inset-0 z-[100] bg-slate-900/50 backdrop-blur-sm flex items-center justify-center pointer-events-none">
           <Loader2 className="w-12 h-12 text-blue-600 animate-spin" />
@@ -114,7 +122,6 @@ export default function HomePage() {
       )}
       
       {/* Hero Section - Modern Glassmorphism Design */}
-      {visibility?.hero !== false && (
       <section className="relative min-h-screen flex items-center overflow-hidden">
         {/* Animated Background */}
         <div className="absolute inset-0 z-0">
@@ -149,7 +156,7 @@ export default function HomePage() {
         {/* Floating Elements */}
         <motion.div 
           style={{ y: floatingY1 }}
-          className="absolute top-32 right-[10%] w-24 h-24 bg-gradient-to-br from-blue-400/20 to-blue-600/20 rounded-3xl backdrop-blur-md border border-white/10 hidden lg:block z-10"
+          className="absolute top-32 right-[10%] w-24 h-24 bg-gradient-to-br from-blue-400/20 to-blue-600/20 rounded-3xl backdrop-blur-md border border-white/20 hidden lg:block z-10"
           animate={{ 
             y: [0, -20, 0], 
             rotate: [0, 15, 0],
@@ -159,7 +166,7 @@ export default function HomePage() {
         />
         <motion.div 
           style={{ y: floatingY2 }}
-          className="absolute bottom-40 right-[40%] w-40 h-40 bg-gradient-to-br from-red-500/20 to-red-600/20 rounded-full backdrop-blur-md border border-white/10 hidden lg:block z-10"
+          className="absolute bottom-40 right-[40%] w-40 h-40 bg-gradient-to-br from-red-500/20 to-red-600/20 rounded-full backdrop-blur-md border border-white/20 hidden lg:block z-10"
           animate={{ 
             y: [0, 40, 0], 
             x: [0, 20, 0],
@@ -169,7 +176,7 @@ export default function HomePage() {
         />
         <motion.div 
           style={{ y: floatingY3 }}
-          className="absolute top-1/4 left-[5%] w-20 h-20 bg-gradient-to-br from-amber-400/20 to-amber-600/20 rounded-2xl backdrop-blur-md border border-white/10 hidden lg:block z-10"
+          className="absolute top-1/4 left-[5%] w-20 h-20 bg-gradient-to-br from-amber-400/20 to-amber-600/20 rounded-2xl backdrop-blur-md border border-white/20 hidden lg:block z-10"
           animate={{ 
             y: [0, -30, 0], 
             rotate: [0, -20, 0],
@@ -367,7 +374,6 @@ export default function HomePage() {
           </motion.div>
         </motion.div>
       </section>
-      )}
 
       {/* Trusted By Section */}
       <section className="py-20 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 overflow-hidden">
@@ -394,7 +400,6 @@ export default function HomePage() {
       </section>
 
       {/* Stats Section - Bento Grid */}
-      {visibility?.stats !== false && (
       <section className="py-24 bg-slate-50 dark:bg-slate-800/50" ref={statsRef}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -438,10 +443,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-      )}
 
       {/* Services Section - Bento Style */}
-      {visibility?.services !== false && (
       <section className="py-24 bg-white dark:bg-slate-900" ref={servicesRef}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -478,7 +481,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-      )}
 
       {/* Why Choose Us - Modern Grid */}
       <section className="py-24 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white relative overflow-hidden">
@@ -553,7 +555,6 @@ export default function HomePage() {
       </section>
 
       {/* How It Works Section */}
-      {visibility?.workflow !== false && (
       <section className="py-24 bg-slate-50 dark:bg-slate-800/30 overflow-hidden" ref={processRef}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -595,10 +596,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-      )}
 
       {/* Core Capabilities Section */}
-      {visibility?.capabilities !== false && (
       <section className="py-24 bg-white dark:bg-slate-900 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -689,7 +688,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-      )}
 
       {/* CTA Section */}
       <section className="py-24 bg-white dark:bg-slate-900 overflow-hidden">
