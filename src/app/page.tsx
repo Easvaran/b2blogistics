@@ -109,7 +109,7 @@ export default function HomePage() {
     visible: { opacity: 1, y: 0 }
   };
 
-  if (!mounted || isLoading) {
+  if (!mounted) {
     return (
       <div className="min-h-screen bg-slate-900 flex items-center justify-center">
         <Loader2 className="w-12 h-12 text-blue-600 animate-spin" />
@@ -119,6 +119,17 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-slate-900">
+      {isLoading && (
+        <div className="fixed inset-0 z-[100] bg-slate-900/50 backdrop-blur-sm flex items-center justify-center pointer-events-none">
+          <Loader2 className="w-12 h-12 text-blue-600 animate-spin" />
+        </div>
+      )}
+      
+      {/* Debug Content - Remove after verification */}
+      <div className="bg-red-500 text-white p-2 text-center text-[10px] font-bold uppercase tracking-widest z-[100] relative">
+        Page Rendering Active
+      </div>
+      
       {/* Hero Section - Modern Glassmorphism Design */}
       {visibility?.hero !== false && (
       <section className="relative min-h-screen flex items-center overflow-hidden">
@@ -780,7 +791,7 @@ export default function HomePage() {
 
       {/* Testimonials */}
       {visibility?.testimonials !== false && (
-      <section className="py-24 bg-slate-50 dark:bg-slate-800/50 overflow-hidden">
+      <section className="py-24 bg-slate-50 dark:bg-slate-900 overflow-hidden border-t border-slate-100 dark:border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
