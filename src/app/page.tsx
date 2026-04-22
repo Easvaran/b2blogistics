@@ -125,11 +125,6 @@ export default function HomePage() {
         </div>
       )}
       
-      {/* Debug Content - Remove after verification */}
-      <div className="bg-red-500 text-white p-2 text-center text-[10px] font-bold uppercase tracking-widest z-[100] relative">
-        Page Rendering Active
-      </div>
-      
       {/* Hero Section - Modern Glassmorphism Design */}
       {visibility?.hero !== false && (
       <section className="relative min-h-screen flex items-center overflow-hidden">
