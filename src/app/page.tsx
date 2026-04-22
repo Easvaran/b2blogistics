@@ -78,6 +78,11 @@ export default function HomePage() {
   const heroOpacity = useTransform(scrollY, [0, 300], [1, 0]);
   const heroScale = useTransform(scrollY, [0, 300], [1, 0.95]);
 
+  // Floating elements parallax
+  const floatingY1 = useTransform(scrollY, [0, 1000], [0, 300]);
+  const floatingY2 = useTransform(scrollY, [0, 1000], [0, 400]);
+  const floatingY3 = useTransform(scrollY, [0, 1000], [0, 200]);
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -138,7 +143,7 @@ export default function HomePage() {
 
         {/* Floating Elements */}
         <motion.div 
-          style={{ y: useTransform(scrollY, [0, 1000], [0, 300]) }}
+          style={{ y: floatingY1 }}
           className="absolute top-32 right-[10%] w-24 h-24 bg-gradient-to-br from-blue-400/20 to-blue-600/20 rounded-3xl backdrop-blur-md border border-white/10 hidden lg:block z-10"
           animate={{ 
             y: [0, -20, 0], 
@@ -148,7 +153,7 @@ export default function HomePage() {
           transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div 
-          style={{ y: useTransform(scrollY, [0, 1000], [0, 400]) }}
+          style={{ y: floatingY2 }}
           className="absolute bottom-40 right-[40%] w-40 h-40 bg-gradient-to-br from-red-500/20 to-red-600/20 rounded-full backdrop-blur-md border border-white/10 hidden lg:block z-10"
           animate={{ 
             y: [0, 40, 0], 
@@ -158,7 +163,7 @@ export default function HomePage() {
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div 
-          style={{ y: useTransform(scrollY, [0, 1000], [0, 200]) }}
+          style={{ y: floatingY3 }}
           className="absolute top-1/4 left-[5%] w-20 h-20 bg-gradient-to-br from-amber-400/20 to-amber-600/20 rounded-2xl backdrop-blur-md border border-white/10 hidden lg:block z-10"
           animate={{ 
             y: [0, -30, 0], 
