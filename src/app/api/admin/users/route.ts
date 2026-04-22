@@ -3,7 +3,9 @@ import { connectDB } from '@/lib/db';
 import User from '@/models/User';
 import bcrypt from 'bcryptjs';
 
-export async function GET() {
+export const dynamic = 'force-dynamic';
+
+export async function GET(request: Request) {
   try {
     await connectDB();
     const users = await User.find({ role: 'admin' }).select('-password');

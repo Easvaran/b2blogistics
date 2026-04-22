@@ -2,7 +2,9 @@ import { NextResponse } from 'next/server';
 import { connectDB } from '@/lib/db';
 import Enquiry from '@/models/Enquiry';
 
-export async function GET() {
+export const dynamic = 'force-dynamic';
+
+export async function GET(request: Request) {
   try {
     await connectDB();
     const enquiries = await Enquiry.find({}).sort({ createdAt: -1 });
