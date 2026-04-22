@@ -210,10 +210,10 @@ export default function AdminSettings() {
     
     if (link.includes('<iframe')) {
       const match = link.match(/src=["']([^"']+)["']/);
-      return match ? match[1] : defaultMap;
+      if (match && match[1]) return match[1];
     }
     
-    if (link.startsWith('http') && link.includes('google.com/maps/embed')) {
+    if (link.startsWith('http')) {
       return link;
     }
     
@@ -298,12 +298,22 @@ export default function AdminSettings() {
               />
             </div>
             <div>
-              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 block">Google Maps Embed Link (Iframe)</label>
+              <div className="flex justify-between items-end mb-1">
+                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block">Google Maps Embed Link (Iframe)</label>
+                <a 
+                  href="https://support.google.com/maps/answer/144361" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-[9px] font-bold text-blue-600 hover:underline flex items-center gap-1"
+                >
+                  How to get embed link? <ArrowRight className="w-2 h-2" />
+                </a>
+              </div>
               <textarea
                 value={siteSettings.contactInfo.googleMapsLink}
                 onChange={(e) => updateNestedState('contactInfo', 'googleMapsLink', e.target.value)}
                 rows={3}
-                placeholder='Paste <iframe src="..."></iframe> here'
+                placeholder='Go to Google Maps -> Share -> Embed a map -> Copy HTML'
                 className="w-full bg-slate-50 dark:bg-slate-700 border border-slate-100 dark:border-slate-600 rounded-xl px-4 py-3 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-blue-600/20"
               />
               {siteSettings.contactInfo.googleMapsLink && (
@@ -683,15 +693,15 @@ export default function AdminSettings() {
                   </div>
                 </div>
                 <div>
-                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 block">Google Maps Embed Link (Iframe)</label>
-                  <textarea
-                    value={newLocation.googleMapsLink}
-                    onChange={(e) => setNewLocation({ ...newLocation, googleMapsLink: e.target.value })}
-                    rows={2}
-                    placeholder='Paste <iframe src="..."></iframe> here'
-                    className="w-full bg-slate-50 dark:bg-slate-700 border border-slate-100 dark:border-slate-600 rounded-xl px-4 py-3 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-blue-600/20"
-                  />
-                  {newLocation.googleMapsLink && (
+                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 block">Google Maps Embed Link (Iframe)</label>
+                    <textarea
+                      value={newLocation.googleMapsLink}
+                      onChange={(e) => setNewLocation({ ...newLocation, googleMapsLink: e.target.value })}
+                      rows={2}
+                      placeholder='Go to Google Maps -> Share -> Embed a map -> Copy HTML'
+                      className="w-full bg-slate-50 dark:bg-slate-700 border border-slate-100 dark:border-slate-600 rounded-xl px-4 py-3 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-blue-600/20"
+                    />
+                    {newLocation.googleMapsLink && (
                     <div className="mt-4 rounded-xl overflow-hidden border border-slate-100 dark:border-slate-700 h-32 relative">
                       <iframe 
                         src={extractMapUrl(newLocation.googleMapsLink)}

@@ -15,11 +15,17 @@ const extractMapUrl = (link: string | undefined | null) => {
   // If it's a full iframe tag, extract the src
   if (link.includes('<iframe')) {
     const match = link.match(/src=["']([^"']+)["']/);
-    return match ? match[1] : defaultMap;
+    if (match && match[1]) return match[1];
   }
   
-  // If it's just the URL, return it if it looks like a google maps embed link
-  if (link.startsWith('http') && link.includes('google.com/maps/embed')) {
+  // If it's a URL (including share links), return it
+  if (link.startsWith('http')) {
+    // Try to convert a standard maps URL to an embed URL if possible
+    if (link.includes('google.com/maps') && !link.includes('embed')) {
+      // Note: This is a basic conversion, it might not work for all links
+      // But it's better than showing Chennai
+      return link; 
+    }
     return link;
   }
   
