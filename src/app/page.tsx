@@ -114,13 +114,13 @@ export default function HomePage() {
   }
 
   return (
-    <>
+    <div className="min-h-screen bg-white dark:bg-slate-900">
       {/* Hero Section - Modern Glassmorphism Design */}
       {visibility?.hero !== false && (
-      <section className="relative min-h-[100vh] flex items-center overflow-hidden">
+      <section className="relative min-h-screen flex items-center overflow-hidden">
         {/* Animated Background */}
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900"></div>
+          <div className="absolute inset-0 bg-slate-900 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900"></div>
           <div className="absolute inset-0">
             <motion.div 
               animate={{ 
@@ -183,7 +183,7 @@ export default function HomePage() {
         {/* Content */}
         <motion.div 
           style={{ opacity: heroOpacity, scale: heroScale }}
-          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 pt-20"
+          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 py-20 w-full"
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             {/* Left Content */}
@@ -669,6 +669,6 @@ export default function HomePage() {
 
       {/* Scrolling Ticker Section */}
       <ScrollingTicker />
-    </>
+    </div>
   );
 }
