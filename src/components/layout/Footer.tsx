@@ -74,7 +74,7 @@ export default function Footer() {
                     B2B<span className="text-red-500">LOGISTICS</span>
                   </span>
                   <span className="text-[9px] font-bold tracking-[0.2em] text-blue-300 leading-none mt-1">
-                    GLOBAL FORWARDING
+                    STATE FORWARDING
                   </span>
                 </div>
               </Link>
@@ -215,7 +215,7 @@ export default function Footer() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
               <div className="text-blue-300 text-xs font-medium tracking-wide text-center">
-                © {new Date().getFullYear()} B2BLOGISTICS Global Forwarding. All Rights Reserved.
+                © {new Date().getFullYear()} B2BLOGISTICS State Forwarding. All Rights Reserved.
                 <span className="mx-2">|</span>
                 Designed by Manic Media
               </div>

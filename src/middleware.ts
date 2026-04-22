@@ -5,8 +5,6 @@ export function middleware(request: NextRequest) {
   const token = request.cookies.get('admin_token')?.value;
   const { pathname } = request.nextUrl;
   
-  console.log(`Middleware running for: ${pathname}, Token: ${token ? 'exists' : 'missing'}`);
-  
   const isLoginPage = pathname === '/admin/login';
   const isAdminRoute = pathname.startsWith('/admin');
 

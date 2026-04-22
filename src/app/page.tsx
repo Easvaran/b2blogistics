@@ -18,7 +18,7 @@ const services = [
 
 const testimonials = [
   { name: 'John Smith', company: 'TechCorp Inc.', role: 'Supply Chain Director', content: 'B2BLOGISTICS has been instrumental in streamlining our state-wide logistics. Their attention to detail and commitment to deadlines is exceptional.', rating: 5, image: '' },
-  { name: 'Sarah Johnson', company: 'Global Retail Ltd.', role: 'Operations Manager', content: 'The team at B2BLOGISTICS goes above and beyond. Their customs clearance expertise saved us both time and money. Highly recommended!', rating: 5, image: '' },
+  { name: 'Sarah Johnson', company: 'State Retail Ltd.', role: 'Operations Manager', content: 'The team at B2BLOGISTICS goes above and beyond. Their customs clearance expertise saved us both time and money. Highly recommended!', rating: 5, image: '' },
   { name: 'Michael Chen', company: 'Asia Trading Co.', role: 'CEO', content: 'We have been partnering with B2BLOGISTICS for 5 years now. Their reliability and professionalism in handling our freight is unmatched.', rating: 5, image: '' },
 ];
 

@@ -82,7 +82,7 @@ export const sendOTPEmail = async (email: string, otp: string) => {
         <p style="color: #64748b; font-size: 14px;">If you didn't request this, you can safely ignore this email. Your password will remain unchanged.</p>
         
         <div style="margin-top: 30px; text-align: center; color: #94a3b8; font-size: 12px; border-top: 1px solid #eee; pt-10;">
-          <p>© ${new Date().getFullYear()} B2BLOGISTICS Global Forwarding. All Rights Reserved.</p>
+          <p>© ${new Date().getFullYear()} B2BLOGISTICS State Forwarding. All Rights Reserved.</p>
         </div>
       </div>
     `,
@@ -95,7 +95,7 @@ export const sendContactMessageEmail = async (data: any) => {
   const mailOptions = {
     from: `"B2BLOGISTICS" <${process.env.SMTP_USER}>`,
     to: process.env.ADMIN_EMAIL,
-    subject: `New Contact Message: ${data.subject}`,
+    subject: `New Contact Message from ${data.name}`,
     html: `
       <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: auto; border: 1px solid #eee; padding: 20px; border-radius: 10px;">
         <h2 style="color: #dc2626; border-bottom: 2px solid #dc2626; padding-bottom: 10px;">New Contact Message</h2>
@@ -119,8 +119,8 @@ export const sendContactMessageEmail = async (data: any) => {
             <td style="padding: 10px; border-bottom: 1px solid #eee;">${data.phone}</td>
           </tr>
           <tr>
-            <td style="padding: 10px; border-bottom: 1px solid #eee;"><strong>Subject</strong></td>
-            <td style="padding: 10px; border-bottom: 1px solid #eee;">${data.subject}</td>
+            <td style="padding: 10px; border-bottom: 1px solid #eee;"><strong>City</strong></td>
+            <td style="padding: 10px; border-bottom: 1px solid #eee;">${data.city}</td>
           </tr>
         </table>
         

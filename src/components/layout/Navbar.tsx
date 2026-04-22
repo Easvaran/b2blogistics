@@ -61,7 +61,7 @@ export default function Navbar() {
                 B2B<span className="text-red-600">LOGISTICS</span>
               </span>
               <span className="text-[10px] font-bold tracking-[0.25em] text-slate-500 dark:text-slate-400 leading-none mt-1">
-                GLOBAL FORWARDING
+                STATE FORWARDING
               </span>
             </div>
           </Link>
