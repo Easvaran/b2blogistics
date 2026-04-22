@@ -73,7 +73,7 @@ export default function AdminSettings() {
       capabilities: true,
       testimonials: true,
       chatbot: true
-    },}
+    }
   });
 
   useEffect(() => {
