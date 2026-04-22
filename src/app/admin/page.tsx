@@ -33,6 +33,17 @@ import AdminServices from './services/page';
 import AdminContacts from './contacts/page'; // Added for Contact Messages
 import AdminSearch from '@/components/admin/AdminSearch';
 import AdminNotifications from '@/components/admin/AdminNotifications';
+import AdminNotificationsList from '@/components/admin/AdminNotificationsList';
+
+interface Notification {
+  id: number;
+  title: string;
+  desc: string;
+  time: string;
+  type: 'order' | 'enquiry' | 'shipment';
+  read: boolean;
+  dismissed?: boolean;
+}
 
 interface SidebarItemProps {
   icon: React.ElementType;
@@ -73,6 +84,29 @@ export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState('Dashboard');
   const [dashboardData, setDashboardData] = useState<any>(null);
   const [isLoadingDashboard, setIsLoadingDashboard] = useState(true);
+  const [notifications, setNotifications] = useState<Notification[]>([
+    { id: 1, title: "New Order Received", desc: "Order #B2B-X72A81 placed by John Doe", time: "2 min ago", type: 'order', read: false },
+    { id: 2, title: "New Enquiry", desc: "Shipping rate inquiry from Global Logistics Ltd", time: "1 hour ago", type: 'enquiry', read: false },
+    { id: 3, title: "Shipment Delivered", desc: "Package #B2B-P99120 has reached its destination", time: "3 hours ago", type: 'shipment', read: true },
+    { id: 4, title: "Order Update", desc: "Payment confirmed for Order #B2B-S12345", time: "5 hours ago", type: 'order', read: true },
+  ]);
+
+  const handleMarkAsRead = (id: number) => {
+    setNotifications(prev => prev.map(n => n.id === id ? { ...n, read: true } : n));
+  };
+
+  const handleMarkAllAsRead = () => {
+    setNotifications(prev => prev.map(n => ({ ...n, read: true })));
+  };
+
+  const handleClearNotifications = () => {
+    // Only dismiss them from the bell dropdown display
+    setNotifications(prev => prev.map(n => ({ ...n, dismissed: true })));
+  };
+
+  const handleDeleteNotification = (id: number) => {
+    setNotifications(prev => prev.filter(n => n.id !== id));
+  };
 
   useEffect(() => {
     if (activeTab === 'Dashboard') {
@@ -110,6 +144,7 @@ export default function AdminDashboard() {
     { icon: ClipboardList, label: 'Activity' },
     { icon: MessageSquare, label: 'Enquiries' },
     { icon: Mail, label: 'Messages' },
+    { icon: Bell, label: 'Notifications' },
     { icon: Settings, label: 'Settings' },
   ];
 
@@ -182,7 +217,13 @@ export default function AdminDashboard() {
           </div>
 
           <div className="flex items-center gap-4">
-            <AdminNotifications />
+            <AdminNotifications 
+              notifications={notifications}
+              onMarkAsRead={handleMarkAsRead}
+              onMarkAllAsRead={handleMarkAllAsRead}
+              onClearAll={handleClearNotifications}
+              onViewAll={() => setActiveTab('Notifications')}
+            />
             <div className="h-8 w-px bg-slate-200 dark:bg-slate-700 mx-2"></div>
             <div className="flex items-center gap-3">
               <div className="text-right hidden sm:block">
@@ -320,6 +361,13 @@ export default function AdminDashboard() {
               )}
               {activeTab === 'Enquiries' && <AdminEnquiries />}
               {activeTab === 'Messages' && <AdminContacts />}
+              {activeTab === 'Notifications' && (
+                <AdminNotificationsList 
+                  notifications={notifications}
+                  onDelete={handleDeleteNotification}
+                  onMarkAsRead={handleMarkAsRead}
+                />
+              )}
               {activeTab === 'Settings' && <AdminSettings />}
             </div>
           </div>

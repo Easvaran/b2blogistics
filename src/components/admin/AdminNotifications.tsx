@@ -11,21 +11,30 @@ interface Notification {
   time: string;
   type: 'order' | 'enquiry' | 'shipment';
   read: boolean;
+  dismissed?: boolean;
 }
 
-const initialNotifications: Notification[] = [
-  { id: 1, title: "New Order Received", desc: "Order #B2B-X72A81 placed by John Doe", time: "2 min ago", type: 'order', read: false },
-  { id: 2, title: "New Enquiry", desc: "Shipping rate inquiry from Global Logistics Ltd", time: "1 hour ago", type: 'enquiry', read: false },
-  { id: 3, title: "Shipment Delivered", desc: "Package #B2B-P99120 has reached its destination", time: "3 hours ago", type: 'shipment', read: true },
-  { id: 4, title: "Order Update", desc: "Payment confirmed for Order #B2B-S12345", time: "5 hours ago", type: 'order', read: true },
-];
+interface AdminNotificationsProps {
+  notifications: Notification[];
+  onMarkAsRead: (id: number) => void;
+  onMarkAllAsRead: () => void;
+  onClearAll: () => void;
+  onViewAll: () => void;
+}
 
-export default function AdminNotifications() {
+export default function AdminNotifications({
+  notifications,
+  onMarkAsRead,
+  onMarkAllAsRead,
+  onClearAll,
+  onViewAll
+}: AdminNotificationsProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [notifications, setNotifications] = useState<Notification[]>(initialNotifications);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const unreadCount = notifications.filter(n => !n.read).length;
+  // Filter out dismissed notifications for the dropdown
+  const activeNotifications = notifications.filter(n => !n.dismissed);
+  const unreadCount = activeNotifications.filter(n => !n.read).length;
 
   // Handle outside click
   useEffect(() => {
@@ -46,14 +55,6 @@ export default function AdminNotifications() {
     window.addEventListener('keydown', handleEsc);
     return () => window.removeEventListener('keydown', handleEsc);
   }, []);
-
-  const markAllAsRead = () => {
-    setNotifications(prev => prev.map(n => ({ ...n, read: true })));
-  };
-
-  const markAsRead = (id: number) => {
-    setNotifications(prev => prev.map(n => n.id === id ? { ...n, read: true } : n));
-  };
 
   const getIcon = (type: string) => {
     switch (type) {
@@ -98,23 +99,33 @@ export default function AdminNotifications() {
           >
             <div className="p-6 border-b border-slate-50 dark:border-slate-700 flex justify-between items-center bg-slate-50/50 dark:bg-slate-800/50">
               <h3 className="text-sm font-black text-slate-900 dark:text-white uppercase tracking-tight">Notifications</h3>
-              {unreadCount > 0 && (
-                <button 
-                  onClick={markAllAsRead}
-                  className="text-[10px] font-black text-blue-600 uppercase tracking-widest hover:text-blue-700 transition-colors"
-                >
-                  Mark all as read
-                </button>
-              )}
+              <div className="flex gap-3">
+                {unreadCount > 0 && (
+                  <button 
+                    onClick={onMarkAllAsRead}
+                    className="text-[10px] font-black text-blue-600 uppercase tracking-widest hover:text-blue-700 transition-colors"
+                  >
+                    Read All
+                  </button>
+                )}
+                {activeNotifications.length > 0 && (
+                  <button 
+                    onClick={onClearAll}
+                    className="text-[10px] font-black text-red-500 uppercase tracking-widest hover:text-red-700 transition-colors"
+                  >
+                    Clear
+                  </button>
+                )}
+              </div>
             </div>
 
             <div className="max-h-[28rem] overflow-y-auto custom-scrollbar">
-              {notifications.length > 0 ? (
+              {activeNotifications.length > 0 ? (
                 <div className="divide-y divide-slate-50 dark:divide-slate-700">
-                  {notifications.map((notif) => (
+                  {activeNotifications.map((notif) => (
                     <div 
                       key={notif.id} 
-                      onClick={() => markAsRead(notif.id)}
+                      onClick={() => onMarkAsRead(notif.id)}
                       className={`p-5 flex gap-4 cursor-pointer transition-all hover:bg-slate-50 dark:hover:bg-slate-700/50 group ${!notif.read ? 'bg-blue-50/30 dark:bg-blue-900/5' : ''}`}
                     >
                       <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-transform group-hover:scale-110 ${
@@ -154,7 +165,10 @@ export default function AdminNotifications() {
             </div>
 
             <div className="p-4 bg-slate-50 dark:bg-slate-800/80 border-t border-slate-50 dark:border-slate-700 text-center">
-              <button className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] hover:text-blue-600 transition-colors">
+              <button 
+                onClick={() => { setIsOpen(false); onViewAll(); }}
+                className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] hover:text-blue-600 transition-colors"
+              >
                 View All Activity
               </button>
             </div>
