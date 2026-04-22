@@ -105,16 +105,8 @@ export default function HomePage() {
     );
   }
 
-  // Debug: Log visibility state
-  console.log('Visibility:', visibility);
-
   return (
     <div className="min-h-screen bg-white dark:bg-slate-900">
-      {/* Forced Debug Bar */}
-      <div className="bg-red-600 text-white text-[10px] font-black uppercase tracking-widest text-center py-1 z-[100] relative">
-        Homepage Rendered Successfully
-      </div>
-
       {isLoading && (
         <div className="fixed inset-0 z-[100] bg-slate-900/50 backdrop-blur-sm flex items-center justify-center pointer-events-none">
           <Loader2 className="w-12 h-12 text-blue-600 animate-spin" />
