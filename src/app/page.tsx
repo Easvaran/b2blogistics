@@ -5,7 +5,6 @@ import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 import Link from 'next/link';
 import { Plane, Ship, FileCheck, Warehouse, ArrowRight, Clock, Shield, Globe, Award, ChevronRight, Star, Users, Package, Route, Headphones, Zap, Target, TrendingUp, Check, Loader2, Truck, CheckCircle2 } from 'lucide-react';
 import ServiceCard from '@/components/ui/ServiceCard';
-import TestimonialCard from '@/components/ui/TestimonialCard';
 import AnimatedCounter from '@/components/ui/AnimatedCounter';
 import ScrollingTicker from '@/components/ui/ScrollingTicker';
 
@@ -14,12 +13,6 @@ const services = [
   { title: 'Ocean Freight', description: 'Cost-effective sea freight solutions', icon: Ship, href: '/services/ocean-freight' },
   { title: 'Customs Clearance', description: 'Expert customs broker services', icon: FileCheck, href: '/services/customs-clearance' },
   { title: 'Warehousing', description: 'Secure storage and distribution', icon: Warehouse, href: '/services/warehousing' },
-];
-
-const testimonials = [
-  { name: 'John Smith', company: 'TechCorp Inc.', role: 'Supply Chain Director', content: 'B2BLOGISTICS has been instrumental in streamlining our state-wide logistics. Their attention to detail and commitment to deadlines is exceptional.', rating: 5, image: '' },
-  { name: 'Sarah Johnson', company: 'State Retail Ltd.', role: 'Operations Manager', content: 'The team at B2BLOGISTICS goes above and beyond. Their customs clearance expertise saved us both time and money. Highly recommended!', rating: 5, image: '' },
-  { name: 'Michael Chen', company: 'Asia Trading Co.', role: 'CEO', content: 'We have been partnering with B2BLOGISTICS for 5 years now. Their reliability and professionalism in handling our freight is unmatched.', rating: 5, image: '' },
 ];
 
 const stats = [
@@ -38,8 +31,7 @@ export default function HomePage() {
     services: true,
     stats: true,
     workflow: true,
-    capabilities: true,
-    testimonials: true
+    capabilities: true
   });
   const [isLoading, setIsLoading] = useState(true);
 
@@ -78,10 +70,6 @@ export default function HomePage() {
   const statsInView = useInView(statsRef, { once: true, amount: 0.2 });
   const servicesRef = useRef(null);
   const servicesInView = useInView(servicesRef, { once: true, amount: 0.2 });
-  const whyRef = useRef(null);
-  const whyInView = useInView(whyRef, { once: true, amount: 0.2 });
-  const trustedRef = useRef(null);
-  const trustedInView = useInView(trustedRef, { once: true });
   const processRef = useRef(null);
   const processInView = useInView(processRef, { once: true, amount: 0.2 });
 
@@ -382,22 +370,19 @@ export default function HomePage() {
       )}
 
       {/* Trusted By Section */}
-      <section className="py-20 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 overflow-hidden" ref={trustedRef}>
+      <section className="py-20 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.p 
-            initial={{ opacity: 0, y: 10 }}
-            animate={trustedInView ? { opacity: 1, y: 0 } : {}}
-            className="text-center text-slate-400 text-[10px] font-black uppercase tracking-[0.3em] mb-12"
-          >
+          <p className="text-center text-slate-400 text-[10px] font-black uppercase tracking-[0.3em] mb-12">
             Trusted by Industry Leaders
-          </motion.p>
+          </p>
           <div className="flex flex-wrap justify-center items-center gap-12 md:gap-20">
             {trustedBy.map((brand, i) => (
               <motion.div
                 key={brand}
-                initial={{ opacity: 0, filter: 'grayscale(100%)', y: 20 }}
-                animate={trustedInView ? { opacity: 1, filter: 'grayscale(0%)', y: 0 } : {}}
-                transition={{ delay: i * 0.1, duration: 0.8 }}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.5 }}
                 whileHover={{ scale: 1.1, filter: 'grayscale(0%) contrast(120%)' }}
                 className="text-2xl md:text-3xl font-black text-slate-300 dark:text-slate-700 hover:text-blue-900 dark:hover:text-white transition-all cursor-default"
               >
@@ -496,7 +481,7 @@ export default function HomePage() {
       )}
 
       {/* Why Choose Us - Modern Grid */}
-      <section className="py-24 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white relative overflow-hidden" ref={whyRef}>
+      <section className="py-24 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white relative overflow-hidden">
         {/* Background Elements */}
         <div className="absolute inset-0">
           <motion.div 
@@ -520,16 +505,11 @@ export default function HomePage() {
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={whyInView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
+          <div className="text-center mb-16">
             <span className="text-red-400 font-black tracking-[0.4em] text-[10px] uppercase mb-4 block">Why Us</span>
             <h2 className="text-4xl md:text-5xl font-black mb-6 uppercase tracking-tight">Why Choose B2BLOGISTICS?</h2>
             <p className="text-blue-200 max-w-2xl mx-auto font-medium">We combine state-level expertise with local knowledge to deliver unmatched logistics solutions.</p>
-          </motion.div>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
@@ -542,9 +522,10 @@ export default function HomePage() {
             ].map((item, index) => (
               <motion.div
                 key={item.title}
-                initial={{ opacity: 0, y: 30, rotateX: 30 }}
-                animate={whyInView ? { opacity: 1, y: 0, rotateX: 0 } : {}}
-                transition={{ delay: index * 0.1, duration: 0.8 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1, duration: 0.5 }}
                 whileHover={{ 
                   y: -10, 
                   backgroundColor: 'rgba(255,255,255,0.15)',
@@ -783,38 +764,6 @@ export default function HomePage() {
           </motion.div>
         </div>
       </section>
-
-      {/* Testimonials */}
-      {visibility?.testimonials !== false && (
-      <section className="py-24 bg-slate-50 dark:bg-slate-900 overflow-hidden border-t border-slate-100 dark:border-slate-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-20"
-          >
-            <span className="text-red-600 font-black tracking-[0.4em] text-[10px] uppercase mb-4 block">Testimonials</span>
-            <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6 uppercase tracking-tight">What Our Clients Say</h2>
-          </motion.div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-            {testimonials.map((testimonial, index) => (
-              <motion.div
-                key={testimonial.name}
-                initial={{ opacity: 0, scale: 0.9, x: index % 2 === 0 ? -20 : 20 }}
-                whileInView={{ opacity: 1, scale: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.2, duration: 0.8 }}
-                whileHover={{ y: -10 }}
-                className="h-full"
-              >
-                <TestimonialCard {...testimonial} />
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-      )}
 
       {/* Scrolling Ticker Section */}
       <ScrollingTicker />
