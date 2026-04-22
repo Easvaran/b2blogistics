@@ -43,6 +43,11 @@ export default function HomePage() {
 
   useEffect(() => {
     setMounted(true);
+    
+    const timeoutId = setTimeout(() => {
+      setIsLoading(false);
+    }, 5000);
+    
     const fetchSettings = async () => {
       try {
         const res = await fetch('/api/settings');
@@ -58,10 +63,13 @@ export default function HomePage() {
         console.error('Error fetching visibility settings:', err);
       } finally {
         setIsLoading(false);
+        clearTimeout(timeoutId);
       }
     };
 
     fetchSettings();
+    
+    return () => clearTimeout(timeoutId);
   }, []);
 
   const statsRef = useRef(null);
