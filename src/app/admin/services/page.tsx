@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { Layers, Plus, Search, Filter, Edit2, Trash2, ExternalLink, Globe, X, Image as ImageIcon, Check, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
