@@ -18,6 +18,10 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
 
   useEffect(() => {
     setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
     const fetchSettings = async () => {
       try {
         const res = await fetch('/api/settings');
@@ -32,7 +36,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
     };
     
     fetchSettings();
-  }, [pathname]);
+  }, [pathname, mounted]);
 
   if (!mounted) {
     return <div className="min-h-screen flex flex-col"><main className="flex-grow">{children}</main></div>;

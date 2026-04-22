@@ -26,13 +26,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
-    if (mounted) {
-      localStorage.setItem('theme', theme);
-      if (theme === 'dark') {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-      }
+    if (!mounted) return;
+    localStorage.setItem('theme', theme);
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
     }
   }, [theme, mounted]);
 
@@ -40,9 +39,14 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     setTheme(prev => prev === 'light' ? 'dark' : 'light');
   };
 
+  const contextValue: ThemeContextType = {
+    theme,
+    toggleTheme
+  };
+
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      <div style={{ visibility: mounted ? 'visible' : 'hidden' }}>
+    <ThemeContext.Provider value={contextValue}>
+      <div style={{ visibility: mounted ? 'visible' : 'hidden' }} className="transition-opacity duration-300">
         {children}
       </div>
     </ThemeContext.Provider>
