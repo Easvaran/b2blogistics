@@ -41,6 +41,18 @@ export default function ContactPage() {
     whatsapp: '919787788888'
   };
 
+  const extractMapUrl = (link: string) => {
+    if (!link) return "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d155959.47639838465!2d80.04395247905654!3d13.047791775145685!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5265ea4f7d3361%3A0x6e61a70b6a7e0c7a!2sChennai%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1709654321098!5m2!1sen!2sin";
+    
+    // If it's a full iframe tag, extract the src
+    if (link.includes('<iframe')) {
+      const match = link.match(/src="([^"]+)"/);
+      return match ? match[1] : link;
+    }
+    
+    return link;
+  };
+
   const ensureAbsoluteUrl = (url: string) => {
     if (!url || url === '#') return '#';
     if (url.startsWith('http://') || url.startsWith('https://')) return url;
@@ -346,7 +358,7 @@ export default function ContactPage() {
             <div className="grid grid-cols-1 lg:grid-cols-3">
               <div className="lg:col-span-2 relative h-[400px]">
                 <iframe 
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d155959.47639838465!2d80.04395247905654!3d13.047791775145685!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5265ea4f7d3361%3A0x6e61a70b6a7e0c7a!2sChennai%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1709654321098!5m2!1sen!2sin"
+                  src={extractMapUrl(contactInfo.googleMapsLink)}
                   className="w-full h-full border-0"
                   allowFullScreen
                   loading="lazy"
@@ -360,11 +372,10 @@ export default function ContactPage() {
                 </div>
                 <p className="text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
                   B2BLOGISTICS<br />
-                  Chennai, Tamil Nadu<br />
-                  India
+                  {contactInfo.address}
                 </p>
                 <a 
-                  href="https://maps.google.com" 
+                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(contactInfo.address)}`}
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 font-bold hover:text-red-600 transition-colors"

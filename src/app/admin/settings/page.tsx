@@ -281,6 +281,16 @@ export default function AdminSettings() {
                 className="w-full bg-slate-50 dark:bg-slate-700 border border-slate-100 dark:border-slate-600 rounded-xl px-4 py-3 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-blue-600/20"
               />
             </div>
+            <div>
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 block">Google Maps Embed Link (Iframe)</label>
+              <textarea
+                value={siteSettings.contactInfo.googleMapsLink}
+                onChange={(e) => updateNestedState('contactInfo', 'googleMapsLink', e.target.value)}
+                rows={3}
+                placeholder='Paste <iframe src="..."></iframe> here'
+                className="w-full bg-slate-50 dark:bg-slate-700 border border-slate-100 dark:border-slate-600 rounded-xl px-4 py-3 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-blue-600/20"
+              />
+            </div>
           </div>
         </div>
 
