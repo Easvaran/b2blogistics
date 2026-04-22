@@ -204,6 +204,22 @@ export default function AdminSettings() {
     }));
   };
 
+  const extractMapUrl = (link: string | undefined | null) => {
+    const defaultMap = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d155959.47639838465!2d80.04395247905654!3d13.047791775145685!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5265ea4f7d3361%3A0x6e61a70b6a7e0c7a!2sChennai%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1709654321098!5m2!1sen!2sin";
+    if (!link || link.trim() === '') return defaultMap;
+    
+    if (link.includes('<iframe')) {
+      const match = link.match(/src=["']([^"']+)["']/);
+      return match ? match[1] : defaultMap;
+    }
+    
+    if (link.startsWith('http') && link.includes('google.com/maps/embed')) {
+      return link;
+    }
+    
+    return defaultMap;
+  };
+
   if (isLoading) {
     return (
       <div className="flex flex-col items-center justify-center h-64">
@@ -290,6 +306,19 @@ export default function AdminSettings() {
                 placeholder='Paste <iframe src="..."></iframe> here'
                 className="w-full bg-slate-50 dark:bg-slate-700 border border-slate-100 dark:border-slate-600 rounded-xl px-4 py-3 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-blue-600/20"
               />
+              {siteSettings.contactInfo.googleMapsLink && (
+                <div className="mt-4 rounded-xl overflow-hidden border border-slate-100 dark:border-slate-700 h-48 relative">
+                  <iframe 
+                    src={extractMapUrl(siteSettings.contactInfo.googleMapsLink)}
+                    className="w-full h-full border-0"
+                    allowFullScreen
+                    loading="lazy"
+                  />
+                  <div className="absolute top-2 right-2 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm px-2 py-1 rounded text-[8px] font-black uppercase tracking-widest text-slate-500">
+                    Map Preview
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -654,13 +683,24 @@ export default function AdminSettings() {
                   </div>
                 </div>
                 <div>
-                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 block">Google Maps Link</label>
-                  <input
-                    type="text"
+                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 block">Google Maps Embed Link (Iframe)</label>
+                  <textarea
                     value={newLocation.googleMapsLink}
                     onChange={(e) => setNewLocation({ ...newLocation, googleMapsLink: e.target.value })}
+                    rows={2}
+                    placeholder='Paste <iframe src="..."></iframe> here'
                     className="w-full bg-slate-50 dark:bg-slate-700 border border-slate-100 dark:border-slate-600 rounded-xl px-4 py-3 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-blue-600/20"
                   />
+                  {newLocation.googleMapsLink && (
+                    <div className="mt-4 rounded-xl overflow-hidden border border-slate-100 dark:border-slate-700 h-32 relative">
+                      <iframe 
+                        src={extractMapUrl(newLocation.googleMapsLink)}
+                        className="w-full h-full border-0"
+                        allowFullScreen
+                        loading="lazy"
+                      />
+                    </div>
+                  )}
                 </div>
 
                 <button
