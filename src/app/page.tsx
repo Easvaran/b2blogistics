@@ -37,6 +37,8 @@ export default function HomePage() {
     hero: true,
     services: true,
     stats: true,
+    workflow: true,
+    capabilities: true,
     testimonials: true
   });
   const [isLoading, setIsLoading] = useState(true);
@@ -564,6 +566,7 @@ export default function HomePage() {
       </section>
 
       {/* How It Works Section */}
+      {visibility?.workflow !== false && (
       <section className="py-24 bg-slate-50 dark:bg-slate-800/30 overflow-hidden" ref={processRef}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -605,8 +608,10 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      )}
 
       {/* Core Capabilities Section */}
+      {visibility?.capabilities !== false && (
       <section className="py-24 bg-white dark:bg-slate-900 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -697,6 +702,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      )}
 
       {/* CTA Section */}
       <section className="py-24 bg-white dark:bg-slate-900 overflow-hidden">

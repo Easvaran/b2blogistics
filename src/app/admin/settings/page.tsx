@@ -69,9 +69,11 @@ export default function AdminSettings() {
       hero: true,
       services: true,
       stats: true,
+      workflow: true,
+      capabilities: true,
       testimonials: true,
       chatbot: true
-    }
+    },}
   });
 
   useEffect(() => {
@@ -87,6 +89,10 @@ export default function AdminSettings() {
         setSiteSettings(prev => ({
           ...prev,
           ...data,
+          contactInfo: { ...prev.contactInfo, ...(data.contactInfo || {}) },
+          socialLinks: { ...prev.socialLinks, ...(data.socialLinks || {}) },
+          workingHours: { ...prev.workingHours, ...(data.workingHours || {}) },
+          visibility: { ...prev.visibility, ...(data.visibility || {}) },
           locations: data.locations || []
         }));
       }
@@ -464,6 +470,8 @@ export default function AdminSettings() {
               { id: 'hero', label: 'Hero Section', icon: Component },
               { id: 'services', label: 'Services Section', icon: Component },
               { id: 'stats', label: 'Stats Section', icon: Component },
+              { id: 'workflow', label: 'Process Section', icon: Component },
+              { id: 'capabilities', label: 'Capabilities Section', icon: Component },
               { id: 'testimonials', label: 'Testimonials', icon: Component },
               { id: 'chatbot', label: 'Chatbot', icon: MessageCircle },
             ].map((item) => (
