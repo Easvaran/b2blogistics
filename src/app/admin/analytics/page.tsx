@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { BarChart3, TrendingUp, Package, Truck, Users, ArrowUpRight, ArrowDownRight, Download } from 'lucide-react';
+import { BarChart3, TrendingUp, Package, Truck, Users, ArrowUpRight, ArrowDownRight, Download, Loader2 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import * as XLSX from 'xlsx';
 
 interface AnalyticsData {
   totalRevenue: number;
@@ -16,6 +17,7 @@ interface AnalyticsData {
 export default function AdminAnalytics() {
   const [data, setData] = useState<AnalyticsData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isExporting, setIsExporting] = useState(false);
 
   useEffect(() => {
     fetchAnalytics();
@@ -51,6 +53,51 @@ export default function AdminAnalytics() {
     }
   };
 
+  const handleExport = () => {
+    if (!data) return;
+    setIsExporting(true);
+    
+    try {
+      // Prepare data for Excel
+      const overviewData = [
+        { Metric: 'Total Revenue', Value: data.totalRevenue },
+        { Metric: 'Total Orders', Value: data.totalOrders },
+        { Metric: 'Total Customers', Value: data.totalCustomers },
+        { Metric: 'Active Shipments', Value: data.activeShipments },
+      ];
+
+      const revenueData = data.revenueByMonth.map(item => ({
+        Month: item.month,
+        Revenue: item.amount
+      }));
+
+      const distributionData = data.shipmentTypeDistribution.map(item => ({
+        Type: item.type,
+        Percentage: `${item.count}%`
+      }));
+
+      // Create workbook and worksheets
+      const wb = XLSX.utils.book_new();
+      
+      const wsOverview = XLSX.utils.json_to_sheet(overviewData);
+      const wsRevenue = XLSX.utils.json_to_sheet(revenueData);
+      const wsDistribution = XLSX.utils.json_to_sheet(distributionData);
+
+      // Add worksheets to workbook
+      XLSX.utils.book_append_sheet(wb, wsOverview, "Overview");
+      XLSX.utils.book_append_sheet(wb, wsRevenue, "Revenue");
+      XLSX.utils.book_append_sheet(wb, wsDistribution, "Shipment Types");
+
+      // Generate file and trigger download
+      XLSX.writeFile(wb, `B2B_Logistics_Analytics_${new Date().toISOString().split('T')[0]}.xlsx`);
+    } catch (error) {
+      console.error('Export error:', error);
+      alert('Failed to export report. Please try again.');
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[400px] gap-3">
@@ -72,9 +119,17 @@ export default function AdminAnalytics() {
           <BarChart3 className="w-6 h-6 text-blue-600" />
           Analytics & Reports
         </h2>
-        <button className="flex items-center gap-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-2.5 rounded-xl font-bold text-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-all shadow-sm">
-          <Download className="w-4 h-4" />
-          Export Report
+        <button 
+          onClick={handleExport}
+          disabled={isExporting}
+          className="flex items-center gap-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-4 py-2.5 rounded-xl font-bold text-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-all shadow-sm disabled:opacity-50"
+        >
+          {isExporting ? (
+            <Loader2 className="w-4 h-4 animate-spin" />
+          ) : (
+            <Download className="w-4 h-4" />
+          )}
+          {isExporting ? 'Exporting...' : 'Export Report'}
         </button>
       </div>
 

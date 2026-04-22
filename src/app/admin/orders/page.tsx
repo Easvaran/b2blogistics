@@ -22,7 +22,9 @@ export default function AdminOrders() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState('All');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingOrder, setEditingOrder] = useState<Order | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     customerName: '',
@@ -51,27 +53,51 @@ export default function AdminOrders() {
     }
   };
 
+  const handleEdit = (order: Order) => {
+    setEditingOrder(order);
+    setFormData({
+      customerName: order.customerName,
+      customerEmail: order.customerEmail,
+      customerPhone: order.customerPhone,
+      origin: order.origin,
+      destination: order.destination,
+      shipmentType: order.shipmentType,
+      weight: order.weight,
+      status: order.status
+    });
+    setIsModalOpen(true);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      const response = await fetch('/api/admin/orders', {
-        method: 'POST',
+      const url = editingOrder 
+        ? `/api/admin/orders/${editingOrder._id}`
+        : '/api/admin/orders';
+      
+      const method = editingOrder ? 'PATCH' : 'POST';
+
+      const response = await fetch(url, {
+        method: method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...formData,
-          checkpoints: [
-            {
-              status: 'Order Placed',
-              location: formData.origin,
-              timestamp: new Date()
-            }
-          ]
+          ...(editingOrder ? {} : {
+            checkpoints: [
+              {
+                status: 'Order Placed',
+                location: formData.origin,
+                timestamp: new Date()
+              }
+            ]
+          })
         }),
       });
 
       if (response.ok) {
         setIsModalOpen(false);
+        setEditingOrder(null);
         setFormData({
           customerName: '',
           customerEmail: '',
@@ -85,11 +111,11 @@ export default function AdminOrders() {
         fetchOrders();
       } else {
         const error = await response.json();
-        alert(error.message || 'Error creating order');
+        alert(error.message || `Error ${editingOrder ? 'updating' : 'creating'} order`);
       }
     } catch (error) {
-      console.error('Error creating order:', error);
-      alert('Error creating order. Please try again.');
+      console.error(`Error ${editingOrder ? 'updating' : 'creating'} order:`, error);
+      alert(`Error ${editingOrder ? 'updating' : 'creating'} order. Please try again.`);
     } finally {
       setIsSubmitting(false);
     }
@@ -110,10 +136,15 @@ export default function AdminOrders() {
     }
   };
 
-  const filteredOrders = orders.filter(order => 
-    order.trackingId?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    order.customerName?.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredOrders = orders.filter(order => {
+    const matchesSearch = 
+      order.trackingId?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      order.customerName?.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    const matchesStatus = statusFilter === 'All' || order.status === statusFilter;
+    
+    return matchesSearch && matchesStatus;
+  });
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -137,7 +168,20 @@ export default function AdminOrders() {
           Order Management
         </h2>
         <button 
-          onClick={() => setIsModalOpen(true)}
+          onClick={() => {
+            setEditingOrder(null);
+            setFormData({
+              customerName: '',
+              customerEmail: '',
+              customerPhone: '',
+              origin: '',
+              destination: '',
+              shipmentType: 'Ocean',
+              weight: 0,
+              status: 'Pending'
+            });
+            setIsModalOpen(true);
+          }}
           className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-xl font-bold transition-all shadow-lg shadow-blue-600/20"
         >
           <Plus className="w-5 h-5" />
@@ -156,8 +200,10 @@ export default function AdminOrders() {
               className="bg-white dark:bg-slate-800 w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden"
             >
               <div className="flex justify-between items-center p-6 border-b border-slate-100 dark:border-slate-700">
-                <h3 className="text-xl font-black text-slate-900 dark:text-white">Create New Order</h3>
-                <button onClick={() => setIsModalOpen(false)} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full transition-all">
+                <h3 className="text-xl font-black text-slate-900 dark:text-white">
+                  {editingOrder ? 'Edit Order' : 'Create New Order'}
+                </h3>
+                <button onClick={() => { setIsModalOpen(false); setEditingOrder(null); }} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full transition-all">
                   <X className="w-5 h-5 text-slate-500" />
                 </button>
               </div>
@@ -236,7 +282,7 @@ export default function AdminOrders() {
                     </select>
                   </div>
                   <div className="space-y-1.5">
-                    <label className="text-xs font-black text-slate-500 uppercase tracking-wider">Initial Status</label>
+                    <label className="text-xs font-black text-slate-500 uppercase tracking-wider">Status</label>
                     <select 
                       value={formData.status}
                       onChange={(e) => setFormData({...formData, status: e.target.value})}
@@ -252,7 +298,7 @@ export default function AdminOrders() {
                 <div className="flex justify-end gap-3 pt-6 border-t border-slate-100 dark:border-slate-700">
                   <button 
                     type="button"
-                    onClick={() => setIsModalOpen(false)}
+                    onClick={() => { setIsModalOpen(false); setEditingOrder(null); }}
                     className="px-6 py-2.5 rounded-xl font-bold text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all"
                   >
                     Cancel
@@ -262,7 +308,7 @@ export default function AdminOrders() {
                     type="submit"
                     className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold transition-all shadow-lg shadow-blue-600/20 disabled:opacity-50"
                   >
-                    {isSubmitting ? 'Creating...' : 'Create Order'}
+                    {isSubmitting ? (editingOrder ? 'Updating...' : 'Creating...') : (editingOrder ? 'Update Order' : 'Create Order')}
                   </button>
                 </div>
               </form>
@@ -284,10 +330,16 @@ export default function AdminOrders() {
           />
         </div>
         <div className="flex gap-2">
-          <button className="flex items-center gap-2 px-4 py-2 border border-slate-200 dark:border-slate-600 rounded-xl text-sm font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all">
-            <Filter className="w-4 h-4" />
-            Filter
-          </button>
+          <select 
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            className="flex items-center gap-2 px-4 py-2 border border-slate-200 dark:border-slate-600 rounded-xl text-sm font-bold text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all focus:outline-none focus:ring-2 focus:ring-blue-600/20"
+          >
+            <option value="All">All Status</option>
+            <option value="Pending">Pending</option>
+            <option value="In Transit">In Transit</option>
+            <option value="Delivered">Delivered</option>
+          </select>
         </div>
       </div>
 
@@ -352,7 +404,11 @@ export default function AdminOrders() {
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2">
-                        <button className="p-2 hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-600 rounded-lg transition-all" title="Edit">
+                        <button 
+                          onClick={() => handleEdit(order)}
+                          className="p-2 hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-600 rounded-lg transition-all" 
+                          title="Edit"
+                        >
                           <Edit2 className="w-4 h-4" />
                         </button>
                         <button 

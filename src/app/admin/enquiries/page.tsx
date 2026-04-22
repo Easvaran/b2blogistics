@@ -20,6 +20,7 @@ export default function AdminEnquiries() {
   const [enquiries, setEnquiries] = useState<Enquiry[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState('All');
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -67,12 +68,17 @@ export default function AdminEnquiries() {
     }
   };
 
-  const filteredEnquiries = enquiries.filter(enquiry => 
-    enquiry.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    enquiry.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    enquiry.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    enquiry.service.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredEnquiries = enquiries.filter(enquiry => {
+    const matchesSearch = 
+      enquiry.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      enquiry.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      enquiry.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      enquiry.service.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    const matchesStatus = statusFilter === 'All' || enquiry.status === statusFilter;
+    
+    return matchesSearch && matchesStatus;
+  });
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -113,10 +119,16 @@ export default function AdminEnquiries() {
             className="w-full pl-10 pr-4 py-2 bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600/20 transition-all text-sm"
           />
         </div>
-        <button className="flex items-center gap-2 px-4 py-2 border border-slate-200 dark:border-slate-600 rounded-xl text-sm font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all">
-          <Filter className="w-4 h-4" />
-          Filter
-        </button>
+        <select 
+          value={statusFilter}
+          onChange={(e) => setStatusFilter(e.target.value)}
+          className="flex items-center gap-2 px-4 py-2 border border-slate-200 dark:border-slate-600 rounded-xl text-sm font-bold text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all focus:outline-none focus:ring-2 focus:ring-blue-600/20"
+        >
+          <option value="All">All Status</option>
+          <option value="Pending">Pending</option>
+          <option value="Contacted">Contacted</option>
+          <option value="Resolved">Resolved</option>
+        </select>
       </div>
 
       {/* Enquiries List */}
