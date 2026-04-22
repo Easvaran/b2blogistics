@@ -1,9 +1,9 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 import Link from 'next/link';
-import { Plane, Ship, FileCheck, Warehouse, ArrowRight, Clock, Shield, Globe, Award, ChevronRight, Star, Users, Package, Route, Headphones, Zap, Target, TrendingUp, Check } from 'lucide-react';
+import { Plane, Ship, FileCheck, Warehouse, ArrowRight, Clock, Shield, Globe, Award, ChevronRight, Star, Users, Package, Route, Headphones, Zap, Target, TrendingUp, Check, Loader2 } from 'lucide-react';
 import ServiceCard from '@/components/ui/ServiceCard';
 import TestimonialCard from '@/components/ui/TestimonialCard';
 import AnimatedCounter from '@/components/ui/AnimatedCounter';
@@ -32,6 +32,26 @@ const stats = [
 const trustedBy = ['DHL', 'FedEx', 'Maersk', 'DB Schenker', 'Kuehne+Nagel', 'Expeditors'];
 
 export default function HomePage() {
+  const [visibility, setVisibility] = useState({
+    hero: true,
+    services: true,
+    stats: true,
+    testimonials: true
+  });
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('/api/settings')
+      .then(res => res.json())
+      .then(data => {
+        if (data.visibility) {
+          setVisibility(prev => ({ ...prev, ...data.visibility }));
+        }
+      })
+      .catch(err => console.error('Error fetching visibility settings:', err))
+      .finally(() => setIsLoading(false));
+  }, []);
+
   const statsRef = useRef(null);
   const statsInView = useInView(statsRef, { once: true, amount: 0.2 });
   const servicesRef = useRef(null);
@@ -61,9 +81,18 @@ export default function HomePage() {
     visible: { opacity: 1, y: 0 }
   };
 
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-slate-900 flex items-center justify-center">
+        <Loader2 className="w-12 h-12 text-blue-600 animate-spin" />
+      </div>
+    );
+  }
+
   return (
     <>
       {/* Hero Section - Modern Glassmorphism Design */}
+      {visibility?.hero !== false && (
       <section className="relative min-h-[100vh] flex items-center overflow-hidden">
         {/* Animated Background */}
         <div className="absolute inset-0 z-0">
@@ -316,6 +345,7 @@ export default function HomePage() {
           </motion.div>
         </motion.div>
       </section>
+      )}
 
       {/* Trusted By Section */}
       <section className="py-20 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 overflow-hidden" ref={trustedRef}>
@@ -345,6 +375,7 @@ export default function HomePage() {
       </section>
 
       {/* Stats Section - Bento Grid */}
+      {visibility?.stats !== false && (
       <section className="py-24 bg-slate-50 dark:bg-slate-800/50" ref={statsRef}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -388,8 +419,10 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      )}
 
       {/* Services Section - Bento Style */}
+      {visibility?.services !== false && (
       <section className="py-24 bg-white dark:bg-slate-900" ref={servicesRef}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -426,6 +459,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      )}
 
       {/* Why Choose Us - Modern Grid */}
       <section className="py-24 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white relative overflow-hidden" ref={whyRef}>
@@ -578,6 +612,7 @@ export default function HomePage() {
       </section>
 
       {/* Testimonials */}
+      {visibility?.testimonials !== false && (
       <section className="py-24 bg-slate-50 dark:bg-slate-800/50 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -606,6 +641,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      )}
 
       {/* Scrolling Ticker Section */}
       <ScrollingTicker />

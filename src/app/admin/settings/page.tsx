@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Settings, User, Key, Building2, Phone, Mail, MapPin, Clock, Facebook, Twitter, Linkedin, Youtube, MessageCircle, Save, Loader2, Plus, Trash2, ExternalLink, X, ShieldCheck, UserPlus, ArrowRight } from 'lucide-react';
+import { Settings, User, Key, Building2, Phone, Mail, MapPin, Clock, Facebook, Twitter, Linkedin, Youtube, MessageCircle, Save, Loader2, Plus, Trash2, ExternalLink, X, ShieldCheck, UserPlus, ArrowRight, Eye, EyeOff, Layout, Component } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface Location {
@@ -62,7 +62,16 @@ export default function AdminSettings() {
       youtube: '',
       whatsapp: '',
     },
-    locations: [] as Location[]
+    locations: [] as Location[],
+    visibility: {
+      navbar: true,
+      footer: true,
+      hero: true,
+      services: true,
+      stats: true,
+      testimonials: true,
+      chatbot: true
+    }
   });
 
   useEffect(() => {
@@ -194,7 +203,7 @@ export default function AdminSettings() {
     }
   };
 
-  const updateNestedState = (section: string, field: string, value: string) => {
+  const updateNestedState = (section: string, field: string, value: any) => {
     setSiteSettings(prev => ({
       ...prev,
       [section]: {
@@ -437,6 +446,44 @@ export default function AdminSettings() {
                 className="w-full bg-slate-50 dark:bg-slate-700 border border-slate-100 dark:border-slate-600 rounded-xl px-4 py-3 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-red-600/20"
               />
             </div>
+          </div>
+        </div>
+
+        {/* Content Visibility */}
+        <div className="bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 space-y-6 lg:col-span-2">
+          <h3 className="text-lg font-black text-slate-900 dark:text-white flex items-center gap-3 uppercase tracking-tight">
+            <div className="w-10 h-10 bg-indigo-50 dark:bg-indigo-900/20 rounded-xl flex items-center justify-center text-indigo-600">
+              <Layout className="w-5 h-5" />
+            </div>
+            Content Visibility
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {[
+              { id: 'navbar', label: 'Navbar', icon: Layout },
+              { id: 'footer', label: 'Footer', icon: Layout },
+              { id: 'hero', label: 'Hero Section', icon: Component },
+              { id: 'services', label: 'Services Section', icon: Component },
+              { id: 'stats', label: 'Stats Section', icon: Component },
+              { id: 'testimonials', label: 'Testimonials', icon: Component },
+              { id: 'chatbot', label: 'Chatbot', icon: MessageCircle },
+            ].map((item) => (
+              <div key={item.id} className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-700/50 rounded-2xl border border-slate-100 dark:border-slate-600">
+                <div className="flex items-center gap-3">
+                  <item.icon className="w-4 h-4 text-slate-400" />
+                  <span className="text-xs font-black text-slate-700 dark:text-slate-200 uppercase tracking-wider">{item.label}</span>
+                </div>
+                <button
+                  onClick={() => updateNestedState('visibility', item.id, !(siteSettings.visibility as any)[item.id])}
+                  className={`w-12 h-6 rounded-full transition-all relative ${
+                    (siteSettings.visibility as any)[item.id] ? 'bg-blue-600' : 'bg-slate-300 dark:bg-slate-600'
+                  }`}
+                >
+                  <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-all ${
+                    (siteSettings.visibility as any)[item.id] ? 'left-7' : 'left-1'
+                  }`} />
+                </button>
+              </div>
+            ))}
           </div>
         </div>
 
