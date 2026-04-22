@@ -62,28 +62,38 @@ export default function ServicesPage() {
   const [mounted, setMounted] = useState(false);
   const [visibility, setVisibility] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [dynamicServices, setDynamicServices] = useState<any[]>([]);
 
   useEffect(() => {
     setMounted(true);
-    const fetchSettings = async () => {
+    
+    const fetchData = async () => {
       try {
-        const res = await fetch('/api/settings');
-        if (!res.ok) {
-          setIsLoading(false);
-          return;
+        // Fetch visibility settings
+        const settingsRes = await fetch('/api/settings');
+        if (settingsRes.ok) {
+          const settingsData = await settingsRes.json();
+          if (settingsData && settingsData.visibility) {
+            setVisibility(settingsData.visibility);
+          }
         }
-        const data = await res.json();
-        if (data && data.visibility) {
-          setVisibility(data.visibility);
+
+        // Fetch services from DB
+        const servicesRes = await fetch('/api/admin/services');
+        if (servicesRes.ok) {
+          const servicesData = await servicesRes.json();
+          if (Array.isArray(servicesData) && servicesData.length > 0) {
+            setDynamicServices(servicesData);
+          }
         }
       } catch (err) {
-        console.error('Error fetching visibility settings:', err);
+        console.error('Error fetching data:', err);
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchSettings();
+    fetchData();
   }, []);
 
   if (!mounted || isLoading) {
@@ -93,6 +103,9 @@ export default function ServicesPage() {
       </div>
     );
   }
+
+  // Use dynamic services from DB, or fallback to hardcoded list for now if DB is empty
+  const displayServices = dynamicServices.length > 0 ? dynamicServices : services;
 
   // If services are explicitly hidden in admin settings
   if (visibility?.services === false) {
@@ -145,46 +158,48 @@ export default function ServicesPage() {
             </h3>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
+            {displayServices.map((service, index) => (
               <motion.div
                 key={service.slug}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="group relative bg-white dark:bg-slate-800 rounded-3xl overflow-hidden shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-2xl hover:shadow-blue-900/10 transition-all duration-500"
+                transition={{ delay: index * 0.1, duration: 0.8 }}
+                whileHover={{ y: -10 }}
+                className="group h-full"
               >
-                {/* Image Header */}
-                <div className="relative h-64 overflow-hidden">
-                  <Image
-                    src={service.image}
-                    alt={service.title}
-                    fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent"></div>
-                  <div className="absolute bottom-6 left-6 flex items-center gap-3">
-                    <div className="w-12 h-12 bg-red-600 rounded-2xl flex items-center justify-center text-white shadow-lg">
-                      <service.icon className="w-6 h-6" />
+                <Link href={`/services/${service.slug}`} className="block h-full">
+                  <div className="bg-white dark:bg-slate-800 rounded-[2.5rem] overflow-hidden shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-700 h-full flex flex-col group-hover:border-blue-600 dark:group-hover:border-blue-500 transition-all duration-500">
+                    <div className="h-56 overflow-hidden relative">
+                      <Image 
+                        src={service.image} 
+                        alt={service.title} 
+                        fill
+                        className="object-cover group-hover:scale-110 transition-transform duration-700"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     </div>
-                    <h4 className="text-xl font-black text-white uppercase tracking-tight">{service.title}</h4>
+                    
+                    <div className="p-8 flex-grow flex flex-col">
+                      <div className="flex items-center gap-4 mb-6">
+                        <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${index % 2 === 0 ? 'bg-blue-600 shadow-blue-600/30' : 'bg-red-600 shadow-red-600/30'} shadow-lg text-white group-hover:rotate-6 transition-transform duration-500`}>
+                          {/* Fallback to Truck icon if service.icon is not a component */}
+                          {typeof service.icon === 'function' || typeof service.icon === 'object' ? <service.icon className="w-6 h-6" /> : <Truck className="w-6 h-6" />}
+                        </div>
+                        <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight">{service.title}</h3>
+                      </div>
+                      
+                      <p className="text-slate-500 dark:text-slate-400 font-medium mb-8 flex-grow leading-relaxed">
+                        {service.description}
+                      </p>
+                      
+                      <div className="flex items-center text-blue-600 dark:text-blue-400 font-black text-xs uppercase tracking-widest gap-2 group/btn">
+                        Explore Service <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-2 transition-transform duration-300" />
+                      </div>
+                    </div>
                   </div>
-                </div>
-
-                {/* Content */}
-                <div className="p-8">
-                  <p className="text-slate-600 dark:text-slate-400 leading-relaxed mb-8">
-                    {service.description}
-                  </p>
-                  
-                  <Link 
-                    href={`/services/${service.slug}`}
-                    className="inline-flex items-center gap-2 text-sm font-black text-blue-900 dark:text-blue-400 uppercase tracking-widest group-hover:gap-4 transition-all"
-                  >
-                    Explore Service <ArrowRight className="w-4 h-4 text-red-600" />
-                  </Link>
-                </div>
+                </Link>
               </motion.div>
             ))}
           </div>
