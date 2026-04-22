@@ -10,20 +10,20 @@ import AnimatedCounter from '@/components/ui/AnimatedCounter';
 import ScrollingTicker from '@/components/ui/ScrollingTicker';
 
 const services = [
-  { title: 'Air Freight', description: 'Fast and reliable air cargo services worldwide', icon: Plane, href: '/services/air-freight' },
+  { title: 'Air Freight', description: 'Fast and reliable air cargo services state-wide', icon: Plane, href: '/services/air-freight' },
   { title: 'Ocean Freight', description: 'Cost-effective sea freight solutions', icon: Ship, href: '/services/ocean-freight' },
   { title: 'Customs Clearance', description: 'Expert customs broker services', icon: FileCheck, href: '/services/customs-clearance' },
   { title: 'Warehousing', description: 'Secure storage and distribution', icon: Warehouse, href: '/services/warehousing' },
 ];
 
 const testimonials = [
-  { name: 'John Smith', company: 'TechCorp Inc.', role: 'Supply Chain Director', content: 'B2BLOGISTICS has been instrumental in streamlining our global logistics. Their attention to detail and commitment to deadlines is exceptional.', rating: 5, image: '' },
+  { name: 'John Smith', company: 'TechCorp Inc.', role: 'Supply Chain Director', content: 'B2BLOGISTICS has been instrumental in streamlining our state-wide logistics. Their attention to detail and commitment to deadlines is exceptional.', rating: 5, image: '' },
   { name: 'Sarah Johnson', company: 'Global Retail Ltd.', role: 'Operations Manager', content: 'The team at B2BLOGISTICS goes above and beyond. Their customs clearance expertise saved us both time and money. Highly recommended!', rating: 5, image: '' },
   { name: 'Michael Chen', company: 'Asia Trading Co.', role: 'CEO', content: 'We have been partnering with B2BLOGISTICS for 5 years now. Their reliability and professionalism in handling our freight is unmatched.', rating: 5, image: '' },
 ];
 
 const stats = [
-  { value: 150, suffix: '+', label: 'Countries Covered', icon: Globe },
+  { value: 150, suffix: '+', label: 'Areas Covered', icon: Globe },
   { value: 50, suffix: 'K+', label: 'Shipments Delivered', icon: Package },
   { value: 2500, suffix: '+', label: 'Happy Clients', icon: Users },
   { value: 25, suffix: '+', label: 'Years Experience', icon: Award },
@@ -146,7 +146,7 @@ export default function HomePage() {
                 className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4 py-2 text-sm"
               >
                 <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                <span className="text-white/90 font-medium">Trusted by 2500+ Global Companies</span>
+                <span className="text-white/90 font-medium">Trusted by 2500+ State-wide Companies</span>
               </motion.div>
 
               <motion.h1
@@ -159,7 +159,7 @@ export default function HomePage() {
                   transition={{ duration: 0.8, delay: 0.5 }}
                   className="text-white block"
                 >
-                  Global 
+                  State-wide 
                 </motion.span>
                 <motion.span 
                   initial={{ opacity: 0, scale: 0.8 }}
@@ -460,15 +460,15 @@ export default function HomePage() {
           >
             <span className="text-red-400 font-black tracking-[0.4em] text-[10px] uppercase mb-4 block">Why Us</span>
             <h2 className="text-4xl md:text-5xl font-black mb-6 uppercase tracking-tight">Why Choose B2BLOGISTICS?</h2>
-            <p className="text-blue-200 max-w-2xl mx-auto font-medium">We combine global expertise with local knowledge to deliver unmatched logistics solutions.</p>
+            <p className="text-blue-200 max-w-2xl mx-auto font-medium">We combine state-level expertise with local knowledge to deliver unmatched logistics solutions.</p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
-              { icon: Clock, title: '24/7 Support', desc: 'Round-the-clock assistance for all your global logistics needs', color: 'blue' },
+              { icon: Clock, title: '24/7 Support', desc: 'Round-the-clock assistance for all your state-wide logistics needs', color: 'blue' },
               { icon: Shield, title: 'Safe & Secure', desc: 'Your cargo is fully insured and protected throughout its journey', color: 'green' },
-              { icon: Globe, title: 'Global Network', desc: 'Strategic presence in 150+ countries with local expert knowledge', color: 'purple' },
-              { icon: Award, title: 'ISO Certified', desc: 'Maintaining international quality standards in all our operations', color: 'amber' },
+              { icon: Globe, title: 'State-wide Network', desc: 'Strategic presence in all districts with local expert knowledge', color: 'purple' },
+              { icon: Award, title: 'ISO Certified', desc: 'Maintaining state-level quality standards in all our operations', color: 'amber' },
               { icon: Zap, title: 'Fast Delivery', desc: 'Optimized routes and processes for expedited shipments', color: 'red' },
               { icon: Headphones, title: 'Expert Advice', desc: 'Dedicated consultants with deep industry knowledge', color: 'cyan' },
             ].map((item, index) => (

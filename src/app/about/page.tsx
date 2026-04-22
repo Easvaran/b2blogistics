@@ -23,17 +23,17 @@ export default function AboutPage() {
   ];
 
   const milestones = [
-    { year: '1998', title: 'Company Founded', desc: 'Established in Chennai with a vision for global logistics' },
-    { year: '2005', title: 'International Expansion', desc: 'Opened offices in Dubai, Singapore, and Hong Kong' },
+    { year: '1998', title: 'Company Founded', desc: 'Established in Chennai with a vision for state-wide logistics' },
+    { year: '2005', title: 'State-wide Expansion', desc: 'Opened offices in major districts across the state' },
     { year: '2012', title: 'ISO Certification', desc: 'Achieved ISO 9001:2008 certification for quality management' },
     { year: '2018', title: 'Digital Transformation', desc: 'Launched real-time tracking and online booking platform' },
-    { year: '2024', title: 'Industry Leader', desc: 'Recognized as top 10 freight forwarders in Asia Pacific' },
+    { year: '2024', title: 'Industry Leader', desc: 'Recognized as top 10 freight forwarders in the region' },
   ];
 
   const team = [
     { name: 'Rajesh Kumar', role: 'Chief Executive Officer', exp: '25+ Years', image: '' },
     { name: 'Priya Sharma', role: 'Director of Operations', exp: '18+ Years', image: '' },
-    { name: 'Anand Patel', role: 'Head of Global Logistics', exp: '20+ Years', image: '' },
+    { name: 'Anand Patel', role: 'Head of State Logistics', exp: '20+ Years', image: '' },
     { name: 'Meera Krishnan', role: 'Chief Financial Officer', exp: '15+ Years', image: '' },
   ];
 
@@ -82,7 +82,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
               { value: '25+', label: 'Years Experience' },
-              { value: '150+', label: 'Countries Served' },
+              { value: '38+', label: 'Districts Served' },
               { value: '2500+', label: 'Happy Clients' },
               { value: '50K+', label: 'Shipments Delivered' },
             ].map((stat, i) => (
@@ -167,7 +167,7 @@ export default function AboutPage() {
                     <span className="font-bold text-blue-900 dark:text-white">B2BLOGISTICS</span>, head-quartered at Chennai, India, is a dynamic and zestful logistic solutions Company... having a wide range of services viz.., Air Freight, Ocean Freight, Customs Brokerage, Project Forwarding (Break bulk/Chartering), Warehousing and Distribution.
                   </p>
                   <p>
-                    The Directors of B2BLOGISTICS have decades of experience in International and domestic freight forwarding and logistics. It is one prudent source for providing cost effective integrated logistics with efficient customer service catering to customer's specific needs with excellent connectivity to global network.
+                    The Directors of B2BLOGISTICS have decades of experience in State-wide and domestic freight forwarding and logistics. It is one prudent source for providing cost effective integrated logistics with efficient customer service catering to customer's specific needs with excellent connectivity to state-wide network.
                   </p>
                   <p>
                     Effective work process demands concentrated efforts, intimate knowledge and competent coordination at which B2BLOGISTICS excels and that eventuates in offering one stop logistic solutions to the customers with a new ray of vision.

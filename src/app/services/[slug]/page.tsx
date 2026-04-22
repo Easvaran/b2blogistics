@@ -9,18 +9,18 @@ import { notFound } from 'next/navigation';
 const servicesData: Record<string, any> = {
   'air-freight': {
     title: 'AIR FREIGHT',
-    description: 'Fast, reliable, and secure air cargo solutions for your time-sensitive shipments across the globe.',
+    description: 'Fast, reliable, and secure air cargo solutions for your time-sensitive shipments across the state.',
     icon: Plane,
     image: 'https://images.unsplash.com/photo-1570710891163-6d3b5c47248b?q=80&w=2070',
     features: [
-      'Global door-to-door delivery',
+      'State-wide door-to-door delivery',
       'Airport-to-airport services',
       'Consolidation and direct shipments',
       'Hazardous goods handling',
       'Real-time tracking and monitoring',
       'Charter services for oversized cargo'
     ],
-    details: 'Our air freight services are designed to meet your most demanding deadlines. With a global network of partners and carriers, we ensure your cargo moves swiftly through the supply chain with maximum security and transparency.'
+    details: 'Our air freight services are designed to meet your most demanding deadlines. With a state-wide network of partners and carriers, we ensure your cargo moves swiftly through the supply chain with maximum security and transparency.'
   },
   'ocean-freight': {
     title: 'OCEAN FREIGHT',
@@ -50,7 +50,7 @@ const servicesData: Record<string, any> = {
       'Ideal for fashion and electronics',
       'Reduced carbon footprint'
     ],
-    details: 'Our Sea/Air solution is an innovative multimodal transport strategy that allows you to optimize your budget while maintaining a competitive transit time for your global shipments.'
+    details: 'Our Sea/Air solution is an innovative multimodal transport strategy that allows you to optimize your budget while maintaining a competitive transit time for your state-wide shipments.'
   },
   'project-handling': {
     title: 'PROJECT HANDLING',
@@ -69,7 +69,7 @@ const servicesData: Record<string, any> = {
   },
   'custom-formalities': {
     title: 'CUSTOM FORMALITIES',
-    description: 'Expert customs brokerage services to ensure your shipments comply with all international trade regulations and move without delay.',
+    description: 'Expert customs brokerage services to ensure your shipments comply with all state trade regulations and move without delay.',
     icon: FileCheck,
     image: 'https://images.unsplash.com/photo-1553413077-190dd305871c?q=80&w=2070',
     features: [
@@ -80,7 +80,7 @@ const servicesData: Record<string, any> = {
       'Electronic data interchange (EDI)',
       'Bonded warehouse arrangements'
     ],
-    details: 'Navigating customs regulations can be a major headache. Our certified customs experts stay updated on the latest laws and procedures to ensure your goods clear customs smoothly in any country.'
+    details: 'Navigating customs regulations can be a major headache. Our certified customs experts stay updated on the latest laws and procedures to ensure your goods clear customs smoothly in any district.'
   },
   'cargo-insurance': {
     title: 'CARGO INSURANCE',
@@ -92,10 +92,10 @@ const servicesData: Record<string, any> = {
       'Door-to-door protection',
       'Fast claim processing',
       'Competitive premium rates',
-      'International standard policies',
+      'State-level standard policies',
       'Peace of mind for high-value goods'
     ],
-    details: 'Transit risks are a reality in global trade. We offer tailored insurance solutions that provide full financial protection for your cargo, whether it moves by air, sea, or land.'
+    details: 'Transit risks are a reality in state-wide trade. We offer tailored insurance solutions that provide full financial protection for your cargo, whether it moves by air, sea, or land.'
   },
   'inland-transports': {
     title: 'INLAND TRANSPORTS',
@@ -254,7 +254,7 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
               RELIABLE {service.title} SOLUTIONS
             </h2>
             <p className="text-xl text-red-100 mb-10 max-w-2xl mx-auto font-medium">
-              We provide end-to-end management of your cargo to ensure seamless global connectivity.
+              We provide end-to-end management of your cargo to ensure seamless state-wide connectivity.
             </p>
             <Link
               href="/contact"

@@ -79,7 +79,7 @@ export default function Footer() {
                 </div>
               </Link>
               <p className="text-blue-200 text-sm leading-relaxed">
-                Your trusted partner for global logistics and freight forwarding solutions since 1998.
+                Your trusted partner for state-wide logistics and freight forwarding solutions since 1998.
               </p>
               <div className="flex items-center gap-3">
                 {socialIcons.map(({ Icon, href }, i) => (

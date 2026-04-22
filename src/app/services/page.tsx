@@ -9,7 +9,7 @@ const services = [
   {
     title: 'AIR FREIGHT',
     slug: 'air-freight',
-    description: 'Fast, reliable, and secure air cargo solutions for your time-sensitive shipments across the globe.',
+    description: 'Fast, reliable, and secure air cargo solutions for your time-sensitive shipments across the state.',
     icon: Plane,
     image: 'https://images.unsplash.com/photo-1570710891163-6d3b5c47248b?q=80&w=2070',
     color: 'blue'
@@ -41,7 +41,7 @@ const services = [
   {
     title: 'CUSTOM FORMALITIES',
     slug: 'custom-formalities',
-    description: 'Expert customs brokerage services to ensure your shipments comply with all international trade regulations.',
+    description: 'Expert customs brokerage services to ensure your shipments comply with all state trade regulations.',
     icon: FileCheck,
     image: 'https://images.unsplash.com/photo-1553413077-190dd305871c?q=80&w=2070',
     color: 'blue'
@@ -80,14 +80,14 @@ export default function ServicesPage() {
             className="max-w-2xl"
           >
             <span className="inline-block px-4 py-1.5 bg-red-600 text-white text-xs font-black uppercase tracking-widest rounded-full mb-6">
-              World Class Logistics
+              State Class Logistics
             </span>
             <h1 className="text-5xl md:text-7xl font-black text-white uppercase tracking-tighter mb-6">
               OUR <span className="text-red-600">SERVICES</span>
             </h1>
             <p className="text-xl text-slate-300 font-medium leading-relaxed">
               Comprehensive freight forwarding and supply chain solutions tailored to your business needs. 
-              We move your cargo across borders with precision and care.
+              We move your cargo across districts with precision and care.
             </p>
           </motion.div>
         </div>
@@ -160,9 +160,9 @@ export default function ServicesPage() {
               </h3>
               <div className="space-y-6">
                 {[
-                  { title: 'Global Network', desc: 'Connectivity to over 150 countries worldwide.', icon: Globe },
+                  { title: 'State-wide Network', desc: 'Connectivity to all districts state-wide.', icon: Globe },
                   { title: 'Safe & Secure', desc: 'Advanced tracking and high-standard cargo safety.', icon: Shield },
-                  { title: 'Expert Team', desc: 'Decades of experience in international freight.', icon: BadgeCheck },
+                  { title: 'Expert Team', desc: 'Decades of experience in state freight.', icon: BadgeCheck },
                   { title: 'On-Time Delivery', desc: 'Precision scheduling and reliable transit times.', icon: Clock }
                 ].map((item, i) => (
                   <div key={i} className="flex gap-4 p-4 rounded-2xl hover:bg-white dark:hover:bg-slate-800 transition-colors">
@@ -196,7 +196,7 @@ export default function ServicesPage() {
                   <span className="font-black text-slate-900 dark:text-white uppercase tracking-tighter">Verified Excellence</span>
                 </div>
                 <p className="text-sm text-slate-500 dark:text-slate-400 italic">
-                  "Delivering your business goals across every continent, every day."
+                  "Delivering your business goals across every district, every day."
                 </p>
               </div>
             </div>

@@ -6,17 +6,17 @@ const defaultServices = [
   {
     title: 'Air Freight',
     slug: 'air-freight',
-    description: 'B2BLOGISTICS provides fast and reliable air freight services for time-sensitive cargo worldwide.',
-    shortDescription: 'Global air freight solutions for urgent cargo shipments.',
+    description: 'B2BLOGISTICS provides fast and reliable air freight services for time-sensitive cargo state-wide.',
+    shortDescription: 'State-wide air freight solutions for urgent cargo shipments.',
     icon: 'Plane',
     image: 'https://images.unsplash.com/photo-1544015759-137fdf55601c?q=80&w=1470&auto=format&fit=crop',
-    features: ['Express Delivery', 'Door-to-Door Service', 'Global Network', 'Customs Clearance'],
-    benefits: ['Speed', 'Security', 'Global Reach', 'Reliability']
+    features: ['Express Delivery', 'Door-to-Door Service', 'State-wide Network', 'Customs Clearance'],
+    benefits: ['Speed', 'Security', 'State-wide Reach', 'Reliability']
   },
   {
     title: 'Ocean Freight',
     slug: 'ocean-freight',
-    description: 'Our ocean freight services offer cost-effective shipping solutions for large volumes of cargo across all major global ports.',
+    description: 'Our ocean freight services offer cost-effective shipping solutions for large volumes of cargo across all major state ports.',
     shortDescription: 'Cost-effective sea transport for large volume shipments.',
     icon: 'Ship',
     image: 'https://images.unsplash.com/photo-1494412519320-aa613dfb7738?q=80&w=1470&auto=format&fit=crop',
