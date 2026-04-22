@@ -74,7 +74,6 @@ export default function HomePage() {
   const trustedInView = useInView(trustedRef, { once: true });
 
   const { scrollY } = useScroll();
-  const heroY = useTransform(scrollY, [0, 500], [0, 150]);
   const heroOpacity = useTransform(scrollY, [0, 300], [1, 0]);
   const heroScale = useTransform(scrollY, [0, 300], [1, 0.95]);
 
