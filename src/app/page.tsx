@@ -80,6 +80,8 @@ export default function HomePage() {
   const whyInView = useInView(whyRef, { once: true, amount: 0.2 });
   const trustedRef = useRef(null);
   const trustedInView = useInView(trustedRef, { once: true });
+  const processRef = useRef(null);
+  const processInView = useInView(processRef, { once: true, amount: 0.2 });
 
   const { scrollY } = useScroll();
   const heroOpacity = useTransform(scrollY, [0, 300], [1, 0]);
@@ -557,6 +559,141 @@ export default function HomePage() {
                 <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-white/5 rounded-full blur-2xl group-hover:bg-white/10 transition-colors"></div>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section className="py-24 bg-slate-50 dark:bg-slate-800/30 overflow-hidden" ref={processRef}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={processInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-20"
+          >
+            <span className="text-red-600 font-black tracking-[0.4em] text-[10px] uppercase mb-4 block">Workflow</span>
+            <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6 uppercase tracking-tight">Seamless Logistics Process</h2>
+            <p className="text-slate-500 dark:text-slate-400 max-w-2xl mx-auto font-medium">From initial inquiry to final delivery, we handle every step with precision and transparency.</p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative">
+            {/* Connecting Line for Desktop */}
+            <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-100 via-blue-200 to-blue-100 dark:from-slate-700 dark:via-slate-600 dark:to-slate-700 -translate-y-1/2 z-0"></div>
+
+            {[
+              { step: '01', title: 'Request Quote', desc: 'Submit your requirements through our easy enquiry form.', icon: FileCheck },
+              { step: '02', title: 'Strategic Planning', desc: 'Our experts design the most efficient route for your cargo.', icon: Target },
+              { step: '03', title: 'Safe Transit', desc: 'Real-time tracking as your shipment moves securely.', icon: Truck },
+              { step: '04', title: 'Final Delivery', desc: 'Seamless customs clearance and door-to-door arrival.', icon: CheckCircle2 },
+            ].map((item, index) => (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, y: 30 }}
+                animate={processInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: index * 0.2, duration: 0.8 }}
+                className="relative z-10 bg-white dark:bg-slate-800 p-8 rounded-[2.5rem] shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-700 group hover:-translate-y-2 transition-all duration-500"
+              >
+                <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center text-white mb-8 group-hover:rotate-6 transition-transform shadow-lg shadow-blue-600/30">
+                  <item.icon className="w-8 h-8" />
+                </div>
+                <span className="text-blue-600 font-black text-4xl mb-4 block opacity-20 group-hover:opacity-100 transition-opacity">{item.step}</span>
+                <h3 className="text-xl font-black text-slate-900 dark:text-white mb-4 uppercase tracking-tight">{item.title}</h3>
+                <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed font-medium">{item.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Core Capabilities Section */}
+      <section className="py-24 bg-white dark:bg-slate-900 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <span className="text-red-600 font-black tracking-[0.4em] text-[10px] uppercase mb-4 block">Our Expertise</span>
+              <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-8 uppercase tracking-tight">Full-Spectrum Logistics Capabilities</h2>
+              <p className="text-slate-600 dark:text-slate-400 text-lg mb-8 leading-relaxed font-medium">
+                B2BLOGISTICS provides a comprehensive suite of services designed to streamline your supply chain. We don't just move cargo; we provide strategic solutions that drive business growth.
+              </p>
+              
+              <div className="space-y-4">
+                {[
+                  'Advanced Real-time Tracking & Visibility',
+                  'Strategic Warehousing & Inventory Management',
+                  'Expert Customs Brokerage & Compliance',
+                  'Multimodal Transport (Air, Sea, Land)',
+                  'Specialized Project Cargo Handling'
+                ].map((item, i) => (
+                  <motion.div 
+                    key={i}
+                    initial={{ opacity: 0, x: -10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1 }}
+                    className="flex items-center gap-3"
+                  >
+                    <div className="w-5 h-5 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
+                      <Check className="w-3 h-3 text-green-600" />
+                    </div>
+                    <span className="text-slate-700 dark:text-slate-200 font-bold text-sm">{item}</span>
+                  </motion.div>
+                ))}
+              </div>
+
+              <motion.div className="mt-12"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+              >
+                <Link
+                  href="/services"
+                  className="bg-blue-900 text-white px-8 py-4 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-blue-800 transition-all shadow-lg shadow-blue-900/20 inline-flex items-center gap-2"
+                >
+                  Explore All Capabilities <ArrowRight className="w-4 h-4" />
+                </Link>
+              </motion.div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1 }}
+              className="relative"
+            >
+              <div className="relative rounded-[3rem] overflow-hidden shadow-2xl">
+                <img 
+                  src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=2070" 
+                  alt="Logistics Operations" 
+                  className="w-full h-[600px] object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-blue-900/60 to-transparent"></div>
+              </div>
+              
+              {/* Floating Stat Card */}
+              <motion.div 
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute -bottom-10 -right-10 bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-700 max-w-xs hidden md:block"
+              >
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 text-blue-600 rounded-2xl flex items-center justify-center">
+                    <Globe className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <p className="text-2xl font-black text-slate-900 dark:text-white">100%</p>
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">State-wide Reach</p>
+                  </div>
+                </div>
+                <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">Connecting every district with seamless freight solutions since 1998.</p>
+              </motion.div>
+            </motion.div>
           </div>
         </div>
       </section>
