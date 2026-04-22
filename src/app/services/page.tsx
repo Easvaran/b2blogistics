@@ -59,22 +59,34 @@ const services = [
 ];
 
 export default function ServicesPage() {
+  const [mounted, setMounted] = useState(false);
   const [visibility, setVisibility] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/settings')
-      .then(res => res.json())
-      .then(data => {
-        if (data.visibility) {
+    setMounted(true);
+    const fetchSettings = async () => {
+      try {
+        const res = await fetch('/api/settings');
+        if (!res.ok) {
+          setIsLoading(false);
+          return;
+        }
+        const data = await res.json();
+        if (data && data.visibility) {
           setVisibility(data.visibility);
         }
-      })
-      .catch(err => console.error('Error fetching visibility settings:', err))
-      .finally(() => setIsLoading(false));
+      } catch (err) {
+        console.error('Error fetching visibility settings:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchSettings();
   }, []);
 
-  if (isLoading) {
+  if (!mounted || isLoading) {
     return (
       <div className="min-h-screen bg-white dark:bg-slate-900 flex items-center justify-center">
         <Loader2 className="w-12 h-12 text-blue-600 animate-spin" />

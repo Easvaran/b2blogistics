@@ -42,21 +42,30 @@ export default function Navbar() {
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [mobileTrackOpen, setMobileTrackOpen] = useState(false);
   const [visibility, setVisibility] = useState<any>(null);
+  const [mounted, setMounted] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const pathname = usePathname();
 
   useEffect(() => {
-    fetch('/api/settings')
-      .then(res => res.json())
-      .then(data => {
-        if (data.visibility) {
+    setMounted(true);
+    const fetchSettings = async () => {
+      try {
+        const res = await fetch('/api/settings');
+        if (!res.ok) return;
+        const data = await res.json();
+        if (data && data.visibility) {
           setVisibility(data.visibility);
         }
-      })
-      .catch(err => console.error('Error fetching visibility settings in Navbar:', err));
+      } catch (err) {
+        console.error('Error fetching visibility settings in Navbar:', err);
+      }
+    };
+    
+    fetchSettings();
   }, []);
 
   const filteredNavLinks = navLinks.filter(link => {
+    if (!mounted) return true; // Show all during SSR to avoid mismatch
     if (link.label === 'SERVICES' && visibility?.services === false) {
       return false;
     }

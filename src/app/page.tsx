@@ -32,6 +32,7 @@ const stats = [
 const trustedBy = ['DHL', 'FedEx', 'Maersk', 'DB Schenker', 'Kuehne+Nagel', 'Expeditors'];
 
 export default function HomePage() {
+  const [mounted, setMounted] = useState(false);
   const [visibility, setVisibility] = useState({
     hero: true,
     services: true,
@@ -41,15 +42,26 @@ export default function HomePage() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/settings')
-      .then(res => res.json())
-      .then(data => {
-        if (data.visibility) {
+    setMounted(true);
+    const fetchSettings = async () => {
+      try {
+        const res = await fetch('/api/settings');
+        if (!res.ok) {
+          setIsLoading(false);
+          return;
+        }
+        const data = await res.json();
+        if (data && data.visibility) {
           setVisibility(prev => ({ ...prev, ...data.visibility }));
         }
-      })
-      .catch(err => console.error('Error fetching visibility settings:', err))
-      .finally(() => setIsLoading(false));
+      } catch (err) {
+        console.error('Error fetching visibility settings:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchSettings();
   }, []);
 
   const statsRef = useRef(null);
@@ -81,7 +93,7 @@ export default function HomePage() {
     visible: { opacity: 1, y: 0 }
   };
 
-  if (isLoading) {
+  if (!mounted || isLoading) {
     return (
       <div className="min-h-screen bg-slate-900 flex items-center justify-center">
         <Loader2 className="w-12 h-12 text-blue-600 animate-spin" />
