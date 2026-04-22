@@ -13,7 +13,6 @@ import {
   ChevronRight,
   Menu,
   X,
-  Bell,
   User as UserIcon, // Renamed to avoid conflict with User component
   Layers,
   ClipboardList,
@@ -33,6 +32,7 @@ import AdminEnquiries from './enquiries/page';
 import AdminServices from './services/page';
 import AdminContacts from './contacts/page'; // Added for Contact Messages
 import AdminSearch from '@/components/admin/AdminSearch';
+import AdminNotifications from '@/components/admin/AdminNotifications';
 
 interface SidebarItemProps {
   icon: React.ElementType;
@@ -182,10 +182,7 @@ export default function AdminDashboard() {
           </div>
 
           <div className="flex items-center gap-4">
-            <button className="relative p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg">
-              <Bell className="w-5 h-5" />
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-slate-800"></span>
-            </button>
+            <AdminNotifications />
             <div className="h-8 w-px bg-slate-200 dark:bg-slate-700 mx-2"></div>
             <div className="flex items-center gap-3">
               <div className="text-right hidden sm:block">
