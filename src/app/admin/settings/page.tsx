@@ -67,16 +67,9 @@ export default function AdminSettings() {
     },
     locations: [] as Location[],
     visibility: {
-      navbar: true,
-      footer: true,
-      hero: true,
-      services: true,
-      stats: true,
-      workflow: true,
-      capabilities: true,
-      testimonials: true,
-      chatbot: true
-    }
+            services: true,
+            trackOrders: true
+          }
   });
 
   useEffect(() => {
@@ -496,15 +489,8 @@ export default function AdminSettings() {
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {[
-              { id: 'navbar', label: 'Navbar', icon: Layout },
-              { id: 'footer', label: 'Footer', icon: Layout },
-              { id: 'hero', label: 'Hero Section', icon: Component },
-              { id: 'services', label: 'Services Section', icon: Component },
-              { id: 'stats', label: 'Stats Section', icon: Component },
-              { id: 'workflow', label: 'Process Section', icon: Component },
-              { id: 'capabilities', label: 'Capabilities Section', icon: Component },
-              { id: 'testimonials', label: 'Testimonials', icon: Component },
-              { id: 'chatbot', label: 'Chatbot', icon: MessageCircle },
+              { id: 'services', label: 'Services Section', icon: Layers },
+              { id: 'trackOrders', label: 'Track Orders Page', icon: Layers },
             ].map((item) => (
               <div key={item.id} className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-700/50 rounded-2xl border border-slate-100 dark:border-slate-600">
                 <div className="flex items-center gap-3">
@@ -524,54 +510,6 @@ export default function AdminSettings() {
               </div>
             ))}
           </div>
-        </div>
-
-        {/* Individual Services Visibility */}
-        <div className="bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 space-y-6 lg:col-span-2">
-          <div className="flex justify-between items-center">
-            <h3 className="text-lg font-black text-slate-900 dark:text-white flex items-center gap-3 uppercase tracking-tight">
-              <div className="w-10 h-10 bg-blue-50 dark:bg-blue-900/20 rounded-xl flex items-center justify-center text-blue-600">
-                <Layers className="w-5 h-5" />
-              </div>
-              Individual Services Visibility
-            </h3>
-            <Link 
-              href="/admin/services" 
-              className="text-[10px] font-black text-blue-600 uppercase tracking-widest hover:underline flex items-center gap-1"
-            >
-              Manage Services <ArrowRight className="w-3 h-3" />
-            </Link>
-          </div>
-          <p className="text-xs text-slate-500 font-medium -mt-2">Toggle which individual services are visible on the public services page.</p>
-          
-          {services.length === 0 ? (
-            <div className="p-8 text-center bg-slate-50 dark:bg-slate-700/50 rounded-2xl border border-dashed border-slate-200 dark:border-slate-600">
-              <p className="text-sm font-bold text-slate-400">No dynamic services found. Add them in Service Management.</p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-              {services.map((service) => (
-                <div key={service._id} className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-700/50 rounded-2xl border border-slate-100 dark:border-slate-600">
-                  <div className="flex items-center gap-3 truncate mr-2">
-                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${service.isVisible !== false ? 'bg-blue-600 text-white' : 'bg-slate-200 text-slate-400'}`}>
-                      <Layers className="w-4 h-4" />
-                    </div>
-                    <span className="text-xs font-black text-slate-700 dark:text-slate-200 uppercase tracking-wider truncate">{service.title}</span>
-                  </div>
-                  <button
-                    onClick={() => handleToggleServiceVisibility(service._id, service.isVisible !== false)}
-                    className={`flex-shrink-0 w-12 h-6 rounded-full transition-all relative ${
-                      service.isVisible !== false ? 'bg-blue-600' : 'bg-slate-300 dark:bg-slate-600'
-                    }`}
-                  >
-                    <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-all ${
-                      service.isVisible !== false ? 'left-7' : 'left-1'
-                    }`} />
-                  </button>
-                </div>
-              ))}
-            </div>
-          )}
         </div>
 
         {/* Branch Locations */}
