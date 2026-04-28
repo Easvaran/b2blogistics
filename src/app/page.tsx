@@ -29,7 +29,7 @@ const trustedBy = ['DHL', 'FedEx', 'Maersk', 'DB Schenker', 'Kuehne+Nagel', 'Exp
 
 export default function HomePage() {
   const [mounted, setMounted] = useState(false);
-  const [dynamicServices, setDynamicServices] = useState([]);
+  const [dynamicServices, setDynamicServices] = useState<any[]>([]);
   const [visibility, setVisibility] = useState({
     hero: true,
     services: true,
