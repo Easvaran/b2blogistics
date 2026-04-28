@@ -10,33 +10,10 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
   const pathname = usePathname();
   const isAdmin = pathname.startsWith('/admin');
   const [mounted, setMounted] = useState(false);
-  const [visibility, setVisibility] = useState({
-    navbar: true,
-    footer: true,
-    chatbot: true
-  });
 
   useEffect(() => {
     setMounted(true);
   }, []);
-
-  useEffect(() => {
-    if (!mounted) return;
-    const fetchSettings = async () => {
-      try {
-        const res = await fetch('/api/settings');
-        if (!res.ok) return;
-        const data = await res.json();
-        if (data && data.visibility) {
-          setVisibility(data.visibility);
-        }
-      } catch (err) {
-        console.error('Error fetching visibility settings:', err);
-      }
-    };
-    
-    fetchSettings();
-  }, [pathname, mounted]);
 
   if (!mounted) {
     return <div className="min-h-screen flex flex-col"><main className="flex-grow">{children}</main></div>;
@@ -44,10 +21,10 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
 
   return (
     <div className="min-h-screen flex flex-col">
-      {!isAdmin && visibility.navbar && <Navbar />}
+      {!isAdmin && <Navbar />}
       <main className="flex-grow">{children}</main>
-      {!isAdmin && visibility.footer && <Footer />}
-      {!isAdmin && visibility.chatbot && <Chatbot />}
+      {!isAdmin && <Footer />}
+      {!isAdmin && <Chatbot />}
     </div>
   );
 }
