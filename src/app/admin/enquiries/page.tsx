@@ -227,7 +227,7 @@ export default function AdminEnquiries() {
                       <div className="space-y-3">
                         <h4 className="text-xs font-black text-slate-400 uppercase tracking-[0.2em]">Message Content</h4>
                         <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700 text-sm text-slate-600 dark:text-slate-300 leading-relaxed italic">
-                          "{enquiry.message}"
+                          &quot;{enquiry.message}&quot;
                         </div>
                       </div>
 

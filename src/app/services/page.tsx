@@ -213,7 +213,7 @@ export default function ServicesPage() {
                   <span className="font-black text-slate-900 dark:text-white uppercase tracking-tighter">Verified Excellence</span>
                 </div>
                 <p className="text-sm text-slate-500 dark:text-slate-400 italic">
-                  "Delivering your business goals across every district, every day."
+                  &quot;Delivering your business goals across every district, every day.&quot;
                 </p>
               </div>
             </div>

@@ -225,7 +225,7 @@ export default function AdminSearch({ setActiveTab }: AdminSearchProps) {
                   <Search className="w-6 h-6 text-slate-300" />
                 </div>
                 <p className="text-sm font-bold text-slate-900 dark:text-white mb-1">No results found</p>
-                <p className="text-xs text-slate-500">We couldn't find anything matching "{query}"</p>
+                <p className="text-xs text-slate-500">We couldn&apos;t find anything matching &quot;{query}&quot;</p>
               </div>
             ) : null}
           </motion.div>

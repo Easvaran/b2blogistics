@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { Star, Quote } from 'lucide-react';
+import Image from 'next/image';
 
 interface TestimonialCardProps {
   name: string;
@@ -42,7 +43,14 @@ export default function TestimonialCard({ name, company, role, content, rating, 
       {/* Author */}
       <div className="flex items-center gap-4 relative z-10 mt-auto pt-6 border-t border-slate-50 dark:border-slate-700/50">
         {image ? (
-          <img src={image} alt={name} className="w-12 h-12 rounded-xl object-cover ring-2 ring-blue-50 dark:ring-blue-900" />
+          <div className="relative w-12 h-12">
+            <Image 
+              src={image} 
+              alt={name} 
+              fill
+              className="rounded-xl object-cover ring-2 ring-blue-50 dark:ring-blue-900" 
+            />
+          </div>
         ) : (
           <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center text-white font-black text-lg shadow-lg shadow-blue-600/30">
             {name.charAt(0)}

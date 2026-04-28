@@ -1,8 +1,9 @@
 'use client';
 
-import { useRef, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Plane, Ship, FileCheck, Warehouse, ArrowRight, Clock, Shield, Globe, Award, ChevronRight, Star, Users, Package, Route, Headphones, Zap, Target, TrendingUp, Check, Loader2, Truck, CheckCircle2 } from 'lucide-react';
 import ServiceCard from '@/components/ui/ServiceCard';
 import AnimatedCounter from '@/components/ui/AnimatedCounter';
@@ -603,7 +604,7 @@ export default function HomePage() {
               <span className="text-red-600 font-black tracking-[0.4em] text-[10px] uppercase mb-4 block">Our Expertise</span>
               <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-8 uppercase tracking-tight">Full-Spectrum Logistics Capabilities</h2>
               <p className="text-slate-600 dark:text-slate-400 text-lg mb-8 leading-relaxed font-medium">
-                B2BLOGISTICS provides a comprehensive suite of services designed to streamline your supply chain. We don't just move cargo; we provide strategic solutions that drive business growth.
+                B2BLOGISTICS provides a comprehensive suite of services designed to streamline your supply chain. We don&apos;t just move cargo; we provide strategic solutions that drive business growth.
               </p>
               
               <div className="space-y-4">
@@ -651,11 +652,12 @@ export default function HomePage() {
               transition={{ duration: 1 }}
               className="relative"
             >
-              <div className="relative rounded-[3rem] overflow-hidden shadow-2xl">
-                <img 
+              <div className="relative rounded-[3rem] overflow-hidden shadow-2xl h-[600px]">
+                <Image 
                   src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=2070" 
                   alt="Logistics Operations" 
-                  className="w-full h-[600px] object-cover"
+                  fill
+                  className="object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-blue-900/60 to-transparent"></div>
               </div>

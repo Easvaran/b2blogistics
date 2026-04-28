@@ -167,7 +167,7 @@ export default function AboutPage() {
                     <span className="font-bold text-blue-900 dark:text-white">B2BLOGISTICS</span>, head-quartered at Chennai, India, is a dynamic and zestful logistic solutions Company... having a wide range of services viz.., Air Freight, Ocean Freight, Customs Brokerage, Project Forwarding (Break bulk/Chartering), Warehousing and Distribution.
                   </p>
                   <p>
-                    The Directors of B2BLOGISTICS have decades of experience in State-wide and domestic freight forwarding and logistics. It is one prudent source for providing cost effective integrated logistics with efficient customer service catering to customer's specific needs with excellent connectivity to state-wide network.
+                    The Directors of B2BLOGISTICS have decades of experience in State-wide and domestic freight forwarding and logistics. It is one prudent source for providing cost effective integrated logistics with efficient customer service catering to customer&apos;s specific needs with excellent connectivity to state-wide network.
                   </p>
                   <p>
                     Effective work process demands concentrated efforts, intimate knowledge and competent coordination at which B2BLOGISTICS excels and that eventuates in offering one stop logistic solutions to the customers with a new ray of vision.
