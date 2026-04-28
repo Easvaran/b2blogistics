@@ -65,10 +65,10 @@ export default function Chatbot() {
       return 'Hello! I am your B2BLOGISTICS assistant. How can I help you with your logistics needs?';
     }
     if (text.includes('track') || text.includes('order')) {
-      return 'You can track your shipment by clicking the "TRACK ORDER" menu in the navigation bar. We support Bill of Lading, Container, and Air Cargo tracking.';
+      return 'You can track your shipment by clicking the "TRACK ORDER" menu in the navigation bar. We support Bill of Lading and Container tracking.';
     }
     if (text.includes('service') || text.includes('freight')) {
-      return 'We offer Air Freight, Ocean Freight, Sea/Air Service, Project Handling, and more. Which one would you like to know about?';
+      return 'We offer specialized Land Transport solutions across the state. We also provide warehousing and project handling services.';
     }
     if (text.includes('contact') || text.includes('phone') || text.includes('email')) {
       return 'You can reach us through our Contact page or call us directly at the numbers provided in the footer.';

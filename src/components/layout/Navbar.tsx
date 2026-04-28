@@ -14,12 +14,6 @@ const navLinks = [
     href: '/services', 
     label: 'SERVICES',
     subLinks: [
-      { href: '/services/air-freight', label: 'AIR FREIGHT' },
-      { href: '/services/ocean-freight', label: 'OCEAN FREIGHT' },
-      { href: '/services/sea-air-service', label: 'SEA/AIR SERVICE' },
-      { href: '/services/project-handling', label: 'PROJECT HANDLING' },
-      { href: '/services/custom-formalities', label: 'CUSTOM FORMALITIES' },
-      { href: '/services/cargo-insurance', label: 'CARGO INSURANCE' },
       { href: '/services/land-transport', label: 'LAND TRANSPORT' },
     ]
   },
@@ -42,29 +36,63 @@ export default function Navbar() {
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [mobileTrackOpen, setMobileTrackOpen] = useState(false);
   const [visibility, setVisibility] = useState<any>(null);
+  const [dynamicServices, setDynamicServices] = useState<any[]>([]);
   const [mounted, setMounted] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const pathname = usePathname();
 
   useEffect(() => {
     setMounted(true);
-    const fetchSettings = async () => {
+    const fetchData = async () => {
       try {
-        const res = await fetch('/api/settings');
-        if (!res.ok) return;
-        const data = await res.json();
-        if (data && data.visibility) {
-          setVisibility(data.visibility);
+        // Fetch visibility settings
+        const settingsRes = await fetch('/api/settings');
+        if (settingsRes.ok) {
+          const settingsData = await settingsRes.json();
+          if (settingsData && settingsData.visibility) {
+            setVisibility(settingsData.visibility);
+          }
+        }
+
+        // Fetch dynamic services for sublinks
+        const servicesRes = await fetch('/api/services');
+        if (servicesRes.ok) {
+          const servicesData = await servicesRes.json();
+          if (Array.isArray(servicesData)) {
+            setDynamicServices(servicesData);
+          }
         }
       } catch (err) {
-        console.error('Error fetching visibility settings in Navbar:', err);
+        console.error('Error fetching data in Navbar:', err);
       }
     };
     
-    fetchSettings();
+    fetchData();
   }, []);
 
-  const filteredNavLinks = navLinks.filter(link => {
+  const getNavLinks = () => {
+     return navLinks.map(link => {
+       if (link.label === 'SERVICES') {
+         // Only show LAND TRANSPORT in sublinks
+         const servicesSubLinks = dynamicServices.length > 0 
+           ? dynamicServices
+               .filter(s => s.slug === 'land-transport')
+               .map(s => ({
+                 href: `/services/${s.slug}`,
+                 label: s.title.toUpperCase()
+               }))
+           : link.subLinks;
+         
+         // If dynamic filtering resulted in empty but we have hardcoded fallback
+         const finalSubLinks = servicesSubLinks.length > 0 ? servicesSubLinks : link.subLinks;
+         
+         return { ...link, subLinks: finalSubLinks };
+       }
+       return link;
+     });
+   };
+
+  const filteredNavLinks = getNavLinks().filter(link => {
     if (!mounted) return true;
     if (link.label === 'SERVICES' && visibility?.services === false) {
       return false;
@@ -263,7 +291,7 @@ export default function Navbar() {
                               exit={{ opacity: 0, height: 0 }}
                               className="pl-4 space-y-1"
                             >
-                              {link.subLinks.map(subLink => {
+                              {link.subLinks?.map(subLink => {
                                 const isSubActive = pathname === subLink.href;
                                 return (
                                   <Link

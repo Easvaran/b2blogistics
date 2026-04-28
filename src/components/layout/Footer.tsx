@@ -128,11 +128,7 @@ export default function Footer() {
               </h3>
               <ul className="space-y-3">
                 {[
-                  { href: '/services/air-freight', label: 'Air Freight' },
-                  { href: '/services/ocean-freight', label: 'Ocean Freight' },
-                  { href: '/services/sea-air-service', label: 'Sea/Air Service' },
-                  { href: '/services/project-handling', label: 'Project Handling' },
-                  { href: '/services/custom-formalities', label: 'Custom Formalities' },
+                  { href: '/services/land-transport', label: 'Land Transport' },
                 ].map((link) => (
                   <li key={link.href}>
                     <Link href={link.href} className="group flex items-center gap-2 text-blue-200 hover:text-white transition-colors text-sm">

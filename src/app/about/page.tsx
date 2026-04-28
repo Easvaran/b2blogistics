@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Quote, CheckCircle2, Plane, Ship, Anchor, Truck, Target, Eye, Users, MapPin, Calendar, Award, Globe, ArrowRight, Linkedin, Twitter } from 'lucide-react';
+import { Quote, CheckCircle2, Plane, Ship, Anchor, Truck, Target, Eye, Users, MapPin, Calendar, Award, Globe, ArrowRight, Linkedin, Twitter, Warehouse, Package } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -247,10 +247,10 @@ export default function AboutPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { title: 'AIR FREIGHT', icon: Plane },
-              { title: 'OCEAN FREIGHT', icon: Ship },
-              { title: 'SEA/AIR SERVICES', icon: Anchor },
-              { title: 'PROJECT HANDLING', icon: Truck }
+              { title: 'LAND TRANSPORT', icon: Truck },
+              { title: 'WAREHOUSING', icon: Warehouse },
+              { title: 'DOOR DELIVERY', icon: MapPin },
+              { title: 'CARGO HANDLING', icon: Package }
             ].map((service, index) => (
               <motion.div
                 key={service.title}

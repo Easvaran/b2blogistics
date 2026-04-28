@@ -9,12 +9,12 @@ import AnimatedCounter from '@/components/ui/AnimatedCounter';
 import ScrollingTicker from '@/components/ui/ScrollingTicker';
 
 const services = [
-  { 
-    title: 'LAND TRANSPORT', 
-    description: 'Reliable and efficient land transport solutions across the state, ensuring your cargo reaches its destination safely and on time.', 
-    icon: Truck, 
-    href: '/services/land-transport',
-    color: 'red'
+  {
+    title: 'LAND TRANSPORT',
+    slug: 'land-transport',
+    description: 'Reliable and efficient land transport solutions across the state, ensuring your cargo reaches its destination safely and on time.',
+    icon: Truck,
+    image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=2014'
   }
 ];
 
@@ -52,7 +52,8 @@ export default function HomePage() {
         if (res.ok) {
           const data = await res.json();
           if (Array.isArray(data)) {
-            setDynamicServices(data.filter(s => s.isVisible !== false));
+            // Only show LAND TRANSPORT
+            setDynamicServices(data.filter(s => s.slug === 'land-transport' && s.isVisible !== false));
           }
         }
       } catch (err) {
@@ -610,7 +611,7 @@ export default function HomePage() {
                   'Advanced Real-time Tracking & Visibility',
                   'Strategic Warehousing & Inventory Management',
                   'Expert Customs Brokerage & Compliance',
-                  'Multimodal Transport (Air, Sea, Land)',
+                  'Comprehensive Land Transport Solutions',
                   'Specialized Project Cargo Handling'
                 ].map((item, i) => (
                   <motion.div 

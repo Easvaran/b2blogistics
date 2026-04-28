@@ -25,7 +25,8 @@ export default function EnquiryPage() {
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
-          setDynamicServices(data.filter(s => s.isVisible !== false));
+          // Only show LAND TRANSPORT
+          setDynamicServices(data.filter(s => s.slug === 'land-transport' && s.isVisible !== false));
         }
       })
       .catch(err => console.error('Error loading dynamic services:', err));
@@ -72,11 +73,13 @@ export default function EnquiryPage() {
 
   const services = [
     { value: 'land-transport', label: 'Land Transport', icon: Truck },
-    ...dynamicServices.map(s => ({
-      value: s.slug,
-      label: s.title,
-      icon: Truck // Default icon for dynamic services
-    }))
+    ...dynamicServices
+      .filter(s => s.slug !== 'land-transport') // Avoid duplication
+      .map(s => ({
+        value: s.slug,
+        label: s.title,
+        icon: Truck 
+      }))
   ];
 
   return (

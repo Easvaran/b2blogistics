@@ -14,7 +14,7 @@ const services = [
     description: 'Reliable and efficient land transport solutions across the state, ensuring your cargo reaches its destination safely and on time.',
     icon: Truck,
     image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=2014',
-    color: 'red'
+    features: ['FTL & LTL Services', 'State-wide Network', 'Real-time Tracking']
   }
 ];
 
@@ -64,9 +64,8 @@ export default function ServicesPage() {
     );
   }
 
-  // Use dynamic services from DB, or fallback to hardcoded list for now if DB is empty
-  // Only show services that are explicitly visible
-  const displayServices = (dynamicServices.length > 0 ? dynamicServices : services).filter((s: any) => s.isVisible !== false);
+  // Only show LAND TRANSPORT
+  const displayServices = (dynamicServices.length > 0 ? dynamicServices : services).filter((s: any) => s.slug === 'land-transport' && s.isVisible !== false);
 
   // If services are explicitly hidden in admin settings
   if (visibility?.services === false) {
