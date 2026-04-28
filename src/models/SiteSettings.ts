@@ -28,15 +28,8 @@ export interface ISiteSettings extends Document {
     googleMapsLink: string;
   }[];
   visibility: {
-    navbar: boolean;
-    footer: boolean;
-    hero: boolean;
     services: boolean;
-    stats: boolean;
-    workflow: boolean;
-    capabilities: boolean;
-    testimonials: boolean;
-    chatbot: boolean;
+    trackOrders: boolean;
   };
   updatedAt: Date;
 }
@@ -74,15 +67,8 @@ const SiteSettingsSchema: Schema = new Schema({
     default: []
   },
   visibility: {
-    navbar: { type: Boolean, default: true },
-    footer: { type: Boolean, default: true },
-    hero: { type: Boolean, default: true },
     services: { type: Boolean, default: true },
-    stats: { type: Boolean, default: true },
-    workflow: { type: Boolean, default: true },
-    capabilities: { type: Boolean, default: true },
-    testimonials: { type: Boolean, default: true },
-    chatbot: { type: Boolean, default: true },
+    trackOrders: { type: Boolean, default: true },
   },
   updatedAt: { type: Date, default: Date.now },
 });

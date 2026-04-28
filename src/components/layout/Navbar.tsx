@@ -65,8 +65,11 @@ export default function Navbar() {
   }, []);
 
   const filteredNavLinks = navLinks.filter(link => {
-    if (!mounted) return true; // Show all during SSR to avoid mismatch
+    if (!mounted) return true;
     if (link.label === 'SERVICES' && visibility?.services === false) {
+      return false;
+    }
+    if (link.label === 'TRACK ORDER' && visibility?.trackOrders === false) {
       return false;
     }
     return true;
