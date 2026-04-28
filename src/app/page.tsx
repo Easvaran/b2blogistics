@@ -9,10 +9,13 @@ import AnimatedCounter from '@/components/ui/AnimatedCounter';
 import ScrollingTicker from '@/components/ui/ScrollingTicker';
 
 const services = [
-  { title: 'Air Freight', description: 'Fast and reliable air cargo services state-wide', icon: Plane, href: '/services/air-freight' },
-  { title: 'Ocean Freight', description: 'Cost-effective sea freight solutions', icon: Ship, href: '/services/ocean-freight' },
-  { title: 'Customs Clearance', description: 'Expert customs broker services', icon: FileCheck, href: '/services/customs-clearance' },
-  { title: 'Warehousing', description: 'Secure storage and distribution', icon: Warehouse, href: '/services/warehousing' },
+  { 
+    title: 'LAND TRANSPORT', 
+    description: 'Reliable and efficient land transport solutions across the state, ensuring your cargo reaches its destination safely and on time.', 
+    icon: Truck, 
+    href: '/services/land-transport',
+    color: 'red'
+  }
 ];
 
 const stats = [
@@ -26,6 +29,7 @@ const trustedBy = ['DHL', 'FedEx', 'Maersk', 'DB Schenker', 'Kuehne+Nagel', 'Exp
 
 export default function HomePage() {
   const [mounted, setMounted] = useState(false);
+  const [dynamicServices, setDynamicServices] = useState([]);
   const [visibility, setVisibility] = useState({
     hero: true,
     services: true,
@@ -42,6 +46,20 @@ export default function HomePage() {
       setIsLoading(false);
     }, 5000);
     
+    const fetchServices = async () => {
+      try {
+        const res = await fetch('/api/services');
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data)) {
+            setDynamicServices(data.filter(s => s.isVisible !== false));
+          }
+        }
+      } catch (err) {
+        console.error('Error fetching dynamic services:', err);
+      }
+    };
+
     const fetchSettings = async () => {
       try {
         const res = await fetch('/api/settings');
@@ -61,6 +79,7 @@ export default function HomePage() {
       }
     };
 
+    fetchServices();
     fetchSettings();
     
     return () => clearTimeout(timeoutId);
@@ -442,12 +461,13 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {services.map((service, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[...services, ...dynamicServices].map((service, index) => (
               <motion.div
                 key={service.title}
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
                 transition={{ delay: index * 0.1, duration: 0.8 }}
                 whileHover={{ scale: 1.02 }}
                 className="h-full"

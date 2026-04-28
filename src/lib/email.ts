@@ -82,7 +82,7 @@ export const sendOTPEmail = async (email: string, otp: string) => {
         <p style="color: #64748b; font-size: 14px;">If you didn't request this, you can safely ignore this email. Your password will remain unchanged.</p>
         
         <div style="margin-top: 30px; text-align: center; color: #94a3b8; font-size: 12px; border-top: 1px solid #eee; pt-10;">
-          <p>© ${new Date().getFullYear()} B2BLOGISTICS State Forwarding. All Rights Reserved.</p>
+          <p>© ${new Date().getFullYear()} B2BLOGISTICS Domestic. All Rights Reserved.</p>
         </div>
       </div>
     `,

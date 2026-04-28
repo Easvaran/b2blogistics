@@ -5,12 +5,10 @@ import { motion } from 'framer-motion';
 import { Plane, Ship, Truck, Warehouse, FileCheck, Globe } from 'lucide-react';
 
 const tickerItems = [
-  { icon: Plane, label: 'Air Freight', value: 'Next Day Delivery Available' },
-  { icon: Ship, label: 'Ocean Freight', value: '7–14 Days State-wide' },
-  { icon: Truck, label: 'Inland Haulage', value: '2–5 Days' },
+  { icon: Truck, label: 'Land Transport', value: 'Safe & Reliable' },
+  { icon: Globe, label: 'Domestic Network', value: 'All Districts' },
   { icon: Warehouse, label: 'Warehousing', value: 'Secure Storage' },
   { icon: FileCheck, label: 'Customs Clearance', value: 'Expert Brokerage' },
-  { icon: Globe, label: 'State-wide Coverage', value: 'All Districts' },
 ];
 
 export default function ScrollingTicker() {

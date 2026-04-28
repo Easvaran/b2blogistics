@@ -9,51 +9,11 @@ import { notFound } from 'next/navigation';
 
 const services = [
   {
-    title: 'AIR FREIGHT',
-    slug: 'air-freight',
-    description: 'Fast, reliable, and secure air cargo solutions for your time-sensitive shipments across the state.',
-    icon: Plane,
-    image: 'https://images.unsplash.com/photo-1570710891163-6d3b5c47248b?q=80&w=2070',
-    color: 'blue'
-  },
-  {
-    title: 'OCEAN FREIGHT',
-    slug: 'ocean-freight',
-    description: 'Cost-effective and scalable sea freight solutions for all types of cargo, from full containers to small shipments.',
-    icon: Ship,
-    image: 'https://images.unsplash.com/photo-1494412574743-0112f05c78ec?q=80&w=2070',
-    color: 'red'
-  },
-  {
-    title: 'SEA/AIR SERVICE',
-    slug: 'sea-air-service',
-    description: 'The perfect balance of speed and economy, combining sea freight cost with air freight speed.',
-    icon: Anchor,
-    image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=2070',
-    color: 'blue'
-  },
-  {
-    title: 'PROJECT HANDLING',
-    slug: 'project-handling',
-    description: 'Specialized logistics for oversized, heavy, and complex cargo requiring meticulous planning.',
+    title: 'LAND TRANSPORT',
+    slug: 'land-transport',
+    description: 'Reliable and efficient land transport solutions across the state, ensuring your cargo reaches its destination safely and on time.',
     icon: Truck,
     image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=2014',
-    color: 'red'
-  },
-  {
-    title: 'CUSTOM FORMALITIES',
-    slug: 'custom-formalities',
-    description: 'Expert customs brokerage services to ensure your shipments comply with all state trade regulations.',
-    icon: FileCheck,
-    image: 'https://images.unsplash.com/photo-1553413077-190dd305871c?q=80&w=2070',
-    color: 'blue'
-  },
-  {
-    title: 'WAREHOUSING',
-    slug: 'warehousing',
-    description: 'Secure storage and distribution solutions with real-time inventory management.',
-    icon: Warehouse,
-    image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=2070',
     color: 'red'
   }
 ];
@@ -79,10 +39,10 @@ export default function ServicesPage() {
         }
 
         // Fetch services from DB
-        const servicesRes = await fetch('/api/admin/services');
+        const servicesRes = await fetch('/api/services');
         if (servicesRes.ok) {
           const servicesData = await servicesRes.json();
-          if (Array.isArray(servicesData) && servicesData.length > 0) {
+          if (Array.isArray(servicesData)) {
             setDynamicServices(servicesData);
           }
         }
@@ -105,7 +65,8 @@ export default function ServicesPage() {
   }
 
   // Use dynamic services from DB, or fallback to hardcoded list for now if DB is empty
-  const displayServices = dynamicServices.length > 0 ? dynamicServices : services;
+  // Only show services that are explicitly visible
+  const displayServices = (dynamicServices.length > 0 ? dynamicServices : services).filter((s: any) => s.isVisible !== false);
 
   // If services are explicitly hidden in admin settings
   if (visibility?.services === false) {

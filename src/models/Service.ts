@@ -9,6 +9,7 @@ export interface IService extends Document {
   image: string;
   features: string[];
   benefits: string[];
+  isVisible: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -22,6 +23,7 @@ const ServiceSchema: Schema = new Schema({
   image: { type: String, required: true },
   features: [{ type: String }],
   benefits: [{ type: String }],
+  isVisible: { type: Boolean, default: true },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 });

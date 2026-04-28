@@ -13,11 +13,22 @@ export default function EnquiryPage() {
   const [isSuccess, setIsSuccess] = useState(false);
   const [settings, setSettings] = useState<any>(null);
 
+  const [dynamicServices, setDynamicServices] = useState<any[]>([]);
+
   useEffect(() => {
     fetch('/api/settings')
       .then(res => res.json())
       .then(data => setSettings(data))
       .catch(err => console.error('Error loading enquiry settings:', err));
+
+    fetch('/api/services')
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          setDynamicServices(data.filter(s => s.isVisible !== false));
+        }
+      })
+      .catch(err => console.error('Error loading dynamic services:', err));
   }, []);
 
   const contactInfo = settings?.contactInfo || {
@@ -60,13 +71,12 @@ export default function EnquiryPage() {
   };
 
   const services = [
-    { value: 'air-freight', label: 'Air Freight', icon: Plane },
-    { value: 'ocean-freight', label: 'Ocean Freight', icon: Ship },
-    { value: 'sea-air', label: 'Sea/Air Service', icon: Anchor },
-    { value: 'project-handling', label: 'Project Handling', icon: Truck },
-    { value: 'customs', label: 'Custom Formalities', icon: FileText },
-    { value: 'insurance', label: 'Cargo Insurance', icon: Shield },
-    { value: 'inland', label: 'Inland Transports', icon: Globe },
+    { value: 'land-transport', label: 'Land Transport', icon: Truck },
+    ...dynamicServices.map(s => ({
+      value: s.slug,
+      label: s.title,
+      icon: Truck // Default icon for dynamic services
+    }))
   ];
 
   return (

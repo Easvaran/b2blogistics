@@ -16,6 +16,7 @@ interface Service {
   image: string;
   features: string[];
   benefits: string[];
+  isVisible: boolean;
 }
 
 export default function AdminServices() {
@@ -37,7 +38,8 @@ export default function AdminServices() {
     icon: 'Package',
     image: '',
     features: [''],
-    benefits: ['']
+    benefits: [''],
+    isVisible: true
   });
 
   useEffect(() => {
@@ -72,7 +74,8 @@ export default function AdminServices() {
         icon: 'Package',
         image: '',
         features: [''],
-        benefits: ['']
+        benefits: [''],
+        isVisible: true
       });
     }
     setIsModalOpen(true);
@@ -254,6 +257,11 @@ export default function AdminServices() {
                     <ImageIcon className="w-12 h-12 text-slate-300" />
                   </div>
                 )}
+                <div className="absolute top-4 right-4">
+                  <div className={`px-2 py-1 rounded-full text-[8px] font-black uppercase tracking-widest backdrop-blur-md shadow-sm border ${service.isVisible !== false ? 'bg-green-500/90 text-white border-green-400/20' : 'bg-red-500/90 text-white border-red-400/20'}`}>
+                    {service.isVisible !== false ? 'Visible' : 'Hidden'}
+                  </div>
+                </div>
                 <div className="absolute top-4 left-4">
                   <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md px-3 py-1 rounded-full shadow-sm border border-white/20">
                     <span className="text-blue-600 font-black text-[10px] uppercase tracking-widest">{service.slug}</span>
@@ -461,6 +469,22 @@ export default function AdminServices() {
                       </div>
                     ))}
                   </div>
+                </div>
+
+                <div className="flex items-center gap-3 p-4 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-slate-200 dark:border-slate-700">
+                  <div className="flex-1">
+                    <label className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-tight">Public Visibility</label>
+                    <p className="text-[10px] text-slate-500 font-medium">When disabled, this service will not be visible on the public website.</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setFormData(prev => ({ ...prev, isVisible: !prev.isVisible }))}
+                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${formData.isVisible ? 'bg-blue-600' : 'bg-slate-300 dark:bg-slate-600'}`}
+                  >
+                    <span
+                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${formData.isVisible ? 'translate-x-6' : 'translate-x-1'}`}
+                    />
+                  </button>
                 </div>
 
                 <div className="pt-8 flex gap-3 sticky bottom-0 bg-white dark:bg-slate-800 pb-2">

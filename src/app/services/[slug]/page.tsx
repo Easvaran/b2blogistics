@@ -8,129 +8,66 @@ import { notFound } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 const servicesData: Record<string, any> = {
-  'air-freight': {
-    title: 'AIR FREIGHT',
-    description: 'Fast, reliable, and secure air cargo solutions for your time-sensitive shipments across the state.',
-    icon: Plane,
-    image: 'https://images.unsplash.com/photo-1570710891163-6d3b5c47248b?q=80&w=2070',
-    features: [
-      'State-wide door-to-door delivery',
-      'Airport-to-airport services',
-      'Consolidation and direct shipments',
-      'Hazardous goods handling',
-      'Real-time tracking and monitoring',
-      'Charter services for oversized cargo'
-    ],
-    details: 'Our air freight services are designed to meet your most demanding deadlines. With a state-wide network of partners and carriers, we ensure your cargo moves swiftly through the supply chain with maximum security and transparency.'
-  },
-  'ocean-freight': {
-    title: 'OCEAN FREIGHT',
-    description: 'Cost-effective and scalable sea freight solutions for all types of cargo, from full containers to small shipments.',
-    icon: Ship,
-    image: 'https://images.unsplash.com/photo-1494412574743-0112f05c78ec?q=80&w=2070',
-    features: [
-      'Full Container Load (FCL)',
-      'Less than Container Load (LCL)',
-      'Breakbulk and oversized cargo',
-      'Refrigerated container services',
-      'Port-to-port and door-to-door',
-      'Customized shipping schedules'
-    ],
-    details: 'B2BLOGISTICS provides comprehensive ocean freight services that balance cost and speed. Whether you are shipping large industrial machinery or retail goods, our team handles all the complexities of maritime logistics.'
-  },
-  'sea-air-service': {
-    title: 'SEA/AIR SERVICE',
-    description: 'The perfect balance of speed and economy, combining the cost-effectiveness of sea freight with the speed of air freight.',
-    icon: Anchor,
-    image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=2070',
-    features: [
-      'Significant cost savings vs air freight',
-      'Faster transit times vs ocean freight',
-      'Single documentation process',
-      'Seamless transshipment handling',
-      'Ideal for fashion and electronics',
-      'Reduced carbon footprint'
-    ],
-    details: 'Our Sea/Air solution is an innovative multimodal transport strategy that allows you to optimize your budget while maintaining a competitive transit time for your state-wide shipments.'
-  },
-  'project-handling': {
-    title: 'PROJECT HANDLING',
-    description: 'Specialized logistics for oversized, heavy, and complex cargo that requires meticulous planning and expert execution.',
+  'land-transport': {
+    title: 'LAND TRANSPORT',
+    description: 'Reliable and efficient land transport solutions across the state, ensuring your cargo reaches its destination safely and on time.',
     icon: Truck,
     image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=2014',
     features: [
-      'Heavy lift and oversized cargo',
-      'Site surveys and feasibility studies',
-      'Route planning and permit management',
-      'On-site supervision',
-      'Multimodal transport solutions',
-      'Specialized equipment handling'
-    ],
-    details: 'From power plant components to industrial factory moves, B2BLOGISTICS excels in managing complex project logistics. We provide end-to-end coordination to ensure your critical assets arrive safely and on schedule.'
-  },
-  'custom-formalities': {
-    title: 'CUSTOM FORMALITIES',
-    description: 'Expert customs brokerage services to ensure your shipments comply with all state trade regulations and move without delay.',
-    icon: FileCheck,
-    image: 'https://images.unsplash.com/photo-1553413077-190dd305871c?q=80&w=2070',
-    features: [
-      'Import and export documentation',
-      'Tariff classification and valuation',
-      'Duty and tax calculation',
-      'Regulatory compliance consulting',
-      'Electronic data interchange (EDI)',
-      'Bonded warehouse arrangements'
-    ],
-    details: 'Navigating customs regulations can be a major headache. Our certified customs experts stay updated on the latest laws and procedures to ensure your goods clear customs smoothly in any district.'
-  },
-  'cargo-insurance': {
-    title: 'CARGO INSURANCE',
-    description: 'Comprehensive insurance coverage to protect your valuable shipments against physical loss or damage during transit.',
-    icon: Shield,
-    image: 'https://images.unsplash.com/photo-1454165833767-027ffea7028c?q=80&w=2070',
-    features: [
-      'All-risk coverage options',
-      'Door-to-door protection',
-      'Fast claim processing',
-      'Competitive premium rates',
-      'State-level standard policies',
-      'Peace of mind for high-value goods'
-    ],
-    details: 'Transit risks are a reality in state-wide trade. We offer tailored insurance solutions that provide full financial protection for your cargo, whether it moves by air, sea, or land.'
-  },
-  'inland-transports': {
-    title: 'INLAND TRANSPORTS',
-    description: 'Reliable road and rail transportation services to connect your cargo from ports and airports to its final destination.',
-    icon: Truck,
-    image: 'https://images.unsplash.com/photo-1519003722824-194d4455a60c?q=80&w=2075',
-    features: [
+      'State-wide door-to-door delivery',
       'Full Truckload (FTL)',
       'Less than Truckload (LTL)',
-      'Container drayage services',
       'Express road delivery',
-      'Rail freight solutions',
+      'Real-time tracking and monitoring',
       'Last-mile delivery expertise'
     ],
-    details: 'Our inland transport network provides the critical link in your supply chain. We manage a fleet of modern vehicles and work with trusted rail operators to provide seamless door-to-door connectivity.'
+    details: 'Our land transport services are designed to meet your most demanding deadlines. With a state-wide network of partners and carriers, we ensure your cargo moves swiftly through the supply chain with maximum security and transparency.'
   }
 };
 
 export default function ServiceDetailPage({ params }: { params: { slug: string } }) {
-  const service = servicesData[params.slug];
+  const [service, setService] = useState<any>(servicesData[params.slug]);
   const [visibility, setVisibility] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/settings')
-      .then(res => res.json())
-      .then(data => {
-        if (data.visibility) {
-          setVisibility(data.visibility);
+    const fetchData = async () => {
+      try {
+        const settingsRes = await fetch('/api/settings');
+        const settingsData = await settingsRes.json();
+        if (settingsData.visibility) {
+          setVisibility(settingsData.visibility);
         }
-      })
-      .catch(err => console.error('Error fetching visibility settings in service detail:', err))
-      .finally(() => setIsLoading(false));
-  }, []);
+
+        // If not a hardcoded service, fetch from DB
+        if (!servicesData[params.slug]) {
+          const serviceRes = await fetch(`/api/services`);
+          const dynamicServices = await serviceRes.json();
+          const dynamicService = dynamicServices.find((s: any) => s.slug === params.slug);
+          if (dynamicService) {
+            // Map dynamic service to match the detail page structure
+            setService({
+              ...dynamicService,
+              icon: Truck, // Default icon
+              features: dynamicService.features || [
+                'Reliable Delivery',
+                'Real-time Tracking',
+                'Expert Handling',
+                'State-wide Coverage'
+              ],
+              details: dynamicService.details || dynamicService.description
+            });
+          }
+        }
+      } catch (err) {
+        console.error('Error fetching data in service detail:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [params.slug]);
 
   if (isLoading) {
     return (

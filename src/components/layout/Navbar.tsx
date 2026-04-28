@@ -20,7 +20,7 @@ const navLinks = [
       { href: '/services/project-handling', label: 'PROJECT HANDLING' },
       { href: '/services/custom-formalities', label: 'CUSTOM FORMALITIES' },
       { href: '/services/cargo-insurance', label: 'CARGO INSURANCE' },
-      { href: '/services/inland-transports', label: 'INLAND TRANSPORTS' },
+      { href: '/services/land-transport', label: 'LAND TRANSPORT' },
     ]
   },
   { 
@@ -89,7 +89,7 @@ export default function Navbar() {
                 B2B<span className="text-red-600">LOGISTICS</span>
               </span>
               <span className="text-[10px] font-bold tracking-[0.25em] text-slate-500 dark:text-slate-400 leading-none mt-1">
-                STATE FORWARDING
+                DOMESTIC
               </span>
             </div>
           </Link>
