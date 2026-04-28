@@ -84,7 +84,7 @@ export default function Navbar() {
            : link.subLinks;
          
          // If dynamic filtering resulted in empty but we have hardcoded fallback
-         const finalSubLinks = servicesSubLinks.length > 0 ? servicesSubLinks : link.subLinks;
+         const finalSubLinks = servicesSubLinks && servicesSubLinks.length > 0 ? servicesSubLinks : (link.subLinks || []);
          
          return { ...link, subLinks: finalSubLinks };
        }
