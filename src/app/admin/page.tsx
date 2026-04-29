@@ -85,12 +85,19 @@ export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState('Dashboard');
   const [dashboardData, setDashboardData] = useState<any>(null);
   const [isLoadingDashboard, setIsLoadingDashboard] = useState(true);
-  const [notifications, setNotifications] = useState<Notification[]>([
-    { id: 1, title: "New Order Received", desc: "Order #B2B-X72A81 placed by John Doe", time: "2 min ago", type: 'order', read: false },
-    { id: 2, title: "New Enquiry", desc: "Shipping rate inquiry from Global Logistics Ltd", time: "1 hour ago", type: 'enquiry', read: false },
-    { id: 3, title: "Shipment Delivered", desc: "Package #B2B-P99120 has reached its destination", time: "3 hours ago", type: 'shipment', read: true },
-    { id: 4, title: "Order Update", desc: "Payment confirmed for Order #B2B-S12345", time: "5 hours ago", type: 'order', read: true },
-  ]);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+
+  const fetchNotifications = async () => {
+    try {
+      const response = await fetch('/api/admin/notifications');
+      if (response.ok) {
+        const data = await response.json();
+        setNotifications(data);
+      }
+    } catch (error) {
+      console.error('Error fetching notifications:', error);
+    }
+  };
 
   const handleMarkAsRead = (id: number) => {
     setNotifications(prev => prev.map(n => n.id === id ? { ...n, read: true } : n));
@@ -110,9 +117,14 @@ export default function AdminDashboard() {
   };
 
   useEffect(() => {
+    fetchNotifications();
     if (activeTab === 'Dashboard') {
       fetchDashboardData();
     }
+
+    // Poll for new notifications every minute
+    const interval = setInterval(fetchNotifications, 60000);
+    return () => clearInterval(interval);
   }, [activeTab]);
 
   const fetchDashboardData = async () => {

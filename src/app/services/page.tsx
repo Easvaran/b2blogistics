@@ -1,11 +1,12 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Plane, Ship, Anchor, Truck, Shield, FileCheck, Globe, ArrowRight, CheckCircle2, Warehouse, BadgeCheck, Clock, MapPin, Loader2 } from 'lucide-react';
+import { Plane, Ship, Anchor, Truck, Shield, FileCheck, Globe, ArrowRight, CheckCircle2, Warehouse, BadgeCheck, Clock, MapPin, Loader2, Package, Boxes, Truck as TruckIcon, HelpCircle, Target, Users, Award } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { notFound } from 'next/navigation';
+import { getIcon } from '@/lib/icons';
 
 const services = [
   {
@@ -64,8 +65,8 @@ export default function ServicesPage() {
     );
   }
 
-  // Only show LAND TRANSPORT
-  const displayServices = (dynamicServices.length > 0 ? dynamicServices : services).filter((s: any) => s.slug === 'land-transport' && s.isVisible !== false);
+  // Show all visible services
+  const displayServices = (dynamicServices.length > 0 ? dynamicServices : services).filter((s: any) => s.isVisible !== false);
 
   // If services are explicitly hidden in admin settings
   if (visibility?.services === false) {
@@ -122,11 +123,25 @@ export default function ServicesPage() {
             {displayServices.map((service, index) => (
               <motion.div
                 key={service.slug}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 50, rotate: -5 }}
+                whileInView={{ 
+                  opacity: 1, 
+                  y: 0, 
+                  rotate: 0,
+                  transition: {
+                    type: "spring",
+                    stiffness: 20,
+                    damping: 15,
+                    delay: index * 0.2,
+                    duration: 2 // Slomo feel
+                  }
+                }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.1, duration: 0.8 }}
-                whileHover={{ y: -10 }}
+                whileHover={{ 
+                  scale: 1.02,
+                  rotateY: 5,
+                  transition: { duration: 0.8 } // Slomo hover
+                }}
                 className="group h-full"
               >
                 <Link href={`/services/${service.slug}`} className="block h-full">
@@ -143,10 +158,22 @@ export default function ServicesPage() {
                     
                     <div className="p-8 flex-grow flex flex-col">
                       <div className="flex items-center gap-4 mb-6">
-                        <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${index % 2 === 0 ? 'bg-blue-600 shadow-blue-600/30' : 'bg-red-600 shadow-red-600/30'} shadow-lg text-white group-hover:rotate-6 transition-transform duration-500`}>
-                          {/* Fallback to Truck icon if service.icon is not a component */}
-                          {typeof service.icon === 'function' || typeof service.icon === 'object' ? <service.icon className="w-6 h-6" /> : <Truck className="w-6 h-6" />}
-                        </div>
+                        <motion.div 
+                          animate={{ 
+                            rotate: [0, 5, -5, 0],
+                          }}
+                          transition={{ 
+                            duration: 6, 
+                            repeat: Infinity, 
+                            ease: "linear" 
+                          }}
+                          className={`w-12 h-12 rounded-2xl flex items-center justify-center ${index % 2 === 0 ? 'bg-blue-600 shadow-blue-600/30' : 'bg-red-600 shadow-red-600/30'} shadow-lg text-white group-hover:scale-110 transition-transform duration-500`}
+                        >
+                          {(() => {
+                            const Icon = typeof service.icon === 'string' ? getIcon(service.icon) : service.icon || Truck;
+                            return <Icon className="w-6 h-6" />;
+                          })()}
+                        </motion.div>
                         <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-tight">{service.title}</h3>
                       </div>
                       

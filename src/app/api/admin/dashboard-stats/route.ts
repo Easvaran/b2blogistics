@@ -10,18 +10,20 @@ export async function GET(request: Request) {
   try {
     await connectDB();
 
+    // Calculate total revenue in INR (₹)
+    const revenueData = await Order.aggregate([
+      { $match: { status: 'Delivered' } },
+      { $group: { _id: null, total: { $sum: "$weight" } } } 
+    ]);
+    // Example rate: 150 INR per kg
+    const revenue = revenueData[0]?.total ? (revenueData[0].total * 150).toLocaleString('en-IN') : '0';
+
     // Fetch counts for statistics
     const totalOrders = await Order.countDocuments();
     const inTransitOrders = await Order.countDocuments({ status: 'In Transit' });
     const pendingOrders = await Order.countDocuments({ status: 'Pending' });
-    
-    // Calculate total revenue (example: sum of some field or a fixed calculation)
-    // For now, let's assume a dummy revenue calculation or fetch if there's a field
-    const revenueData = await Order.aggregate([
-      { $match: { status: 'Delivered' } },
-      { $group: { _id: null, total: { $sum: "$weight" } } } // Example: weight * rate
-    ]);
-    const revenue = revenueData[0]?.total ? (revenueData[0].total * 150).toLocaleString() : '0';
+    const totalCustomersData = await Order.distinct('customerEmail');
+    const totalCustomers = totalCustomersData.length;
 
     // Fetch recent activity (mix of orders and enquiries)
     const recentOrders = await Order.find({})
@@ -58,10 +60,11 @@ export async function GET(request: Request) {
 
     return NextResponse.json({
       stats: {
-        totalOrders: totalOrders.toLocaleString(),
-        inTransit: inTransitOrders.toLocaleString(),
-        revenue: `$${revenue}`,
-        pending: pendingOrders.toLocaleString(),
+        totalOrders: totalOrders.toLocaleString('en-IN'),
+        inTransit: inTransitOrders.toLocaleString('en-IN'),
+        revenue: `₹${revenue}`,
+        pending: pendingOrders.toLocaleString('en-IN'),
+        totalCustomers: totalCustomers.toLocaleString('en-IN')
       },
       recentActivity,
       recentShipments

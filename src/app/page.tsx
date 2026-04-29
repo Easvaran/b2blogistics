@@ -13,6 +13,7 @@ const services = [
   {
     title: 'LAND TRANSPORT',
     slug: 'land-transport',
+    href: '/services/land-transport',
     description: 'Reliable and efficient land transport solutions across the state, ensuring your cargo reaches its destination safely and on time.',
     icon: Truck,
     image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=2014'
@@ -464,18 +465,8 @@ export default function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[...services, ...dynamicServices].map((service, index) => (
-              <motion.div
-                key={service.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1, duration: 0.8 }}
-                whileHover={{ scale: 1.02 }}
-                className="h-full"
-              >
-                <ServiceCard {...service} />
-              </motion.div>
+            {[...services, ...dynamicServices.map(s => ({ ...s, href: `/services/${s.slug}` }))].map((service, index) => (
+              <ServiceCard key={service.title} {...service} index={index} />
             ))}
           </div>
         </div>

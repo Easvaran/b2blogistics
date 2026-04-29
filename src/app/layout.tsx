@@ -1,9 +1,11 @@
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
+import NextAuthProvider from '@/components/providers/NextAuthProvider';
 import ClientLayout from '@/components/layout/ClientLayout';
 import { Metadata } from 'next';
 import { Suspense } from 'react';
+import { ToastContainer } from '@/components/ui/Toast';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -20,9 +22,12 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <ThemeProvider>
-          <ClientLayout>{children}</ClientLayout>
-        </ThemeProvider>
+        <NextAuthProvider>
+          <ThemeProvider>
+            <ClientLayout>{children}</ClientLayout>
+            <ToastContainer />
+          </ThemeProvider>
+        </NextAuthProvider>
       </body>
     </html>
   );

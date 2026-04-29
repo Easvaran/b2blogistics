@@ -1,21 +1,43 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { LucideIcon } from 'lucide-react';
+import { LucideIcon, Truck } from 'lucide-react';
 import Link from 'next/link';
+import { getIcon } from '@/lib/icons';
 
 interface ServiceCardProps {
   title: string;
   description: string;
-  icon: LucideIcon;
+  icon: LucideIcon | string;
   href: string;
+  index?: number;
 }
 
-export default function ServiceCard({ title, description, icon: Icon, href }: ServiceCardProps) {
+export default function ServiceCard({ title, description, icon, href, index = 0 }: ServiceCardProps) {
+  const Icon = typeof icon === 'string' ? getIcon(icon) : icon || Truck;
+
   return (
     <motion.div
-      whileHover={{ y: -8, scale: 1.02 }}
-      transition={{ duration: 0.3 }}
+      initial={{ opacity: 0, y: 50, rotate: -3 }}
+      whileInView={{ 
+        opacity: 1, 
+        y: 0, 
+        rotate: 0,
+        transition: {
+          type: "spring",
+          stiffness: 20,
+          damping: 15,
+          delay: index * 0.1,
+          duration: 2 // Slomo feel
+        }
+      }}
+      viewport={{ once: true }}
+      whileHover={{ 
+        y: -8, 
+        scale: 1.02,
+        rotateY: 5,
+        transition: { duration: 0.8 } // Slomo hover
+      }}
       className="group relative bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-slate-100 dark:border-slate-700 overflow-hidden"
     >
       {/* Gradient Background on Hover */}
@@ -26,9 +48,19 @@ export default function ServiceCard({ title, description, icon: Icon, href }: Se
       
       {/* Icon Container */}
       <div className="relative z-10 mb-6">
-        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900/50 dark:to-blue-800/50 flex items-center justify-center group-hover:from-blue-600 group-hover:to-blue-500 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-blue-600/30">
+        <motion.div 
+          animate={{ 
+            rotate: [0, 5, -5, 0],
+          }}
+          transition={{ 
+            duration: 6, 
+            repeat: Infinity, 
+            ease: "linear" 
+          }}
+          className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900/50 dark:to-blue-800/50 flex items-center justify-center group-hover:from-blue-600 group-hover:to-blue-500 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-blue-600/30"
+        >
           <Icon className="h-8 w-8 text-blue-600 dark:text-blue-400 group-hover:text-white transition-colors duration-300" />
-        </div>
+        </motion.div>
       </div>
 
       {/* Content */}

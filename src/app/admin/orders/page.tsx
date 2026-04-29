@@ -1,9 +1,10 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Package, Plus, Search, Filter, MoreVertical, Edit2, Trash2, ExternalLink, X } from 'lucide-react';
+import { Package, Plus, Search, Filter, MoreVertical, Edit2, Trash2, ExternalLink, X, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ConfirmationModal from '@/components/admin/ConfirmationModal';
+import { showToast } from '@/components/ui/Toast';
 
 interface Order {
   _id: string;
@@ -99,6 +100,7 @@ export default function AdminOrders() {
       });
 
       if (response.ok) {
+        showToast(editingOrder ? 'Order updated successfully!' : 'Order created successfully!');
         setIsModalOpen(false);
         setEditingOrder(null);
         setFormData({
@@ -114,11 +116,11 @@ export default function AdminOrders() {
         fetchOrders();
       } else {
         const error = await response.json();
-        alert(error.message || `Error ${editingOrder ? 'updating' : 'creating'} order`);
+        showToast(error.message || `Error ${editingOrder ? 'updating' : 'creating'} order`, 'error');
       }
     } catch (error) {
       console.error(`Error ${editingOrder ? 'updating' : 'creating'} order:`, error);
-      alert(`Error ${editingOrder ? 'updating' : 'creating'} order. Please try again.`);
+      showToast(`Error ${editingOrder ? 'updating' : 'creating'} order. Please try again.`, 'error');
     } finally {
       setIsSubmitting(false);
     }
@@ -132,10 +134,14 @@ export default function AdminOrders() {
         method: 'DELETE',
       });
       if (response.ok) {
+        showToast('Order deleted successfully!');
         fetchOrders();
+      } else {
+        showToast('Failed to delete order', 'error');
       }
     } catch (error) {
       console.error('Error deleting order:', error);
+      showToast('An error occurred while deleting the order.', 'error');
     } finally {
       setIsConfirmModalOpen(false);
       setOrderToDelete(null);

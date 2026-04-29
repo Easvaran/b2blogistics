@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Truck, MapPin, Clock, Plus, CheckCircle2, Circle, ChevronRight, Search } from 'lucide-react';
+import { Truck, MapPin, Clock, Plus, CheckCircle2, Circle, ChevronRight, Search, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { showToast } from '@/components/ui/Toast';
 
 interface Checkpoint {
   status: string;
@@ -60,9 +61,13 @@ export default function AdminShipments() {
         if (selectedOrder?._id === orderId) {
           setSelectedOrder({ ...selectedOrder, status: newStatus });
         }
+        showToast(`Shipment status updated to ${newStatus}`);
+      } else {
+        showToast('Failed to update status', 'error');
       }
     } catch (error) {
       console.error('Error updating status:', error);
+      showToast('An error occurred.', 'error');
     }
   };
 
@@ -91,9 +96,13 @@ export default function AdminShipments() {
         setSelectedOrder(updatedOrder);
         setNewCheckpoint({ status: '', location: '' });
         fetchOrders();
+        showToast('Checkpoint added successfully!');
+      } else {
+        showToast('Failed to add checkpoint', 'error');
       }
     } catch (error) {
       console.error('Error adding checkpoint:', error);
+      showToast('An error occurred.', 'error');
     } finally {
       setIsUpdating(false);
     }

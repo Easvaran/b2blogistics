@@ -1,8 +1,10 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Mail, Search, Filter, Trash2, CheckCircle, Phone, Calendar, User, Eye, EyeOff, MessageSquare } from 'lucide-react';
+import { Mail, Search, Filter, Trash2, CheckCircle, Phone, Calendar, User, Eye, EyeOff, MessageSquare, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { showToast } from '@/components/ui/Toast';
+import ConfirmationModal from '@/components/admin/ConfirmationModal';
 
 interface ContactMessage {
   _id: string;
@@ -20,6 +22,8 @@ export default function AdminContacts() {
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [messageToDelete, setMessageToDelete] = useState<string | null>(null);
 
   useEffect(() => {
     fetchMessages();
@@ -46,25 +50,37 @@ export default function AdminContacts() {
       });
       if (response.ok) {
         setMessages(prev => prev.map(m => m._id === id ? { ...m, isRead: !currentStatus } : m));
+        showToast(`Message marked as ${!currentStatus ? 'read' : 'unread'}`);
       }
     } catch (error) {
       console.error('Error updating status:', error);
+      showToast('Failed to update status', 'error');
     }
   };
 
-  const deleteMessage = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this message?')) return;
+  const deleteMessage = async () => {
+    if (!messageToDelete) return;
     try {
-      const response = await fetch(`/api/admin/contacts?id=${id}`, {
+      const response = await fetch(`/api/admin/contacts?id=${messageToDelete}`, {
         method: 'DELETE',
       });
       if (response.ok) {
-        setMessages(prev => prev.filter(m => m._id !== id));
-        if (selectedId === id) setSelectedId(null);
+        setMessages(prev => prev.filter(m => m._id !== messageToDelete));
+        if (selectedId === messageToDelete) setSelectedId(null);
+        showToast('Message deleted successfully!');
       }
     } catch (error) {
       console.error('Error deleting message:', error);
+      showToast('Failed to delete message', 'error');
+    } finally {
+      setIsConfirmModalOpen(false);
+      setMessageToDelete(null);
     }
+  };
+
+  const confirmDelete = (id: string) => {
+    setMessageToDelete(id);
+    setIsConfirmModalOpen(true);
   };
 
   const filteredMessages = messages.filter(m => 
@@ -168,7 +184,7 @@ export default function AdminContacts() {
                         {msg.isRead ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                       </button>
                       <button 
-                        onClick={() => deleteMessage(msg._id)}
+                        onClick={() => confirmDelete(msg._id)}
                         className="p-3 bg-red-50 text-red-500 rounded-xl hover:bg-red-100 transition-all"
                         title="Delete message"
                       >
@@ -216,6 +232,13 @@ export default function AdminContacts() {
           )}
         </div>
       </div>
+      <ConfirmationModal
+        isOpen={isConfirmModalOpen}
+        onClose={() => setIsConfirmModalOpen(false)}
+        onConfirm={deleteMessage}
+        title="Delete Message"
+        message="Are you sure you want to delete this message? This action cannot be undone."
+      />
     </motion.div>
   );
 }

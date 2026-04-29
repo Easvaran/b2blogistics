@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Settings, User, Key, Building2, Phone, Mail, MapPin, Clock, Facebook, Twitter, Linkedin, Youtube, MessageCircle, Save, Loader2, Plus, Trash2, ExternalLink, X, ShieldCheck, UserPlus, ArrowRight, Eye, EyeOff, Layout, Component, Layers } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { showToast } from '@/components/ui/Toast';
+import ConfirmationModal from '@/components/admin/ConfirmationModal';
 
 interface Location {
   name: string;
@@ -41,6 +43,18 @@ export default function AdminSettings() {
     name: '',
     email: '',
     password: ''
+  });
+
+  // Confirmation Modal State
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [confirmConfig, setConfirmConfig] = useState<{
+    title: string;
+    message: string;
+    onConfirm: () => void;
+  }>({
+    title: '',
+    message: '',
+    onConfirm: () => {}
   });
 
   const [services, setServices] = useState<any[]>([]);
@@ -149,13 +163,13 @@ export default function AdminSettings() {
         body: JSON.stringify(siteSettings),
       });
       if (response.ok) {
-        alert('Settings updated successfully!');
+        showToast('Settings updated successfully!');
       } else {
-        alert('Failed to update settings');
+        showToast('Failed to update settings', 'error');
       }
     } catch (error) {
       console.error('Update error:', error);
-      alert('An error occurred while saving.');
+      showToast('An error occurred while saving.', 'error');
     } finally {
       setIsSaving(false);
     }
@@ -174,37 +188,45 @@ export default function AdminSettings() {
       });
 
       if (response.ok) {
-        alert(editingUser ? 'User updated successfully!' : 'User added successfully!');
+        showToast(editingUser ? 'User updated successfully!' : 'User added successfully!');
         fetchUsers();
         setIsUserModalOpen(false);
         setEditingUser(null);
         setUserData({ name: '', email: '', password: '' });
       } else {
         const data = await response.json();
-        alert(data.message || 'Failed to save user');
+        showToast(data.message || 'Failed to save user', 'error');
       }
     } catch (error) {
       console.error('Save user error:', error);
-      alert('An error occurred.');
+      showToast('An error occurred.', 'error');
     } finally {
       setIsSaving(false);
     }
   };
 
-  const handleDeleteUser = async (id: string) => {
-    if (confirm('Are you sure you want to delete this admin account?')) {
-      try {
-        const response = await fetch(`/api/admin/users/${id}`, { method: 'DELETE' });
-        if (response.ok) {
-          alert('User deleted successfully!');
-          fetchUsers();
-        } else {
-          alert('Failed to delete user');
+  const handleDeleteUser = (id: string) => {
+    setConfirmConfig({
+      title: 'Delete Admin Account',
+      message: 'Are you sure you want to delete this admin account? This action cannot be undone.',
+      onConfirm: async () => {
+        try {
+          const response = await fetch(`/api/admin/users/${id}`, { method: 'DELETE' });
+          if (response.ok) {
+            showToast('User deleted successfully!');
+            fetchUsers();
+          } else {
+            showToast('Failed to delete user', 'error');
+          }
+        } catch (error) {
+          console.error('Delete error:', error);
+          showToast('An error occurred.', 'error');
+        } finally {
+          setIsConfirmModalOpen(false);
         }
-      } catch (error) {
-        console.error('Delete error:', error);
       }
-    }
+    });
+    setIsConfirmModalOpen(true);
   };
 
   const handleAddLocation = () => {
@@ -227,10 +249,17 @@ export default function AdminSettings() {
   };
 
   const handleDeleteLocation = (index: number) => {
-    if (confirm('Are you sure you want to delete this location?')) {
-      const updatedLocations = siteSettings.locations.filter((_, i) => i !== index);
-      setSiteSettings({ ...siteSettings, locations: updatedLocations });
-    }
+    setConfirmConfig({
+      title: 'Delete Location',
+      message: 'Are you sure you want to delete this office location?',
+      onConfirm: () => {
+        const updatedLocations = siteSettings.locations.filter((_, i) => i !== index);
+        setSiteSettings({ ...siteSettings, locations: updatedLocations });
+        showToast('Location removed from list. Remember to save changes.');
+        setIsConfirmModalOpen(false);
+      }
+    });
+    setIsConfirmModalOpen(true);
   };
 
   const updateNestedState = (section: string, field: string, value: any) => {
@@ -797,6 +826,14 @@ export default function AdminSettings() {
           </div>
         )}
       </AnimatePresence>
+
+      <ConfirmationModal
+        isOpen={isConfirmModalOpen}
+        onClose={() => setIsConfirmModalOpen(false)}
+        onConfirm={confirmConfig.onConfirm}
+        title={confirmConfig.title}
+        message={confirmConfig.message}
+      />
     </motion.div>
   );
 }

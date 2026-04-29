@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { Layers, Plus, Search, Filter, Edit2, Trash2, ExternalLink, Globe, X, Image as ImageIcon, Check, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ConfirmationModal from '@/components/admin/ConfirmationModal';
+import { showToast } from '@/components/ui/Toast';
 
 interface Service {
   _id?: string;
@@ -133,14 +134,16 @@ export default function AdminServices() {
       });
 
       if (response.ok) {
+        showToast(editingService ? 'Service updated successfully!' : 'Service created successfully!');
         fetchServices();
         handleCloseModal();
       } else {
         const error = await response.json();
-        alert(error.message || 'Error saving service');
+        showToast(error.message || 'Error saving service', 'error');
       }
     } catch (error) {
       console.error('Error saving service:', error);
+      showToast('An unexpected error occurred.', 'error');
     } finally {
       setIsSaving(false);
     }
@@ -155,10 +158,14 @@ export default function AdminServices() {
       });
 
       if (response.ok) {
+        showToast('Service deleted successfully!');
         setServices(prev => prev.filter(s => s._id !== serviceToDelete));
+      } else {
+        showToast('Failed to delete service', 'error');
       }
     } catch (error) {
       console.error('Error deleting service:', error);
+      showToast('An error occurred during deletion.', 'error');
     } finally {
       setIsConfirmModalOpen(false);
       setServiceToDelete(null);

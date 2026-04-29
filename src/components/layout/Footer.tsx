@@ -121,46 +121,50 @@ export default function Footer() {
             </div>
 
             {/* Services */}
-            <div className="space-y-6">
-              <h3 className="font-bold text-sm text-white uppercase tracking-wider flex items-center gap-2">
-                <div className="w-8 h-1 bg-gradient-to-r from-blue-600 to-blue-500 rounded-full"></div>
-                Services
-              </h3>
-              <ul className="space-y-3">
-                {[
-                  { href: '/services/land-transport', label: 'Land Transport' },
-                ].map((link) => (
-                  <li key={link.href}>
-                    <Link href={link.href} className="group flex items-center gap-2 text-blue-200 hover:text-white transition-colors text-sm">
-                      <ChevronRight className="h-3 w-3 text-red-500 opacity-0 group-hover:opacity-100 transition-opacity" />
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {settings?.visibility?.services !== false && (
+              <div className="space-y-6">
+                <h3 className="font-bold text-sm text-white uppercase tracking-wider flex items-center gap-2">
+                  <div className="w-8 h-1 bg-gradient-to-r from-blue-600 to-blue-500 rounded-full"></div>
+                  Services
+                </h3>
+                <ul className="space-y-3">
+                  {[
+                    { href: '/services/land-transport', label: 'Land Transport' },
+                  ].map((link) => (
+                    <li key={link.href}>
+                      <Link href={link.href} className="group flex items-center gap-2 text-blue-200 hover:text-white transition-colors text-sm">
+                        <ChevronRight className="h-3 w-3 text-red-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             {/* Tracking */}
-            <div className="space-y-6">
-              <h3 className="font-bold text-sm text-white uppercase tracking-wider flex items-center gap-2">
-                <div className="w-8 h-1 bg-gradient-to-r from-amber-500 to-amber-400 rounded-full"></div>
-                Track Order
-              </h3>
-              <ul className="space-y-3">
-                {[
-                  { href: 'https://www.track-trace.com/bol', label: 'Bill of Lading' },
-                  { href: 'https://www.track-trace.com/container', label: 'Container' },
-                  { href: 'https://www.track-trace.com/aircargo', label: 'Air Cargo' },
-                ].map((link) => (
-                  <li key={link.href}>
-                    <a href={link.href} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2 text-blue-200 hover:text-white transition-colors text-sm">
-                      <ChevronRight className="h-3 w-3 text-red-500 opacity-0 group-hover:opacity-100 transition-opacity" />
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {settings?.visibility?.trackOrders !== false && (
+              <div className="space-y-6">
+                <h3 className="font-bold text-sm text-white uppercase tracking-wider flex items-center gap-2">
+                  <div className="w-8 h-1 bg-gradient-to-r from-amber-500 to-amber-400 rounded-full"></div>
+                  Track Order
+                </h3>
+                <ul className="space-y-3">
+                  {[
+                    { href: 'https://www.track-trace.com/bol', label: 'Bill of Lading' },
+                    { href: 'https://www.track-trace.com/container', label: 'Container' },
+                    { href: 'https://www.track-trace.com/aircargo', label: 'Air Cargo' },
+                  ].map((link) => (
+                    <li key={link.href}>
+                      <a href={link.href} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2 text-blue-200 hover:text-white transition-colors text-sm">
+                        <ChevronRight className="h-3 w-3 text-red-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             {/* Contact */}
             <div className="space-y-6">
@@ -212,8 +216,7 @@ export default function Footer() {
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
               <div className="text-blue-300 text-xs font-medium tracking-wide text-center">
                 © {new Date().getFullYear()} B2BLOGISTICS Domestic. All Rights Reserved.
-                <span className="mx-2">|</span>
-                Designed by Manic Media
+      
               </div>
               
               <motion.button 

@@ -1,9 +1,10 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { MessageSquare, Search, Filter, Trash2, CheckCircle, Mail, Phone, Calendar, Clock, User, Tag, ChevronDown, ChevronUp } from 'lucide-react';
+import { MessageSquare, Search, Filter, Trash2, CheckCircle, Mail, Phone, Calendar, Clock, User, Tag, ChevronDown, ChevronUp, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ConfirmationModal from '@/components/admin/ConfirmationModal';
+import { showToast } from '@/components/ui/Toast';
 
 interface Enquiry {
   _id: string;
@@ -51,9 +52,13 @@ export default function AdminEnquiries() {
       });
       if (response.ok) {
         setEnquiries(prev => prev.map(e => e._id === id ? { ...e, status: newStatus as any } : e));
+        showToast(`Status updated to ${newStatus}`);
+      } else {
+        showToast('Failed to update status', 'error');
       }
     } catch (error) {
       console.error('Error updating status:', error);
+      showToast('An error occurred.', 'error');
     }
   };
 
@@ -65,9 +70,13 @@ export default function AdminEnquiries() {
       });
       if (response.ok) {
         setEnquiries(prev => prev.filter(e => e._id !== enquiryToDelete));
+        showToast('Enquiry deleted successfully!');
+      } else {
+        showToast('Failed to delete enquiry', 'error');
       }
     } catch (error) {
       console.error('Error deleting enquiry:', error);
+      showToast('An error occurred.', 'error');
     } finally {
       setIsConfirmModalOpen(false);
       setEnquiryToDelete(null);
