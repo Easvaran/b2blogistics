@@ -86,12 +86,6 @@ export default function AdminSettings() {
           }
   });
 
-  useEffect(() => {
-    fetchSettings();
-    fetchUsers();
-    fetchServices();
-  }, [fetchSettings, fetchUsers, fetchServices]);
-
   const fetchServices = useCallback(async () => {
     try {
       const response = await fetch('/api/admin/services');
@@ -137,6 +131,12 @@ export default function AdminSettings() {
       console.error('Error fetching users:', error);
     }
   }, []);
+
+  useEffect(() => {
+    fetchSettings();
+    fetchUsers();
+    fetchServices();
+  }, [fetchSettings, fetchUsers, fetchServices]);
 
   const handleToggleServiceVisibility = async (serviceId: string, currentVisibility: boolean) => {
     try {
