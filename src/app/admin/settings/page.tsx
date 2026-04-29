@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { Settings, User, Key, Building2, Phone, Mail, MapPin, Clock, Facebook, Twitter, Linkedin, Youtube, MessageCircle, Save, Loader2, Plus, Trash2, ExternalLink, X, ShieldCheck, UserPlus, ArrowRight, Eye, EyeOff, Layout, Component, Layers } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -90,9 +90,9 @@ export default function AdminSettings() {
     fetchSettings();
     fetchUsers();
     fetchServices();
-  }, []);
+  }, [fetchSettings, fetchUsers, fetchServices]);
 
-  const fetchServices = async () => {
+  const fetchServices = useCallback(async () => {
     try {
       const response = await fetch('/api/admin/services');
       const data = await response.json();
@@ -102,9 +102,9 @@ export default function AdminSettings() {
     } catch (error) {
       console.error('Error fetching services:', error);
     }
-  };
+  }, []);
 
-  const fetchSettings = async () => {
+  const fetchSettings = useCallback(async () => {
     try {
       const response = await fetch('/api/admin/settings/site-config');
       const data = await response.json();
@@ -124,9 +124,9 @@ export default function AdminSettings() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
-  const fetchUsers = async () => {
+  const fetchUsers = useCallback(async () => {
     try {
       const response = await fetch('/api/admin/users');
       const data = await response.json();
@@ -136,7 +136,7 @@ export default function AdminSettings() {
     } catch (error) {
       console.error('Error fetching users:', error);
     }
-  };
+  }, []);
 
   const handleToggleServiceVisibility = async (serviceId: string, currentVisibility: boolean) => {
     try {
