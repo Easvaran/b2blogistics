@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Package, Plus, Search, Filter, MoreVertical, Edit2, Trash2, ExternalLink, X, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ConfirmationModal from '@/components/admin/ConfirmationModal';
@@ -41,11 +41,7 @@ export default function AdminOrders() {
     status: 'Pending'
   });
 
-  useEffect(() => {
-    fetchOrders();
-  }, []);
-
-  const fetchOrders = async () => {
+  const fetchOrders = useCallback(async () => {
     try {
       const response = await fetch('/api/admin/orders');
       const data = await response.json();
@@ -55,7 +51,11 @@ export default function AdminOrders() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchOrders();
+  }, [fetchOrders]);
 
   const handleEdit = (order: Order) => {
     setEditingOrder(order);

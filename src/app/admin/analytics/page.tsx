@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { BarChart3, TrendingUp, Package, Truck, Users, ArrowUpRight, ArrowDownRight, Download, Loader2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import * as XLSX from 'xlsx';
@@ -20,11 +20,7 @@ export default function AdminAnalytics() {
   const [isExporting, setIsExporting] = useState(false);
   const [stats, setStats] = useState<any>({});
 
-  useEffect(() => {
-    fetchAnalytics();
-  }, []);
-
-  const fetchAnalytics = async () => {
+  const fetchAnalytics = useCallback(async () => {
     try {
       const response = await fetch('/api/admin/dashboard-stats');
       const statsData = await response.json();
@@ -34,15 +30,15 @@ export default function AdminAnalytics() {
       
       // Since dashboard-stats provides some data, we'll augment it for analytics
       setData({
-        totalRevenue: parseFloat(stats.revenue?.replace(/[₹,]/g, '') || '0'),
-        totalOrders: parseInt(stats.totalOrders?.replace(/,/g, '') || '0'),
-        totalCustomers: parseInt(stats.totalCustomers?.replace(/,/g, '') || '0'),
-        activeShipments: parseInt(stats.inTransit?.replace(/,/g, '') || '0'),
+        totalRevenue: parseFloat(currentStats.revenue?.replace(/[₹,]/g, '') || '0'),
+        totalOrders: parseInt(currentStats.totalOrders?.replace(/,/g, '') || '0'),
+        totalCustomers: parseInt(currentStats.totalCustomers?.replace(/,/g, '') || '0'),
+        activeShipments: parseInt(currentStats.inTransit?.replace(/,/g, '') || '0'),
         revenueByMonth: [
           { month: 'Jan', amount: 450000 },
           { month: 'Feb', amount: 520000 },
           { month: 'Mar', amount: 480000 },
-          { month: 'Apr', amount: parseFloat(stats.revenue?.replace(/[₹,]/g, '') || '0') },
+          { month: 'Apr', amount: parseFloat(currentStats.revenue?.replace(/[₹,]/g, '') || '0') },
         ]
       });
     } catch (error) {
@@ -50,7 +46,11 @@ export default function AdminAnalytics() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchAnalytics();
+  }, [fetchAnalytics]);
 
   const handleExport = async () => {
     setIsExporting(true);

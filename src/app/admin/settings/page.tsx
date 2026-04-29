@@ -829,7 +829,7 @@ export default function AdminSettings() {
 
       <ConfirmationModal
         isOpen={isConfirmModalOpen}
-        onClose={() => setIsConfirmModalOpen(false)}
+        onCancel={() => setIsConfirmModalOpen(false)}
         onConfirm={confirmConfig.onConfirm}
         title={confirmConfig.title}
         message={confirmConfig.message}

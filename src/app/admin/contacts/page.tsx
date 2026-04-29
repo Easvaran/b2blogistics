@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Mail, Search, Filter, Trash2, CheckCircle, Phone, Calendar, User, Eye, EyeOff, MessageSquare, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { showToast } from '@/components/ui/Toast';
@@ -25,11 +25,7 @@ export default function AdminContacts() {
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [messageToDelete, setMessageToDelete] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetchMessages();
-  }, []);
-
-  const fetchMessages = async () => {
+  const fetchMessages = useCallback(async () => {
     try {
       const response = await fetch('/api/admin/contacts');
       const data = await response.json();
@@ -39,7 +35,11 @@ export default function AdminContacts() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchMessages();
+  }, [fetchMessages]);
 
   const toggleReadStatus = async (id: string, currentStatus: boolean) => {
     try {
@@ -234,7 +234,7 @@ export default function AdminContacts() {
       </div>
       <ConfirmationModal
         isOpen={isConfirmModalOpen}
-        onClose={() => setIsConfirmModalOpen(false)}
+        onCancel={() => setIsConfirmModalOpen(false)}
         onConfirm={deleteMessage}
         title="Delete Message"
         message="Are you sure you want to delete this message? This action cannot be undone."

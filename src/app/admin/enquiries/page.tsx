@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { MessageSquare, Search, Filter, Trash2, CheckCircle, Mail, Phone, Calendar, Clock, User, Tag, ChevronDown, ChevronUp, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ConfirmationModal from '@/components/admin/ConfirmationModal';
@@ -27,11 +27,7 @@ export default function AdminEnquiries() {
   const [enquiryToDelete, setEnquiryToDelete] = useState<string | null>(null);
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetchEnquiries();
-  }, []);
-
-  const fetchEnquiries = async () => {
+  const fetchEnquiries = useCallback(async () => {
     try {
       const response = await fetch('/api/admin/enquiries');
       const data = await response.json();
@@ -41,7 +37,11 @@ export default function AdminEnquiries() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchEnquiries();
+  }, [fetchEnquiries]);
 
   const updateStatus = async (id: string, newStatus: string) => {
     try {

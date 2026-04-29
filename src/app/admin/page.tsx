@@ -87,7 +87,7 @@ export default function AdminDashboard() {
   const [isLoadingDashboard, setIsLoadingDashboard] = useState(true);
   const [notifications, setNotifications] = useState<Notification[]>([]);
 
-  const fetchNotifications = async () => {
+  const fetchNotifications = useCallback(async () => {
     try {
       const response = await fetch('/api/admin/notifications');
       if (response.ok) {
@@ -97,7 +97,7 @@ export default function AdminDashboard() {
     } catch (error) {
       console.error('Error fetching notifications:', error);
     }
-  };
+  }, []);
 
   const handleMarkAsRead = (id: number) => {
     setNotifications(prev => prev.map(n => n.id === id ? { ...n, read: true } : n));
@@ -116,18 +116,7 @@ export default function AdminDashboard() {
     setNotifications(prev => prev.filter(n => n.id !== id));
   };
 
-  useEffect(() => {
-    fetchNotifications();
-    if (activeTab === 'Dashboard') {
-      fetchDashboardData();
-    }
-
-    // Poll for new notifications every minute
-    const interval = setInterval(fetchNotifications, 60000);
-    return () => clearInterval(interval);
-  }, [activeTab]);
-
-  const fetchDashboardData = async () => {
+  const fetchDashboardData = useCallback(async () => {
     setIsLoadingDashboard(true);
     try {
       const response = await fetch('/api/admin/dashboard-stats');
@@ -140,7 +129,18 @@ export default function AdminDashboard() {
     } finally {
       setIsLoadingDashboard(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchNotifications();
+    if (activeTab === 'Dashboard') {
+      fetchDashboardData();
+    }
+
+    // Poll for new notifications every minute
+    const interval = setInterval(fetchNotifications, 60000);
+    return () => clearInterval(interval);
+  }, [activeTab, fetchNotifications, fetchDashboardData]);
 
   const handleLogout = () => {
     document.cookie = 'admin_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT; Max-Age=0; SameSite=Lax';

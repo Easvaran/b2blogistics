@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Truck, MapPin, Clock, Plus, CheckCircle2, Circle, ChevronRight, Search, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { showToast } from '@/components/ui/Toast';
@@ -33,11 +33,7 @@ export default function AdminShipments() {
     location: ''
   });
 
-  useEffect(() => {
-    fetchOrders();
-  }, []);
-
-  const fetchOrders = async () => {
+  const fetchOrders = useCallback(async () => {
     try {
       const response = await fetch('/api/admin/orders');
       const data = await response.json();
@@ -47,7 +43,11 @@ export default function AdminShipments() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchOrders();
+  }, [fetchOrders]);
 
   const handleUpdateStatus = async (orderId: string, newStatus: string) => {
     try {
