@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Quote, CheckCircle2, Plane, Ship, Anchor, Truck, Target, Eye, Users, MapPin, Calendar, Award, Globe, ArrowRight, Linkedin, Twitter, Warehouse, Package } from 'lucide-react';
+import { Quote, CheckCircle2, Plane, Ship, Anchor, Truck, Target, Eye, Users, MapPin, Calendar, Award, Globe, ArrowRight, Linkedin, Twitter, Warehouse, Package, Shield } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
