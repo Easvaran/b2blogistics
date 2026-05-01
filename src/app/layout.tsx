@@ -11,25 +11,25 @@ import Script from 'next/script';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'B2B Logistics | Domestic Freight Forwarding & Supply Chain Solutions',
-  description: 'Your trusted partner for domestic logistics, land transport, and freight forwarding solutions in India since 1998. Reliable, safe, and on-time delivery.',
-  keywords: 'logistics, freight forwarding, land transport, supply chain, B2B logistics, domestic shipping, India logistics',
-  authors: [{ name: 'B2B Logistics' }],
+  title: 'B2B Logistics Solution | Logistics Services in Chennai',
+  description: 'B2B Logistics Solution offers reliable freight forwarding, transportation, and supply chain services in Chennai. Get fast and affordable logistics solutions.',
+  keywords: 'logistics services in Chennai, freight forwarding Chennai, supply chain solutions India, transportation services Chennai, B2B logistics, domestic shipping India',
+  authors: [{ name: 'B2B Logistics Solution' }],
   openGraph: {
-    title: 'B2B Logistics | Domestic Freight Forwarding Solutions',
-    description: 'Expert domestic logistics and supply chain solutions since 1998. Reliable land transport across India.',
-    url: 'https://b2blogisticssolution.com',
-    siteName: 'B2B Logistics',
+    title: 'B2B Logistics Solution | Logistics Services in Chennai',
+    description: 'B2B Logistics Solution offers reliable freight forwarding, transportation, and supply chain services in Chennai.',
+    url: 'https://www.b2blogisticssolution.com',
+    siteName: 'B2B Logistics Solution',
     locale: 'en_IN',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'B2B Logistics | Domestic Freight Forwarding Solutions',
-    description: 'Expert domestic logistics and supply chain solutions since 1998.',
+    title: 'B2B Logistics Solution | Logistics Services in Chennai',
+    description: 'Reliable freight forwarding and supply chain solutions in Chennai.',
   },
   alternates: {
-    canonical: 'https://b2blogisticssolution.com',
+    canonical: 'https://www.b2blogisticssolution.com',
   },
   robots: {
     index: true,
@@ -42,9 +42,22 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "B2B Logistics Solution",
+    "url": "https://www.b2blogisticssolution.com",
+    "logo": "https://www.b2blogisticssolution.com/logo.png",
+    "sameAs": []
+  };
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-ZSFS24BP1J"
           strategy="afterInteractive"

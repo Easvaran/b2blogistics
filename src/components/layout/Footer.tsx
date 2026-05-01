@@ -71,15 +71,15 @@ export default function Footer() {
                 </div>
                 <div className="flex flex-col">
                   <span className="font-black text-2xl tracking-tighter text-white leading-none">
-                    B2B<span className="text-red-500">LOGISTICS</span>
+                    B2B<span className="text-red-500">LOGISTICS SOLUTION</span>
                   </span>
-                  <span className="text-[9px] font-bold tracking-[0.2em] text-blue-300 leading-none mt-1">
-                    DOMESTIC
+                  <span className="text-[9px] font-bold tracking-[0.2em] text-blue-300 leading-none mt-1 uppercase">
+                    Logistics Services in Chennai
                   </span>
                 </div>
               </Link>
               <p className="text-blue-200 text-sm leading-relaxed">
-                Your trusted partner for state-wide logistics and freight forwarding solutions since 1998.
+                Your trusted partner for <strong>freight forwarding Chennai</strong> and state-wide logistics solutions since 1998.
               </p>
               <div className="flex items-center gap-3">
                 {socialIcons.map(({ Icon, href }, i) => (

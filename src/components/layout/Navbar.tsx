@@ -117,10 +117,10 @@ export default function Navbar() {
             </div>
             <div className="flex flex-col">
               <span className="font-black text-2xl tracking-tighter text-blue-900 dark:text-white leading-none">
-                B2B<span className="text-red-600">LOGISTICS</span>
+                B2B<span className="text-red-600">LOGISTICS SOLUTION</span>
               </span>
-              <span className="text-[10px] font-bold tracking-[0.25em] text-slate-500 dark:text-slate-400 leading-none mt-1">
-                DOMESTIC
+              <span className="text-[10px] font-bold tracking-[0.25em] text-slate-500 dark:text-slate-400 leading-none mt-1 uppercase">
+                Premier Logistics Services in Chennai
               </span>
             </div>
           </Link>

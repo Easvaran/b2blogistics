@@ -69,7 +69,7 @@ export default function AboutPageClient() {
               Established 1998 | Chennai, India
             </span>
             <h1 className="text-5xl md:text-7xl font-black text-white tracking-tight mb-6">
-              ABOUT <span className="bg-gradient-to-r from-red-500 to-amber-500 bg-clip-text text-transparent">B2BLOGISTICS</span>
+              ABOUT <span className="bg-gradient-to-r from-red-500 to-amber-500 bg-clip-text text-transparent">B2B LOGISTICS SOLUTION</span>
             </h1>
             <div className="w-24 h-1.5 bg-gradient-to-r from-blue-500 to-red-500 mx-auto rounded-full"></div>
           </motion.div>

@@ -218,7 +218,7 @@ export default function HomePage() {
 
               <motion.h1
                 variants={itemVariants}
-                className="text-5xl md:text-6xl lg:text-7xl font-black leading-tight"
+                className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight"
               >
                 <motion.span 
                   initial={{ opacity: 0, x: -20 }}
@@ -226,7 +226,7 @@ export default function HomePage() {
                   transition={{ duration: 0.8, delay: 0.5 }}
                   className="text-white block"
                 >
-                  State-wide 
+                  Reliable B2B 
                 </motion.span>
                 <motion.span 
                   initial={{ opacity: 0, scale: 0.8 }}
@@ -234,16 +234,16 @@ export default function HomePage() {
                   transition={{ duration: 0.8, delay: 0.7 }}
                   className="bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent inline-block"
                 >
-                  Logistics
+                  Logistics Solution
                 </motion.span>
                 <br />
                 <motion.span 
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.9 }}
-                  className="text-white"
+                  className="text-white text-3xl md:text-4xl lg:text-5xl"
                 >
-                  Made Simple
+                  Premier Logistics Services in Chennai
                 </motion.span>
               </motion.h1>
 
@@ -251,7 +251,7 @@ export default function HomePage() {
                 variants={itemVariants}
                 className="text-lg text-white/70 max-w-lg leading-relaxed"
               >
-                End-to-end freight forwarding solutions with real-time tracking, customs clearance, and warehousing. Your cargo, our priority.
+                Experience seamless freight forwarding, transportation, and supply chain solutions India. B2B Logistics Solution provides end-to-end management with real-time tracking for your business growth.
               </motion.p>
 
               {/* CTA Buttons */}
@@ -408,6 +408,59 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* SEO About Section */}
+      <section className="py-24 bg-white dark:bg-slate-900 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <h2 className="text-sm font-black text-red-600 uppercase tracking-[0.3em] mb-4">About B2B Logistics Solution</h2>
+              <h3 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-8 uppercase tracking-tight">Your Trusted Partner for Freight Forwarding in Chennai</h3>
+              <div className="space-y-6 text-slate-600 dark:text-slate-400 text-lg leading-relaxed font-medium">
+                <p>
+                  At <strong>B2B Logistics Solution</strong>, we specialize in providing top-tier <strong>logistics services in Chennai</strong> and across India. With over 25 years of industry excellence, our mission is to simplify complex supply chains and offer reliable <strong>freight forwarding Chennai</strong> businesses can depend on.
+                </p>
+                <p>
+                  Whether you are looking for <strong>transportation services Chennai</strong> for local distribution or comprehensive <strong>supply chain solutions India</strong> for national operations, our expert team is equipped to handle your requirements with precision. We understand the unique challenges of the logistics landscape in Tamil Nadu, from the bustling ports of Chennai to the industrial hubs of Madurai.
+                </p>
+                <p>
+                  Our commitment to technology-driven logistics ensures that your cargo is tracked in real-time, providing transparency and peace of mind. As a leader in the sector, we offer a full suite of services including air freight, ocean freight, inland haulage, and secure warehousing.
+                </p>
+              </div>
+              <div className="mt-10">
+                <Link
+                  href="/about"
+                  className="text-red-600 font-black text-xs uppercase tracking-widest hover:underline flex items-center gap-2"
+                >
+                  Learn More About Our Journey <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1 }}
+              className="relative"
+            >
+              <div className="relative rounded-[3rem] overflow-hidden shadow-2xl h-[500px]">
+                <Image 
+                  src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?q=80&w=2070" 
+                  alt="B2B Logistics Solution Team - Expert Logistics Services in Chennai" 
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent"></div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       {/* Stats Section - Bento Grid */}
       <section className="py-24 bg-slate-50 dark:bg-slate-800/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -453,8 +506,11 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
             <div>
-              <span className="text-red-600 font-black tracking-[0.4em] text-[10px] uppercase mb-4 block">What We Do</span>
-              <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Our Services</h2>
+              <span className="text-red-600 font-black tracking-[0.4em] text-[10px] uppercase mb-4 block">Comprehensive Solutions</span>
+              <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Our Professional Logistics Services in Chennai</h2>
+              <p className="mt-4 text-slate-500 dark:text-slate-400 max-w-2xl font-medium">
+                B2B Logistics Solution offers a wide range of <strong>transportation services Chennai</strong> and specialized <strong>supply chain solutions India</strong> to meet the dynamic needs of modern businesses.
+              </p>
             </div>
             <Link
               href="/services"
@@ -465,9 +521,27 @@ export default function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[...services, ...dynamicServices.map(s => ({ ...s, href: `/services/${s.slug}` }))].map((service, index) => (
-              <ServiceCard key={service.title} {...service} index={index} />
-            ))}
+            <div className="lg:col-span-1 space-y-8">
+              <div className="p-8 bg-slate-50 dark:bg-slate-800 rounded-[2.5rem] border border-slate-100 dark:border-slate-700">
+                <h3 className="text-2xl font-black text-slate-900 dark:text-white mb-4 uppercase tracking-tight">Freight Forwarding Chennai</h3>
+                <p className="text-slate-500 dark:text-slate-400 text-sm font-medium leading-relaxed">
+                  We are experts in <strong>freight forwarding Chennai</strong>, managing international and domestic cargo movements via air, sea, and land. Our network ensures your goods reach their destination efficiently and cost-effectively.
+                </p>
+              </div>
+              <div className="p-8 bg-slate-50 dark:bg-slate-800 rounded-[2.5rem] border border-slate-100 dark:border-slate-700">
+                <h3 className="text-2xl font-black text-slate-900 dark:text-white mb-4 uppercase tracking-tight">Supply Chain Solutions India</h3>
+                <p className="text-slate-500 dark:text-slate-400 text-sm font-medium leading-relaxed">
+                  Our <strong>supply chain solutions India</strong> are designed to optimize your operations from procurement to final delivery. We provide strategic consulting and execution for businesses across Tamil Nadu and beyond.
+                </p>
+              </div>
+            </div>
+            <div className="lg:col-span-2">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 h-full">
+                {[...services, ...dynamicServices.map(s => ({ ...s, href: `/services/${s.slug}` }))].map((service, index) => (
+                  <ServiceCard key={service.title} {...service} index={index} />
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -498,19 +572,21 @@ export default function HomePage() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-16">
-            <span className="text-red-400 font-black tracking-[0.4em] text-[10px] uppercase mb-4 block">Why Us</span>
-            <h2 className="text-4xl md:text-5xl font-black mb-6 uppercase tracking-tight">Why Choose B2BLOGISTICS?</h2>
-            <p className="text-blue-200 max-w-2xl mx-auto font-medium">We combine state-level expertise with local knowledge to deliver unmatched logistics solutions.</p>
+            <span className="text-red-400 font-black tracking-[0.4em] text-[10px] uppercase mb-4 block">Our Advantage</span>
+            <h2 className="text-4xl md:text-5xl font-black mb-6 uppercase tracking-tight">Why Choose B2B Logistics Solution?</h2>
+            <p className="text-blue-200 max-w-2xl mx-auto font-medium">
+              We are the preferred choice for <strong>logistics services in Chennai</strong> because we combine state-level expertise with a deep commitment to customer success.
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
-              { icon: Clock, title: '24/7 Support', desc: 'Round-the-clock assistance for all your state-wide logistics needs', color: 'blue' },
-              { icon: Shield, title: 'Safe & Secure', desc: 'Your cargo is fully insured and protected throughout its journey', color: 'green' },
-              { icon: Globe, title: 'State-wide Network', desc: 'Strategic presence in all districts with local expert knowledge', color: 'purple' },
-              { icon: Award, title: 'ISO Certified', desc: 'Maintaining state-level quality standards in all our operations', color: 'amber' },
-              { icon: Zap, title: 'Fast Delivery', desc: 'Optimized routes and processes for expedited shipments', color: 'red' },
-              { icon: Headphones, title: 'Expert Advice', desc: 'Dedicated consultants with deep industry knowledge', color: 'cyan' },
+              { icon: Clock, title: '24/7 Logistics Support', desc: 'Round-the-clock assistance for all your freight forwarding Chennai needs, ensuring no cargo is left unattended.', color: 'blue' },
+              { icon: Shield, title: 'Safe & Secure Transportation', desc: 'Our transportation services Chennai are backed by advanced security protocols and comprehensive insurance coverage.', color: 'green' },
+              { icon: Globe, title: 'State-wide Network', desc: 'From Chennai to Madurai, our network covers every district with local expert knowledge and efficient routing.', color: 'purple' },
+              { icon: Award, title: 'Certified Excellence', desc: 'We maintain the highest standards in supply chain solutions India, ensuring compliance and quality in every shipment.', color: 'amber' },
+              { icon: Zap, title: 'Expedited Delivery', desc: 'Fast and reliable transportation services Chennai businesses rely on for time-sensitive cargo and urgent deliveries.', color: 'red' },
+              { icon: Headphones, title: 'Strategic Consulting', desc: 'Our team provides expert advice to optimize your supply chain and reduce operational costs across India.', color: 'cyan' },
             ].map((item, index) => (
               <motion.div
                 key={item.title}
@@ -593,9 +669,9 @@ export default function HomePage() {
               transition={{ duration: 0.8 }}
             >
               <span className="text-red-600 font-black tracking-[0.4em] text-[10px] uppercase mb-4 block">Our Expertise</span>
-              <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-8 uppercase tracking-tight">Full-Spectrum Logistics Capabilities</h2>
+              <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-8 uppercase tracking-tight">Full-Spectrum Logistics Capabilities in Tamil Nadu</h2>
               <p className="text-slate-600 dark:text-slate-400 text-lg mb-8 leading-relaxed font-medium">
-                B2BLOGISTICS provides a comprehensive suite of services designed to streamline your supply chain. We don&apos;t just move cargo; we provide strategic solutions that drive business growth.
+                B2B Logistics Solution provides a comprehensive suite of services designed to streamline your supply chain. We don&apos;t just move cargo; we provide strategic solutions that drive business growth for companies seeking reliable <strong>logistics services in Chennai</strong>.
               </p>
               
               <div className="space-y-4">
@@ -713,7 +789,7 @@ export default function HomePage() {
                 transition={{ delay: 0.3, duration: 0.8 }}
                 className="text-4xl md:text-6xl font-black text-white mb-8 uppercase tracking-tighter"
               >
-                Ready to Ship?
+                Ready to Optimize Your Supply Chain?
               </motion.h2>
               <motion.p 
                 initial={{ opacity: 0, y: 20 }}
@@ -722,7 +798,7 @@ export default function HomePage() {
                 transition={{ delay: 0.5, duration: 0.8 }}
                 className="text-blue-200 text-lg md:text-xl mb-12 max-w-2xl mx-auto font-medium"
               >
-                Get a personalized quote for your logistics needs. Our experts are ready to help you optimize your supply chain.
+                Get a personalized quote for your <strong>logistics services in Chennai</strong>. Our experts are ready to help you scale your business with the best <strong>supply chain solutions India</strong>.
               </motion.p>
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
