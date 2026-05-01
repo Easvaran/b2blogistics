@@ -17,33 +17,54 @@ export default function Icon() {
       // ImageResponse JSX element
       <div
         style={{
-          fontSize: 24,
-          background: '#2563eb', // blue-600
           width: '100%',
           height: '100%',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          color: 'white',
-          borderRadius: '8px',
+          position: 'relative',
         }}
       >
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
+        <div
+          style={{
+            background: 'linear-gradient(to bottom right, #2563eb, #1e40af)', // blue-600 to blue-800
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: 'white',
+            borderRadius: '8px',
+          }}
         >
-          <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2" />
-          <path d="M15 18H9" />
-          <path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.95-5.07a1 1 0 0 0-.78-.36H15v11a1 1 0 0 0 1 1h2" />
-          <circle cx="7" cy="18" r="2" />
-          <circle cx="17" cy="18" r="2" />
-        </svg>
+          <svg
+            width="22"
+            height="22"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <circle cx="12" cy="12" r="10" />
+            <line x1="2" y1="12" x2="22" y2="12" />
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+          </svg>
+        </div>
+        {/* Red dot to match brand logo */}
+        <div
+          style={{
+            position: 'absolute',
+            bottom: '0px',
+            right: '0px',
+            width: '8px',
+            height: '8px',
+            background: '#dc2626', // red-600
+            borderRadius: '50%',
+            border: '2px solid white',
+          }}
+        ></div>
       </div>
     ),
     // ImageResponse options
