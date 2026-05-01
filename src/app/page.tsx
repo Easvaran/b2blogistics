@@ -226,24 +226,24 @@ export default function HomePage() {
                   transition={{ duration: 0.8, delay: 0.5 }}
                   className="text-white block"
                 >
-                  Reliable B2B 
+                  B2B Logistics Solution
                 </motion.span>
                 <motion.span 
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.8, delay: 0.7 }}
-                  className="bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent inline-block"
+                  className="bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent inline-block text-3xl md:text-4xl lg:text-5xl"
                 >
-                  Logistics Solution
+                  Freight & Supply Chain Services
                 </motion.span>
                 <br />
                 <motion.span 
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.9 }}
-                  className="text-white text-3xl md:text-4xl lg:text-5xl"
+                  className="text-white text-2xl md:text-3xl lg:text-4xl opacity-80"
                 >
-                  Premier Logistics Services in Madurai
+                  Premier Logistics in Madurai
                 </motion.span>
               </motion.h1>
 
@@ -251,7 +251,7 @@ export default function HomePage() {
                 variants={itemVariants}
                 className="text-lg text-white/70 max-w-lg leading-relaxed"
               >
-                Experience seamless freight forwarding, transportation, and supply chain solutions India. B2B Logistics Solution provides end-to-end management with real-time tracking for your business growth.
+                B2B Logistics Solution is a leading logistics company offering freight forwarding, transportation, and supply chain solutions across India.
               </motion.p>
 
               {/* CTA Buttons */}

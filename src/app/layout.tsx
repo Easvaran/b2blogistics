@@ -11,13 +11,13 @@ import Script from 'next/script';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'B2B Logistics Solution | Professional Logistics & Freight Forwarding Services',
-  description: 'Expert freight forwarding, seamless supply chain management, and professional transportation services in Madurai. We deliver reliable, efficient, and cost-effective logistics solutions tailored to your business needs.',
-  keywords: 'professional logistics Madurai, expert freight forwarding, supply chain solutions India, transportation services Madurai, B2B logistics solution, domestic shipping excellence',
+  title: 'B2B Logistics Solution | Freight & Supply Chain Services',
+  description: 'B2B Logistics Solution provides expert freight forwarding, supply chain management, and logistics services in India.',
+  keywords: 'B2B Logistics Solution, freight forwarding India, supply chain management, professional logistics Madurai, transportation services India',
   authors: [{ name: 'B2B Logistics Solution' }],
   openGraph: {
-    title: 'B2B Logistics Solution | Professional Logistics & Freight Forwarding',
-    description: 'Expert freight forwarding, seamless supply chain management, and professional transportation services in Madurai.',
+    title: 'B2B Logistics Solution | Freight & Supply Chain Services',
+    description: 'Expert freight forwarding and supply chain management services in India.',
     url: 'https://www.b2blogisticssolution.com',
     siteName: 'B2B Logistics Solution',
     locale: 'en_IN',
@@ -25,8 +25,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'B2B Logistics Solution | Professional Logistics & Freight Forwarding',
-    description: 'Reliable freight forwarding and supply chain solutions tailored to your business needs.',
+    title: 'B2B Logistics Solution | Freight & Supply Chain Services',
+    description: 'B2B Logistics Solution provides expert freight forwarding and supply chain management services in India.',
   },
   alternates: {
     canonical: 'https://www.b2blogisticssolution.com',
