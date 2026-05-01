@@ -22,12 +22,12 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     title: `${service.title} | B2B Logistics Domestic Freight`,
     description: service.description,
     alternates: {
-      canonical: `https://b2blogistics.in/services/${params.slug}`,
+      canonical: `https://b2blogisticssolution.com/services/${params.slug}`,
     },
     openGraph: {
       title: `${service.title} | B2B Logistics`,
       description: service.description,
-      url: `https://b2blogistics.in/services/${params.slug}`,
+      url: `https://b2blogisticssolution.com/services/${params.slug}`,
       type: 'article',
     },
   };

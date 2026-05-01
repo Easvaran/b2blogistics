@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'B2B Logistics | Domestic Freight Forwarding Solutions',
     description: 'Expert domestic logistics and supply chain solutions since 1998. Reliable land transport across India.',
-    url: 'https://b2blogistics.in',
+    url: 'https://b2blogisticssolution.com',
     siteName: 'B2B Logistics',
     locale: 'en_IN',
     type: 'website',
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     description: 'Expert domestic logistics and supply chain solutions since 1998.',
   },
   alternates: {
-    canonical: 'https://b2blogistics.in',
+    canonical: 'https://b2blogisticssolution.com',
   },
   robots: {
     index: true,

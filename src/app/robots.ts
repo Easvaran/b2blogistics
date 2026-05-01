@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: '/admin/',
     },
-    sitemap: 'https://b2blogistics.in/sitemap.xml',
+    sitemap: 'https://b2blogisticssolution.com/sitemap.xml',
   };
 }
