@@ -11,13 +11,13 @@ import Script from 'next/script';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'B2B Logistics Solution | Logistics Services in Maurai',
-  description: 'B2B Logistics Solution offers reliable freight forwarding, transportation, and supply chain services in Chennai. Get fast and affordable logistics solutions.',
-  keywords: 'logistics services in Madurai, freight forwarding Madurai, supply chain solutions India, transportation services Chennai, B2B logistics, domestic shipping India',
+  title: 'B2B Logistics Solution | Professional Logistics & Freight Forwarding Services',
+  description: 'Expert freight forwarding, seamless supply chain management, and professional transportation services in Chennai. We deliver reliable, efficient, and cost-effective logistics solutions tailored to your business needs.',
+  keywords: 'professional logistics Chennai, expert freight forwarding, supply chain solutions India, transportation services Chennai, B2B logistics solution, domestic shipping excellence',
   authors: [{ name: 'B2B Logistics Solution' }],
   openGraph: {
-    title: 'B2B Logistics Solution | Logistics Services in madurai',
-    description: 'B2B Logistics Solution offers reliable freight forwarding, transportation, and supply chain services in Chennai.',
+    title: 'B2B Logistics Solution | Professional Logistics & Freight Forwarding',
+    description: 'Expert freight forwarding, seamless supply chain management, and professional transportation services in Chennai.',
     url: 'https://www.b2blogisticssolution.com',
     siteName: 'B2B Logistics Solution',
     locale: 'en_IN',
@@ -25,8 +25,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'B2B Logistics Solution | Logistics Services in Madurai',
-    description: 'Reliable freight forwarding and supply chain solutions in Madurai.',
+    title: 'B2B Logistics Solution | Professional Logistics & Freight Forwarding',
+    description: 'Reliable freight forwarding and supply chain solutions tailored to your business needs.',
   },
   alternates: {
     canonical: 'https://www.b2blogisticssolution.com',
