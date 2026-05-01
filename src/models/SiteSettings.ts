@@ -39,7 +39,7 @@ const SiteSettingsSchema: Schema = new Schema({
     phone: { type: String, default: '+91 97877 88888' },
     phoneSecondary: { type: String, default: '044 45535112' },
     email: { type: String, default: 'bharathi@b2blogistics.in' },
-    address: { type: String, default: 'Chennai, India' },
+    address: { type: String, default: 'Madurai, India' },
     googleMapsLink: { type: String, default: '' },
   },
   workingHours: {

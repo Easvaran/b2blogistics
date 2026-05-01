@@ -12,12 +12,12 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'B2B Logistics Solution | Professional Logistics & Freight Forwarding Services',
-  description: 'Expert freight forwarding, seamless supply chain management, and professional transportation services in Chennai. We deliver reliable, efficient, and cost-effective logistics solutions tailored to your business needs.',
-  keywords: 'professional logistics Chennai, expert freight forwarding, supply chain solutions India, transportation services Chennai, B2B logistics solution, domestic shipping excellence',
+  description: 'Expert freight forwarding, seamless supply chain management, and professional transportation services in Madurai. We deliver reliable, efficient, and cost-effective logistics solutions tailored to your business needs.',
+  keywords: 'professional logistics Madurai, expert freight forwarding, supply chain solutions India, transportation services Madurai, B2B logistics solution, domestic shipping excellence',
   authors: [{ name: 'B2B Logistics Solution' }],
   openGraph: {
     title: 'B2B Logistics Solution | Professional Logistics & Freight Forwarding',
-    description: 'Expert freight forwarding, seamless supply chain management, and professional transportation services in Chennai.',
+    description: 'Expert freight forwarding, seamless supply chain management, and professional transportation services in Madurai.',
     url: 'https://www.b2blogisticssolution.com',
     siteName: 'B2B Logistics Solution',
     locale: 'en_IN',

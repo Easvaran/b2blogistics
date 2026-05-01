@@ -23,7 +23,7 @@ export default function AboutPageClient() {
   ];
 
   const milestones = [
-    { year: '1998', title: 'Company Founded', desc: 'Established in Chennai with a vision for state-wide logistics' },
+    { year: '1998', title: 'Company Founded', desc: 'Established in Madurai with a vision for state-wide logistics' },
     { year: '2005', title: 'State-wide Expansion', desc: 'Opened offices in major districts across the state' },
     { year: '2012', title: 'ISO Certification', desc: 'Achieved ISO 9001:2008 certification for quality management' },
     { year: '2018', title: 'Digital Transformation', desc: 'Launched real-time tracking and online booking platform' },
@@ -66,7 +66,7 @@ export default function AboutPageClient() {
           >
             <span className="inline-block bg-white/10 backdrop-blur-sm border border-white/20 text-white px-4 py-2 rounded-full text-sm font-bold mb-6">
               <Globe className="w-4 h-4 inline mr-2" />
-              Established 1998 | Chennai, India
+              Established 1998 | Madurai, India
             </span>
             <h1 className="text-5xl md:text-7xl font-black text-white tracking-tight mb-6">
               ABOUT <span className="bg-gradient-to-r from-red-500 to-amber-500 bg-clip-text text-transparent">B2B LOGISTICS SOLUTION</span>

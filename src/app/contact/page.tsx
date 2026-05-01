@@ -9,7 +9,7 @@ import Image from 'next/image';
 import { contactFormSchema, type ContactFormData } from '@/types/forms';
 
 const extractMapUrl = (link: string | undefined | null) => {
-  const defaultMap = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d155959.47639838465!2d80.04395247905654!3d13.047791775145685!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5265ea4f7d3361%3A0x6e61a70b6a7e0c7a!2sChennai%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1709654321098!5m2!1sen!2sin";
+  const defaultMap = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125766.19577239162!2d78.04637682283935!3d9.91790479159676!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b00c582421730ad%3A0x34aa30615467e91a!2sMadurai%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1709654321098!5m2!1sen!2sin";
   if (!link || link.trim() === '') return defaultMap;
   
   // If it's a full iframe tag, extract the src
@@ -48,7 +48,7 @@ export default function ContactPage() {
     phone: '+91 97877 88888',
     phoneSecondary: '044 45535112',
     email: 'bharathi@b2blogistics.in',
-    address: 'Chennai, India',
+    address: 'Madurai, India',
     googleMapsLink: ''
   };
 

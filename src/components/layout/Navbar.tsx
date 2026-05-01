@@ -120,7 +120,7 @@ export default function Navbar() {
                 B2B<span className="text-red-600">LOGISTICS SOLUTION</span>
               </span>
               <span className="text-[10px] font-bold tracking-[0.25em] text-slate-500 dark:text-slate-400 leading-none mt-1 uppercase">
-                Premier Logistics Services in Chennai
+                Premier Logistics Services in Madurai
               </span>
             </div>
           </Link>

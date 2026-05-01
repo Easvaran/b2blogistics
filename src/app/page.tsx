@@ -243,7 +243,7 @@ export default function HomePage() {
                   transition={{ duration: 0.8, delay: 0.9 }}
                   className="text-white text-3xl md:text-4xl lg:text-5xl"
                 >
-                  Premier Logistics Services in Chennai
+                  Premier Logistics Services in Madurai
                 </motion.span>
               </motion.h1>
 
@@ -419,13 +419,13 @@ export default function HomePage() {
               transition={{ duration: 0.8 }}
             >
               <h2 className="text-sm font-black text-red-600 uppercase tracking-[0.3em] mb-4">About B2B Logistics Solution</h2>
-              <h3 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-8 uppercase tracking-tight">Your Trusted Partner for Freight Forwarding in Chennai</h3>
+              <h3 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-8 uppercase tracking-tight">Your Trusted Partner for Freight Forwarding in Madurai</h3>
               <div className="space-y-6 text-slate-600 dark:text-slate-400 text-lg leading-relaxed font-medium">
                 <p>
-                  At <strong>B2B Logistics Solution</strong>, we specialize in providing top-tier <strong>logistics services in Chennai</strong> and across India. With over 25 years of industry excellence, our mission is to simplify complex supply chains and offer reliable <strong>freight forwarding Chennai</strong> businesses can depend on.
+                  At <strong>B2B Logistics Solution</strong>, we specialize in providing top-tier <strong>logistics services in Madurai</strong> and across India. With over 25 years of industry excellence, our mission is to simplify complex supply chains and offer reliable <strong>freight forwarding Madurai</strong> businesses can depend on.
                 </p>
                 <p>
-                  Whether you are looking for <strong>transportation services Chennai</strong> for local distribution or comprehensive <strong>supply chain solutions India</strong> for national operations, our expert team is equipped to handle your requirements with precision. We understand the unique challenges of the logistics landscape in Tamil Nadu, from the bustling ports of Chennai to the industrial hubs of Madurai.
+                  Whether you are looking for <strong>transportation services Madurai</strong> for local distribution or comprehensive <strong>supply chain solutions India</strong> for national operations, our expert team is equipped to handle your requirements with precision. We understand the unique challenges of the logistics landscape in Tamil Nadu, from the bustling ports of Chennai to the industrial hubs of Madurai.
                 </p>
                 <p>
                   Our commitment to technology-driven logistics ensures that your cargo is tracked in real-time, providing transparency and peace of mind. As a leader in the sector, we offer a full suite of services including air freight, ocean freight, inland haulage, and secure warehousing.
@@ -450,7 +450,7 @@ export default function HomePage() {
               <div className="relative rounded-[3rem] overflow-hidden shadow-2xl h-[500px]">
                 <Image 
                   src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?q=80&w=2070" 
-                  alt="B2B Logistics Solution Team - Expert Logistics Services in Chennai" 
+                  alt="B2B Logistics Solution Team - Expert Logistics Services in Madurai" 
                   fill
                   className="object-cover"
                 />
@@ -507,9 +507,9 @@ export default function HomePage() {
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
             <div>
               <span className="text-red-600 font-black tracking-[0.4em] text-[10px] uppercase mb-4 block">Comprehensive Solutions</span>
-              <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Our Professional Logistics Services in Chennai</h2>
+              <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Our Professional Logistics Services in Madurai</h2>
               <p className="mt-4 text-slate-500 dark:text-slate-400 max-w-2xl font-medium">
-                B2B Logistics Solution offers a wide range of <strong>transportation services Chennai</strong> and specialized <strong>supply chain solutions India</strong> to meet the dynamic needs of modern businesses.
+                B2B Logistics Solution offers a wide range of <strong>transportation services Madurai</strong> and specialized <strong>supply chain solutions India</strong> to meet the dynamic needs of modern businesses.
               </p>
             </div>
             <Link
@@ -523,9 +523,9 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-1 space-y-8">
               <div className="p-8 bg-slate-50 dark:bg-slate-800 rounded-[2.5rem] border border-slate-100 dark:border-slate-700">
-                <h3 className="text-2xl font-black text-slate-900 dark:text-white mb-4 uppercase tracking-tight">Freight Forwarding Chennai</h3>
+                <h3 className="text-2xl font-black text-slate-900 dark:text-white mb-4 uppercase tracking-tight">Freight Forwarding Madurai</h3>
                 <p className="text-slate-500 dark:text-slate-400 text-sm font-medium leading-relaxed">
-                  We are experts in <strong>freight forwarding Chennai</strong>, managing international and domestic cargo movements via air, sea, and land. Our network ensures your goods reach their destination efficiently and cost-effectively.
+                  We are experts in <strong>freight forwarding Madurai</strong>, managing international and domestic cargo movements via air, sea, and land. Our network ensures your goods reach their destination efficiently and cost-effectively.
                 </p>
               </div>
               <div className="p-8 bg-slate-50 dark:bg-slate-800 rounded-[2.5rem] border border-slate-100 dark:border-slate-700">
@@ -575,17 +575,17 @@ export default function HomePage() {
             <span className="text-red-400 font-black tracking-[0.4em] text-[10px] uppercase mb-4 block">Our Advantage</span>
             <h2 className="text-4xl md:text-5xl font-black mb-6 uppercase tracking-tight">Why Choose B2B Logistics Solution?</h2>
             <p className="text-blue-200 max-w-2xl mx-auto font-medium">
-              We are the preferred choice for <strong>logistics services in Chennai</strong> because we combine state-level expertise with a deep commitment to customer success.
+              We are the preferred choice for <strong>logistics services in Madurai</strong> because we combine state-level expertise with a deep commitment to customer success.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
-              { icon: Clock, title: '24/7 Logistics Support', desc: 'Round-the-clock assistance for all your freight forwarding Chennai needs, ensuring no cargo is left unattended.', color: 'blue' },
-              { icon: Shield, title: 'Safe & Secure Transportation', desc: 'Our transportation services Chennai are backed by advanced security protocols and comprehensive insurance coverage.', color: 'green' },
+              { icon: Clock, title: '24/7 Logistics Support', desc: 'Round-the-clock assistance for all your freight forwarding Madurai needs, ensuring no cargo is left unattended.', color: 'blue' },
+              { icon: Shield, title: 'Safe & Secure Transportation', desc: 'Our transportation services Madurai are backed by advanced security protocols and comprehensive insurance coverage.', color: 'green' },
               { icon: Globe, title: 'State-wide Network', desc: 'From Chennai to Madurai, our network covers every district with local expert knowledge and efficient routing.', color: 'purple' },
               { icon: Award, title: 'Certified Excellence', desc: 'We maintain the highest standards in supply chain solutions India, ensuring compliance and quality in every shipment.', color: 'amber' },
-              { icon: Zap, title: 'Expedited Delivery', desc: 'Fast and reliable transportation services Chennai businesses rely on for time-sensitive cargo and urgent deliveries.', color: 'red' },
+              { icon: Zap, title: 'Expedited Delivery', desc: 'Fast and reliable transportation services Madurai businesses rely on for time-sensitive cargo and urgent deliveries.', color: 'red' },
               { icon: Headphones, title: 'Strategic Consulting', desc: 'Our team provides expert advice to optimize your supply chain and reduce operational costs across India.', color: 'cyan' },
             ].map((item, index) => (
               <motion.div
@@ -671,7 +671,7 @@ export default function HomePage() {
               <span className="text-red-600 font-black tracking-[0.4em] text-[10px] uppercase mb-4 block">Our Expertise</span>
               <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-8 uppercase tracking-tight">Full-Spectrum Logistics Capabilities in Tamil Nadu</h2>
               <p className="text-slate-600 dark:text-slate-400 text-lg mb-8 leading-relaxed font-medium">
-                B2B Logistics Solution provides a comprehensive suite of services designed to streamline your supply chain. We don&apos;t just move cargo; we provide strategic solutions that drive business growth for companies seeking reliable <strong>logistics services in Chennai</strong>.
+                B2B Logistics Solution provides a comprehensive suite of services designed to streamline your supply chain. We don&apos;t just move cargo; we provide strategic solutions that drive business growth for companies seeking reliable <strong>logistics services in Madurai</strong>.
               </p>
               
               <div className="space-y-4">
@@ -798,7 +798,7 @@ export default function HomePage() {
                 transition={{ delay: 0.5, duration: 0.8 }}
                 className="text-blue-200 text-lg md:text-xl mb-12 max-w-2xl mx-auto font-medium"
               >
-                Get a personalized quote for your <strong>logistics services in Chennai</strong>. Our experts are ready to help you scale your business with the best <strong>supply chain solutions India</strong>.
+                Get a personalized quote for your <strong>logistics services in Madurai</strong>. Our experts are ready to help you scale your business with the best <strong>supply chain solutions India</strong>.
               </motion.p>
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}

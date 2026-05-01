@@ -23,7 +23,7 @@ export default function Footer() {
     phone: '+91 97877 88888',
     phoneSecondary: '044 45535112',
     email: 'bharathi@b2blogistics.in',
-    address: 'Chennai, India'
+    address: 'Madurai, India'
   };
 
   const socialLinks = settings?.socialLinks || {
@@ -74,12 +74,12 @@ export default function Footer() {
                     B2B<span className="text-red-500">LOGISTICS SOLUTION</span>
                   </span>
                   <span className="text-[9px] font-bold tracking-[0.2em] text-blue-300 leading-none mt-1 uppercase">
-                    Logistics Services in Chennai
+                    Logistics Services in Madurai
                   </span>
                 </div>
               </Link>
               <p className="text-blue-200 text-sm leading-relaxed">
-                Your trusted partner for <strong>freight forwarding Chennai</strong> and state-wide logistics solutions since 1998.
+                Your trusted partner for <strong>freight forwarding Madurai</strong> and state-wide logistics solutions since 1998.
               </p>
               <div className="flex items-center gap-3">
                 {socialIcons.map(({ Icon, href }, i) => (
