@@ -6,17 +6,17 @@ import ClientLayout from '@/components/layout/ClientLayout';
 import { Metadata } from 'next';
 import { Suspense } from 'react';
 import { ToastContainer } from '@/components/ui/Toast';
-import Script from 'next/script';
+import Script from 'next/script'; 
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'B2B Logistics Solution | Logistics Services in Chennai',
+  title: 'B2B Logistics Solution | Logistics Services in Maurai',
   description: 'B2B Logistics Solution offers reliable freight forwarding, transportation, and supply chain services in Chennai. Get fast and affordable logistics solutions.',
-  keywords: 'logistics services in Chennai, freight forwarding Chennai, supply chain solutions India, transportation services Chennai, B2B logistics, domestic shipping India',
+  keywords: 'logistics services in Madurai, freight forwarding Madurai, supply chain solutions India, transportation services Chennai, B2B logistics, domestic shipping India',
   authors: [{ name: 'B2B Logistics Solution' }],
   openGraph: {
-    title: 'B2B Logistics Solution | Logistics Services in Chennai',
+    title: 'B2B Logistics Solution | Logistics Services in madurai',
     description: 'B2B Logistics Solution offers reliable freight forwarding, transportation, and supply chain services in Chennai.',
     url: 'https://www.b2blogisticssolution.com',
     siteName: 'B2B Logistics Solution',
@@ -25,8 +25,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'B2B Logistics Solution | Logistics Services in Chennai',
-    description: 'Reliable freight forwarding and supply chain solutions in Chennai.',
+    title: 'B2B Logistics Solution | Logistics Services in Madurai',
+    description: 'Reliable freight forwarding and supply chain solutions in Madurai.',
   },
   alternates: {
     canonical: 'https://www.b2blogisticssolution.com',
